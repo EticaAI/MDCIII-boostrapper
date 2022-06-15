@@ -28,4 +28,8 @@ ROOTDIR="$(pwd)"
 # shellcheck source=1603_16.lib.sh
 . "$ROOTDIR"/999999999/1603_16.lib.sh
 
-gh_repo_create_1603_16_N "1603_16_24"
+
+# 1603_16_24 Angola
+# gh_repo_create_1603_16_N "1603_16_24"
+# 1603_16_508 Mozambique
+gh_repo_create_1603_16_N "1603_16_508"
