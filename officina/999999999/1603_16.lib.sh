@@ -27,6 +27,17 @@ __lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
 __lsf_1603_45_16_lib="${__lsf_clone_local}/officina/999999999/1603_45_16.lib.sh"
 _ROOTDIR="${__lsf_clone_local}/officina"
 
+# Angola	024	AGO
+# Brazil	076	BRA
+# Cabo Verde	132	CPV
+# Guinea-Bissau	624	GNB
+# Mozambique	508	MOZ
+# Portugal	620	PRT
+# Sao Tome and Principe	678	STP
+# Timor-Leste	626	TLS
+# China, Macao Special Administrative Region	446	MAC
+declare -a UN_M49_CPLP=("24" "76" "132" "446" "624" "508" "620" "626" "678")
+
 # DESTDIR="" ## this need to be defined to reuse libs from main repository
 
 if [ -f "$__lsf_999999999_lib" ]; then
@@ -82,7 +93,9 @@ fi
 # }
 
 #######################################
-# Initialize local repository with with very rudimentar content
+# Initialize local repository with with very rudimentar content.
+# WARNING. This does not handle cases where the remote repository already exist
+# but does not exist locallu
 #
 # Globals:
 #   ROOTDIR
@@ -100,7 +113,7 @@ gh_repo_create_1603_16_N() {
   _gh_description="${numerodinatio}"
   _gh_commit_fiatlux="fīat lūx, ${numerodinatio}!"
 
-  echo "${FUNCNAME[0]} [$numerodinatio]..."
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerodinatio] ${tty_normal}"
 
   if [ ! -d "$trivium_basi" ]; then
     echo "mkdir [$trivium_basi] ...."
@@ -147,7 +160,12 @@ gh_repo_create_1603_16_N() {
   gh repo edit "MDCIII/${numerodinatio}" --enable-projects=false
 
   set +x
-  # DISPLAY=$DISPLAY git gui
+
+  echo "INFO: since its first time, adding an seep 30 to avoid create "
+  echo "      repositories too fast"
+  sleep 30
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
 #######################################
@@ -237,19 +255,28 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
-  echo "${FUNCNAME[0]} TODO..."
 
   # bootstrap_1603_45_16__item_no1 "1603_16" "24" "AGO" "AO" "3" "1" "0"
   # bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0"
 
-  gh_repo_name="1603_16_24"
-  gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
-  archivum_relative_path="1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv"
+  # for item in "$UN_M49_CPLP" do
+  #   echo "$item"
+  # done
+
+  for i in "${UN_M49_CPLP[@]}"; do
+    echo "$i"
+    # or do whatever with individual element of the array
+    gh_repo_create_1603_16_N "1603_16_$i"
+  done
+
+  # gh_repo_name="1603_16_24"
+  # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
+  # archivum_relative_path="1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv"
 
   # lsf1603_to_gh_repo_local_file "1603_16_24" "1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv" "${ROOTDIR}"
-  lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_relative_path" "${ROOTDIR}"
+  # lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_relative_path" "${ROOTDIR}"
   # archivum_copiae_simplici "${ROOTDIR}/1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv" "${ROOTDIR}/999999/3133368/1603_16_24/1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv"
-  archivum_copiae_simplici "${ROOTDIR}/1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv" "${gh_repo_local}/${archivum_relative_path}"
+  # archivum_copiae_simplici "${ROOTDIR}/1603/16/24/0/1603_16_24_0.no1.tm.hxl.csv" "${gh_repo_local}/${archivum_relative_path}"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
@@ -292,8 +319,8 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       v_iso2="${linea[2]}"
       cod_ab_level_max="${linea[3]}"
       # numerordinatio_praefixo="1603_45_16"
-      echo ""
-      echo "        ${linea[*]}"
+      # echo ""
+      # echo "        ${linea[*]}"
       # echo "unm49 $unm49"
       # echo "v_iso3 $v_iso3"
       # echo "v_iso2 $v_iso2"
@@ -311,8 +338,48 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
         continue
       fi
 
+      if [ "$unm49" != "24" ]; then
+        # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+        continue
+      fi
+      echo ""
+      echo "        ${linea[*]}"
+
+      gh_repo_name="1603_16_${unm49}"
+      gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
+      # fontem_archivum_basi="${ROOTDIR}/${__group_path}/${unm49}"
+      __group_path=$(numerordinatio_neo_separatum "$numerordinatio_praefixo" "/")
       # bootstrap_1603_45_16__item_no1 "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
       # bootstrap_1603_45_16__item_rdf "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
+
+      echo "cod_ab_levels $cod_ab_level_max"
+
+      for ((i = 0; i <= cod_ab_level_max; i++)); do
+        cod_level="$i"
+        gh_repo_name_et_level="${gh_repo_name}_${cod_level}"
+        __group_path=$(numerordinatio_neo_separatum "$gh_repo_name_et_level" "/")
+
+        # fontem_archivum_no1="${ROOTDIR}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
+        # objectivum_archivum_no1="${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
+        # fontem_archivum_rdf_owl="${ROOTDIR}/${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
+        # objectivum_archivum_rdf_owl="${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
+
+        archivum_no1__relative="${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
+        archivum_rdf_owl__relative="${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
+
+        # if [ "$_iso3661p1a3_lower" == "bra" ] && [ "$cod_level" == "2" ]; then
+        #   echo ""
+        #   echo "Skiping COD-AB-BR lvl 2"
+        #   echo ""
+        #   continue
+        # fi
+        # echo "loop $cod_level [${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv]"
+        echo "loop $cod_level [${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv]"
+
+        lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${ROOTDIR}"
+        lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${ROOTDIR}"
+
+      done
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 5 (@TODO disable me later)] ${tty_normal}"
       # sleep 5
@@ -343,6 +410,7 @@ lsf1603_to_gh_repo_local_file() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [${gh_repo_name}] [${archivum_relative_path}] [${basim_fontem}] ${tty_normal}"
 
+  fontem_archivum="${ROOTDIR}/${archivum_relative_path}"
   objectivum_archivum_repo_basi="${ROOTDIR}/999999/3133368/${gh_repo_name}"
   objectivum_archivum="${objectivum_archivum_repo_basi}/${archivum_relative_path}"
   objectivum_archivum_basi=$(dirname "${objectivum_archivum}")
@@ -356,7 +424,9 @@ lsf1603_to_gh_repo_local_file() {
     mkdir -p "$objectivum_archivum_basi"
   fi
 
-  echo "${FUNCNAME[0]} TODO... [$objectivum_archivum_basi]"
+  # echo "${FUNCNAME[0]} TODO... [$objectivum_archivum_basi]"
+
+  archivum_copiae_simplici "${fontem_archivum}" "${objectivum_archivum}"
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
