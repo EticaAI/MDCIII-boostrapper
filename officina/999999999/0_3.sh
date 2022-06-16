@@ -26,6 +26,7 @@
 set -e
 
 ROOTDIR="$(pwd)"
+NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # The next part is necessary because we assume 999999999.lib.sh is not at the
 # disk yet, but we can show colorful messages
@@ -143,8 +144,10 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx() {
   _basim_objectivum="${trivium_basi_lsf}/999999/1603/45/16/xlsx"
 
   # /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999/1603/45/16/1603_45_16.index.hxl.csv
-  fontem_index="${ROOTDIR}/999999/1603/45/16/1603_45_16.index.hxl.csv"
-  objectivum_index="${trivium_basi_cache}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+  # fontem_index="${ROOTDIR}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+  fontem_index="${trivium_basi_cache}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+  # objectivum_index="${trivium_basi_cache}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+  objectivum_index="${ROOTDIR}/999999/1603/45/16/1603_45_16.index.hxl.csv"
 
   # for file_path in "${ROOTDIR}"/999999/1603/45/16/xlsx/*.xlsx; do
 
@@ -171,6 +174,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx() {
     cp "$fontem_index" "${objectivum_index}"
   else
     echo "Index okay [${objectivum_index}]"
+    ls -lha "${objectivum_index}"
   fi
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"

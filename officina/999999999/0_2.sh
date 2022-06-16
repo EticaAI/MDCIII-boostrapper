@@ -23,6 +23,15 @@
 set -e
 
 ROOTDIR="$(pwd)"
+NUMERORDINATIO_BASIM="$ROOTDIR"
+
+## Example of log as local user
+#     cd /workspace/git/EticaAI/MDCIII-boostrapper/officina
+#     sudo su mdciii
+#     source ~/.profile
+# Test
+#   hxltmcli --help
+#   ./999999999/1603_16.sh
 
 printf '\n\t\e[1;32m%-6s\e[m\n' "999999999/0_3.sh"
 bash "${ROOTDIR}/999999999/0_3.sh"
