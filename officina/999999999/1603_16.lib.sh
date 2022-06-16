@@ -1,7 +1,7 @@
 #!/bin/bash
 #===============================================================================
 #
-#          FILE:  1603_16.sh
+#          FILE:  1603_16.lib.sh
 #
 #         USAGE:  #import on other scripts
 #                 . "$ROOTDIR"/999999999/999999999.lib.sh
@@ -22,31 +22,16 @@
 #      REVISION:  ---
 #===============================================================================
 
-#######################################
-# Initialize local repository with with very rudimentar content
-#
-# Globals:
-#   ROOTDIR
-# Arguments:
-#   numerodinatio
-# Outputs:
-#
-#######################################
-localdirs_permisions_fix() {
-  numerodinatio="$1"
+__lsf_clone_local="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
+__lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
 
-  # opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.apothecae.todo.txt"
-  trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
-
-  echo "${FUNCNAME[0]} [$numerodinatio]..."
-
-  echo "RUN THIS:"
-  echo "  sudo chown 1000:1603 -R 999999/"
-  echo "  sudo chmod 1775 -R 999999/"
-  echo "  sudo chown 1603:1603 -R 999999/3133368/"
-
-  # echo "$numerodinatio"
-}
+if [ -f "$__lsf_999999999_lib" ]; then
+  echo "previous LSF already cached"
+  # shellcheck source=../999999/3133368/lexicographi-sine-finibus/officina/999999999/999999999.lib.sh
+  . "$__lsf_999999999_lib"
+else
+  echo "LSF not cached. This may go wrong"
+fi
 
 #######################################
 # Initialize local repository with with very rudimentar content
@@ -74,6 +59,8 @@ gh_repo_create_1603_16_N() {
     mkdir "$trivium_basi"
   else
     echo "INFO: base dir already exist (mkdir [$trivium_basi])"
+    echo "SKIPING NOW all steps"
+    return 0
   fi
 
   if [ ! -f "${trivium_basi}/README.md" ]; then
@@ -114,3 +101,100 @@ gh_repo_create_1603_16_N() {
   set +x
   # DISPLAY=$DISPLAY git gui
 }
+
+#######################################
+# (Re)fech github.com/EticaAI/lexicographi-sine-finibus (if necessary)
+#
+# @see - https://github.blog
+#        /2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
+#      - https://stackoverflow.com/questions/6802145
+#        /how-to-convert-a-git-shallow-clone-to-a-full-clone
+#
+# Note: this function is both at 1603_16.lib.sh and 0_3.sh
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_fetch_lexicographi_sine_finibus() {
+  # numerodinatio="$1"
+  shallow="${1:-"0"}"
+
+  _lsf_repo="https://github.com/EticaAI/lexicographi-sine-finibus.git"
+  trivium_basi="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
+
+  printf "\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+
+  if [ ! -d "$trivium_basi" ]; then
+    echo "mkdir [$trivium_basi] ...."
+    mkdir "$trivium_basi"
+
+    pwd
+
+    cd "${trivium_basi}" || exit
+
+    pwd
+    ls -lha
+
+    if [ "$shallow" -eq "1" ]; then
+      echo "git clone --depth=1 \"$_lsf_repo\" ."
+      git clone --depth=1 "$_lsf_repo" .
+    else
+      echo "git clone --filter=blob:none \"$_lsf_repo\" ."
+      git clone --filter=blob:none "$_lsf_repo" .
+    fi
+    ls -lha
+
+  else
+    echo "INFO: base dir already exist (mkdir [$trivium_basi])"
+    set -x
+    cd "${trivium_basi}" || exit
+    ls -lha
+    # If the folder already exist, and the user is re-requesting again
+    # we cannot use --dept 1
+    # @see
+    # git fetch --unshallow
+    git pull
+    ls -lha
+    set +x
+  fi
+
+  echo "TO PURGE:"
+  echo "    rm -r ${trivium_basi}"
+
+  echo "Note: if this is first time, you need to initialize also the data"
+  echo "   gh_repo_fetch_lexicographi_sine_finibus_1603_16_init"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Fech github.com/EticaAI/lexicographi-sine-finibus (if necessary)
+#
+# @see - https://github.blog
+#        /2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
+#      - https://stackoverflow.com/questions/6802145
+#        /how-to-convert-a-git-shallow-clone-to-a-full-clone
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
+
+  blue=$(tput setaf 4)
+  normal=$(tput sgr0)
+  printf "\t%40s\n" "${blue}${FUNCNAME[0]} TODO"
+  echo "${FUNCNAME[0]} TODO..."
+}
+
+###############################################################################
+
+#### To initialize first time
+# local_system_dependencies_python
+# gh_repo_fetch_lexicographi_sine_finibus
