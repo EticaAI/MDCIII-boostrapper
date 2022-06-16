@@ -54,9 +54,8 @@ ROOTDIR="$(pwd)"
 # shopt login_shell
 
 #### The Happy Path ____________________________________________________________
-
-### 1. Install system dependencies (likely relevant only for GitHub Actions) ---
-local_system_dependencies_python
+### 1. Initialize bare minimum
+# Already done with 0_3.sh (also called by 0_2.sh)
 
 ### 2. Download main repository   ----------------------------------------------
 ## 2.1 The repository itself

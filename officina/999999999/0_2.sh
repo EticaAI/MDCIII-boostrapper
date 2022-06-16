@@ -26,3 +26,6 @@ ROOTDIR="$(pwd)"
 
 printf '\n\t\e[1;32m%-6s\e[m\n' "999999999/0_3.sh"
 bash "${ROOTDIR}/999999999/0_3.sh"
+
+printf '\n\t\e[1;32m%-6s\e[m\n' "999999999/1603_16.sh"
+bash "${ROOTDIR}/999999999/1603_16.sh"

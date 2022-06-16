@@ -121,12 +121,14 @@ gh_repo_create_1603_16_N() {
 #######################################
 gh_repo_fetch_lexicographi_sine_finibus() {
   # numerodinatio="$1"
-  shallow="${1:-"0"}"
+  # shallow="${1:-"0"}"
+  # @TODO remove shallow option
+  shallow="0"
 
   _lsf_repo="https://github.com/EticaAI/lexicographi-sine-finibus.git"
   trivium_basi="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
 
-  printf "\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
 
   if [ ! -d "$trivium_basi" ]; then
     echo "mkdir [$trivium_basi] ...."
@@ -149,16 +151,20 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     ls -lha
 
   else
-    echo "INFO: base dir already exist (mkdir [$trivium_basi])"
+    printf "\t%40s\n" "${tty_blue} INFO: base dir already exist [$trivium_basi] ${tty_normal}"
     set -x
     cd "${trivium_basi}" || exit
-    ls -lha
+    # ls -lha
     # If the folder already exist, and the user is re-requesting again
     # we cannot use --dept 1
     # @see
     # git fetch --unshallow
+    git status
+    echo "git --git-dir /workspace/git/EticaAI/n-data.git-metadata --work-tree ${trivium_basi} gui"
+
     git pull
-    ls -lha
+    # ls -lha
+    cd "$ROOTDIR" || exit
     set +x
   fi
 

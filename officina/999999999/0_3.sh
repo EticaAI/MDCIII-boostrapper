@@ -61,7 +61,9 @@ tty_normal=$(tput sgr0)
 #######################################
 gh_repo_fetch_lexicographi_sine_finibus() {
   # numerodinatio="$1"
-  shallow="${1:-"0"}"
+  # shallow="${1:-"0"}"
+  # @TODO remove shallow option
+  shallow="0"
 
   _lsf_repo="https://github.com/EticaAI/lexicographi-sine-finibus.git"
   trivium_basi="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
@@ -89,16 +91,20 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     ls -lha
 
   else
-    echo "INFO: base dir already exist (mkdir [$trivium_basi])"
+    printf "\t%40s\n" "${tty_blue} INFO: base dir already exist [$trivium_basi] ${tty_normal}"
     set -x
     cd "${trivium_basi}" || exit
-    ls -lha
+    # ls -lha
     # If the folder already exist, and the user is re-requesting again
     # we cannot use --dept 1
     # @see
     # git fetch --unshallow
+    git status
+    echo "git --git-dir /workspace/git/EticaAI/n-data.git-metadata --work-tree ${trivium_basi} gui"
+
     git pull
-    ls -lha
+    # ls -lha
+    cd "$ROOTDIR" || exit
     set +x
   fi
 
@@ -107,6 +113,29 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 
   echo "Note: if this is first time, you need to initialize also the data"
   echo "   gh_repo_fetch_lexicographi_sine_finibus_1603_16_init"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# (Re)fech github.com/EticaAI/lexicographi-sine-finibus (if necessary)
+#
+# @see - https://github.blog
+#        /2020-12-21-get-up-to-speed-with-partial-clone-and-shallow-clone/
+#      - https://stackoverflow.com/questions/6802145
+#        /how-to-convert-a-git-shallow-clone-to-a-full-clone
+#
+# Note: this function is both at 1603_16.lib.sh and 0_3.sh
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx() {
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  echo "TODO"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
@@ -159,5 +188,6 @@ local_system_dependencies_python() {
 
 ## This is manual step
 # local_permisions_fix
-gh_repo_fetch_lexicographi_sine_finibus
 local_system_dependencies_python
+gh_repo_fetch_lexicographi_sine_finibus
+gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx
