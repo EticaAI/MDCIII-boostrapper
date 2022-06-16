@@ -1,0 +1,50 @@
+# SPDX-License-Identifier: Unlicense OR 0BSD
+#
+# .github/workflows/1603_16.yml
+
+# This is a very early test
+# @TODO eventually make it run weekly
+name: "aN1603_16"
+
+on:
+  push:
+    branches:
+      - main
+
+# @TODO take parts from https://github.com/EticaAI/hxltm/blob/main/.github/workflows/hxltm-normae_documentum_hxltm-etica-ai.yml
+
+jobs:
+  # flutter-quick-test #########################################################
+  # _[por-Latn] Teste rápido: se é para falhar, falhe rápido! [por-Latn]_
+  "aN1603_16":
+    name: aN1603_16
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v3
+
+      #### Python ______________________________________________________________
+      # @see https://github.com/actions/setup-python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: 'pip'
+      - run: pip install libhxl hxltm-eticaai openpyxl frictionless
+
+      #### Java Setup __________________________________________________________
+      # @see https://github.com/marketplace/actions/setup-java-jdk
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      ### Apache Jena ----------------------------------------------------------
+      # @see https://github.com/foooomio/setup-jena
+      - uses: foooomio/setup-jena@v2
+      - run: sparql --version
+
+      #### Debug _______________________________________________________________ 
+      # _[por-Latn] Lista arquivos locais (útil para saber o que fazer upload [por-Latn]_
+      - run: ls -lha
+      # tree-like command for macos, @see https://superuser.com/questions/359723/mac-os-x-equivalent-of-the-ubuntu-tree-command
+      - run: find * -type f

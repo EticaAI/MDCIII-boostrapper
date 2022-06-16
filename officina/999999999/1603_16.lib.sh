@@ -36,7 +36,10 @@ _ROOTDIR="${__lsf_clone_local}/officina"
 # Sao Tome and Principe	678	STP
 # Timor-Leste	626	TLS
 # China, Macao Special Administrative Region	446	MAC
-declare -a UN_M49_CPLP=("24" "76" "132" "446" "624" "508" "620" "626" "678")
+# declare -a UN_M49_CPLP=("24" "76" "132" "446" "624" "508" "620" "626" "678")
+
+# Brazil we do later (we have far more admin2 Brazilian data to integrate)
+declare -a UN_M49_CPLP=("24" "132" "446" "624" "508" "620" "626" "678")
 
 # DESTDIR="" ## this need to be defined to reuse libs from main repository
 
@@ -121,6 +124,7 @@ gh_repo_create_1603_16_N() {
   else
     echo "INFO: base dir already exist (mkdir [$trivium_basi])"
     echo "SKIPING NOW all steps"
+    printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
     return 0
   fi
 
@@ -164,6 +168,57 @@ gh_repo_create_1603_16_N() {
   echo "INFO: since its first time, adding an seep 30 to avoid create "
   echo "      repositories too fast"
   sleep 30
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Submit changes from local repository (only if necessary)
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#   numerodinatio please use _ as delimitator (eg. 1603_16_24)
+# Outputs:
+#
+#######################################
+gh_repo_sync_push() {
+  numerodinatio="$1"
+
+  # @TODO make
+
+  _DEPLOY_0_9_COMMIT_MESSAGE="$(TZ=":Zulu" date +"%Y-%m-%d %T") 🤖🧮💾"
+  DEPLOY_0_9_COMMIT_MESSAGE="${DEPLOY_0_9_COMMIT_MESSAGE:-${_DEPLOY_0_9_COMMIT_MESSAGE}}"
+
+  # opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.apothecae.todo.txt"
+  trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
+  _gh_homepage='https://github.com/EticaAI/lexicographi-sine-finibus'
+  _gh_description="${numerodinatio}"
+  # _gh_commit_fiatlux="fīat lūx, ${numerodinatio}!"
+  # _gh_commit_fiatlux="$DEPLOY_0_9_COMMIT_MESSAGE"
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerodinatio] ${tty_normal}"
+
+  if [ ! -d "$trivium_basi" ]; then
+    printf "\t%40s\n" "${tty_red} ERROR: local repo must already exist [$trivium_basi] ${tty_normal}"
+    return 1
+  fi
+
+  cd "${trivium_basi}" || exit
+  if [[ $(git status --porcelain) ]]; then
+    # Changes
+    echo "changes exist"
+    set -x
+    # pwd
+    git -C "${trivium_basi}" add .
+    git -C "${trivium_basi}" commit -m "${DEPLOY_0_9_COMMIT_MESSAGE}"
+    git -C "${trivium_basi}" push
+    set +x
+  else
+    # No changes
+    echo "no changes"
+  fi
+  cd "${ROOTDIR}" || exit
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
@@ -338,11 +393,19 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
         continue
       fi
 
-      if [ "$unm49" != "24" ]; then
+      # if [ "$unm49" != "24" ]; then
+      # if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
+      # shellcheck disable=SC2076
+      if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
         # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+        echo "CPLP [${unm49}]..."
+      else
+        echo "Skiping [${unm49}]"
         continue
       fi
-      echo ""
+      # echo "sleeping 10 @todo remove me"
+      # sleep 10
+      # echo ""
       echo "        ${linea[*]}"
 
       gh_repo_name="1603_16_${unm49}"
@@ -354,15 +417,13 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
 
       echo "cod_ab_levels $cod_ab_level_max"
 
+      bootstrap_1603_45_16__item_no1 "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
+      bootstrap_1603_45_16__item_rdf "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
+
       for ((i = 0; i <= cod_ab_level_max; i++)); do
         cod_level="$i"
         gh_repo_name_et_level="${gh_repo_name}_${cod_level}"
         __group_path=$(numerordinatio_neo_separatum "$gh_repo_name_et_level" "/")
-
-        # fontem_archivum_no1="${ROOTDIR}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
-        # objectivum_archivum_no1="${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
-        # fontem_archivum_rdf_owl="${ROOTDIR}/${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
-        # objectivum_archivum_rdf_owl="${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
 
         archivum_no1__relative="${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
         archivum_rdf_owl__relative="${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
@@ -374,12 +435,14 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
         #   continue
         # fi
         # echo "loop $cod_level [${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv]"
-        echo "loop $cod_level [${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv]"
+        # echo "loop $cod_level [${gh_repo_local}/${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv]"
 
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${ROOTDIR}"
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${ROOTDIR}"
 
       done
+
+      gh_repo_sync_push "${gh_repo_name}"
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 5 (@TODO disable me later)] ${tty_normal}"
       # sleep 5
