@@ -26,6 +26,8 @@ set -e
 
 
 ROOTDIR="$(pwd)"
+# DESTDIR is used to inform shell libs from main repository we're in another dir
+DESTDIR="$ROOTDIR"
 
 # shellcheck source=1603_16.lib.sh
 . "$ROOTDIR"/999999999/1603_16.lib.sh

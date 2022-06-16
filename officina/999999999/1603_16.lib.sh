@@ -24,13 +24,20 @@
 
 __lsf_clone_local="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
 __lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
+__lsf_1603_45_16_lib="${__lsf_clone_local}/officina/999999999/1603_45_16.lib.sh"
+_ROOTDIR="${__lsf_clone_local}/officina"
+
+# DESTDIR="" ## this need to be defined to reuse libs from main repository
 
 if [ -f "$__lsf_999999999_lib" ]; then
-  echo "previous LSF already cached"
+  # echo "OKAY: previous LSF already cached"
   # shellcheck source=../999999/3133368/lexicographi-sine-finibus/officina/999999999/999999999.lib.sh
-  . "$__lsf_999999999_lib"
+  ROOTDIR="$_ROOTDIR" . "$__lsf_999999999_lib"
+  # shellcheck source=../999999/3133368/lexicographi-sine-finibus/officina/999999999/1603_45_16.lib.sh
+  ROOTDIR="$_ROOTDIR" . "$__lsf_1603_45_16_lib"
 else
-  echo "LSF not cached. This may go wrong"
+  echo "ERROR: LSF not cached."
+  exit 1
 fi
 
 #######################################
@@ -193,10 +200,15 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 #######################################
 gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
 
-  blue=$(tput setaf 4)
-  normal=$(tput sgr0)
-  printf "\t%40s\n" "${blue}${FUNCNAME[0]} TODO"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   echo "${FUNCNAME[0]} TODO..."
+
+
+  mkdir -p /workspace/git/fititnt/MDCIII-boostrapper/officina/1603/16/24
+  bootstrap_1603_45_16__item_no1 "1603_16" "24" "AGO" "AO" "1" "1" "0"
+  # bootstrap_1603_45_16__item_no1 "1603_45_16" "24" "AGO" "AO" "1" "1" "0"
+  # bootstrap_1603_45_16__item_rdf "1603_45_16" "24" "AGO" "AO" "3" "1" "0"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
 ###############################################################################

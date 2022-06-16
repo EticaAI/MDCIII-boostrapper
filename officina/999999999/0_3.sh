@@ -135,7 +135,44 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 #######################################
 gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx() {
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
-  echo "TODO"
+  echo "@TODO zzzzmake this function more flexible. for now is just a quick workaround"
+
+  trivium_basi_lsf="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus/officina"
+  trivium_basi_cache="/workspace/git/EticaAI/lexicographi-sine-finibus/officina"
+  _basim_fontem="${trivium_basi_cache}/999999/1603/45/16/xlsx"
+  _basim_objectivum="${trivium_basi_lsf}/999999/1603/45/16/xlsx"
+
+  # /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999/1603/45/16/1603_45_16.index.hxl.csv
+  fontem_index="${ROOTDIR}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+  objectivum_index="${trivium_basi_cache}/999999/1603/45/16/1603_45_16.index.hxl.csv"
+
+  # for file_path in "${ROOTDIR}"/999999/1603/45/16/xlsx/*.xlsx; do
+
+  echo "ls $_basim_fontem"
+  ls "${_basim_fontem}"
+
+  echo "ls $_basim_objectivum"
+  ls "${_basim_objectivum}"
+
+  for file_path in "${_basim_fontem}"/*.xlsx; do
+    # ISO3166p1a3_original=$(basename --suffix=.xlsx "$file_path")
+    nomen=$(basename "$file_path")
+    # echo "$file_path $ISO3166p1a3_original $nomen"
+    if [ ! -f "${_basim_objectivum}/$nomen" ]; then
+      echo "cp [$nomen] ..."
+      # echo "cp $file_path ${_basim_objectivum}/$nomen"
+      cp "$file_path" "${_basim_objectivum}/$nomen"
+    fi
+  done
+
+  if [ ! -f "${objectivum_index}" ]; then
+    echo "cp [$fontem_index] [$objectivum_index] ..."
+    # echo "cp $file_path ${_basim_objectivum}/$nomen"
+    cp "$fontem_index" "${objectivum_index}"
+  else
+    echo "Index okay [${objectivum_index}]"
+  fi
+
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
@@ -156,6 +193,19 @@ local_permisions_fix() {
   echo "  sudo chown 1000:1603 -R 999999/"
   echo "  sudo chmod 1775 -R 999999/"
   echo "  sudo chown 1603:1603 -R 999999/3133368/"
+  echo ""
+  # echo "  sudo mkdir 1603/"
+  # echo "  sudo chown 1000:1603 -R 1603/"
+  # echo "  sudo chmod 1775 -R 1603/"
+  # echo "  sudo chown 1603:1603 -R 1603/"
+  echo ""
+  echo "AFTER main LSF already be ready"
+  echo "  sudo ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/999999999/0 999999999/0"
+  echo "  sudo ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/999999/1603 999999/1603"
+  echo "  sudo ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/1603 1603"
+  # echo "  sudo chown 1000:1603 -R 1603/"
+  # echo "  sudo chmod 1775 -R 1603/"
+  # echo "  sudo chown 1603:1603 -R 1603/"
 
   # echo "$numerodinatio"
 }
@@ -175,6 +225,8 @@ local_system_dependencies_python() {
 
   pip3 install hxltm-eticaai
   pip3 install libhxl
+  pip3 install openpyxl
+  pip3 install frictionless
 
   echo "Testing versions"
 
