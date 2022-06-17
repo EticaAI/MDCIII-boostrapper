@@ -44,6 +44,11 @@ jobs:
           repository: EticaAI/lexicographi-sine-finibus
           path: officina/999999/3133368/999999_1603_16
 
+      # Debug part, remove later, START
+      - run: find * -type f
+        continue-on-error: true
+      # Debug part, remove later, END
+
       - name: "Merge 999999 [MDCIII/999999_1603_16 -> EticaAI/lexicographi-sine-finibus]"
         run: >
           rsync --verbose --human-readable --checksum --recursive
@@ -55,11 +60,15 @@ jobs:
       #   run: rsync --dry-run --verbose --human-readable --checksum --recursive officina/999999/3133368/999999_1603_16/999999/ officina/999999/3133368/lexicographi-sine-finibus/officina/999999
       #   continue-on-error: true
 
+      # Debug part, remove later, START
       - run: ls -lha
       - run: ls -lha 99999/
         continue-on-error: true
       - run: ls -lha 999999/3133368/
         continue-on-error: true
+      - run: find * -type f
+        continue-on-error: true
+      # Debug part, remove later, END
 
       ### Symlinks
       - name: officina/1603
@@ -90,7 +99,9 @@ jobs:
           python-version: "3.9"
           cache: "pip"
       # - run: pip install libhxl hxltm-eticaai openpyxl frictionless csvkit
-      - run: pip install -r .github/requirements.txt
+      # - run: pip install -r .github/requirements.txt
+      - run: pip install -r ../.github/requirements.txt
+        continue-on-error: true
 
       #### Java Setup __________________________________________________________
       # @see https://github.com/marketplace/actions/setup-java-jdk
@@ -121,3 +132,17 @@ jobs:
 
       - run: rsync --version
         continue-on-error: true
+
+      ### Debug, internal tools from lexicographi-sine-finibus
+      - run: ./999999999/0/1603_1.py --help
+        continue-on-error: true
+
+      - run: ./999999999/0/999999999_7200235.py --help
+        continue-on-error: true
+
+      - run: ./999999999/0/1603_3_12.py --help
+        continue-on-error: true
+
+      #### ssh keys
+      # @see https://github.com/webfactory/ssh-agent
+      # SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022
