@@ -57,6 +57,38 @@ else
 fi
 
 #######################################
+# For two repositories already saved at officina/999999/3133368, copy files
+# from first repository to the second repository.
+#
+# IMPORTANT: do not add "/" at the end of final of the paths. The function
+#            will add it based on what rsync required
+#
+# Globals:
+#   ROOTDIR
+#   DESTDIR
+# Arguments:
+#   fons                (Exemplum: "999999_1603_16")
+#   objectivus          (Exemplum: "lexicographi-sine-finibus")
+#   trivium_fonti       (Exemplum: "999999")
+#   trivium_objectivo   (Exemplum: "officina/999999")
+# Outputs:
+#
+#######################################
+gh_repo_combine() {
+  fons="$1"
+  objectivus="$2"
+  trivium_fonti="$3"
+  trivium_objectivo="$4"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerodinatio] ${tty_normal}"
+  set -x
+  rsync --dry-run --verbose --human-readable --checksum --recursive \
+    "${ROOTDIR}/999999/3133368/${fons}/${trivium_fonti}/" \
+    "${DESTDIR}/999999/3133368/${objectivus}/${trivium_objectivo}"
+  set +x
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
 # Initialize local repository with with very rudimentar content.
 # If directory does not exist locally, will try check from remote first.
 #
@@ -306,6 +338,10 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     cd "$ROOTDIR" || exit
     set +x
   fi
+
+
+  gh_repo_combine "" ""
+  echo "TODO merge 999999_1603_16"
 
   echo "TO PURGE:"
   echo "    rm -r ${trivium_basi}"
