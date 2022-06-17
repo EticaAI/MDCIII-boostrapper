@@ -25,7 +25,22 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v3
+      #### Fetch data __________________________________________________________
+
+      - name: EticaAI/MDCIII-boostrapper
+        uses: actions/checkout@v3
+
+      - name: EticaAI/lexicographi-sine-finibus
+        uses: actions/checkout@v3
+        with:
+          repository: EticaAI/lexicographi-sine-finibus
+          path: officina/999999/3133368/lexicographi-sine-finibus
+
+      - name: MDCIII/999999_1603_16
+        uses: actions/checkout@v3
+        with:
+          repository: EticaAI/lexicographi-sine-finibus
+          path: officina/999999/3133368/999999_1603_16
 
       #### Python ______________________________________________________________
       # @see https://github.com/actions/setup-python
@@ -61,4 +76,7 @@ jobs:
         continue-on-error: true
 
       - run: frictionless --version
+        continue-on-error: true
+
+      - run: rsync --version
         continue-on-error: true

@@ -56,47 +56,6 @@ else
   exit 1
 fi
 
-# @TODO move this to 999999999.lib.sh and delete from 1603_16.lib.sh
-#######################################
-# Copy file from source to destiny if hashs are not equal. Simpler version
-# than archivum_copiae since will do no validation checks
-#
-# Globals:
-#
-# Arguments:
-#   fontem_archivum
-#   objectivum_archivum
-#
-# Outputs:
-#
-#######################################
-# archivum_copiae_simplici() {
-#   fontem_archivum="$1"
-#   objectivum_archivum="$2"
-
-#   echo "${FUNCNAME[0]} ... [$fontem_archivum] --> [$objectivum_archivum]"
-
-#   if [ -f "$objectivum_archivum" ]; then
-#     objectivum_archivum_hash=$(sha256sum "$objectivum_archivum" | cut -d ' ' -f 1)
-#     fontem_archivum_hash=$(sha256sum "$fontem_archivum" | cut -d ' ' -f 1)
-#     if [[ "$fontem_archivum_hash" != "$objectivum_archivum_hash" ]]; then
-#       echo "INFO: Not equal. Replacing now..."
-#       # echo "Not equal. Copy now... [$fontem_archivum] --> [$objectivum_archivum]"
-#       # sha256sum "$objectivum_archivum"
-#       # sha256sum "$fontem_archivum"
-#       rm "$objectivum_archivum"
-#       cp "$fontem_archivum" "$objectivum_archivum"
-#     else
-#       echo "INFO: already equal. No need to copy"
-#     fi
-#   else
-#     echo "INFO: copy for the first time"
-#     cp "$fontem_archivum" "$objectivum_archivum"
-#   fi
-
-#   return 0
-# }
-
 #######################################
 # Initialize local repository with with very rudimentar content.
 # If directory does not exist locally, will try check from remote first.
