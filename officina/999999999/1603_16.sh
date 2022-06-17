@@ -47,9 +47,9 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # ---------------------------------------------------------------------------- #
 
 # 1603_16_24 Angola
-# gh_repo_create_1603_16_N "1603_16_24"
+# gh_repo_create_numerordinatio "1603_16_24"
 # 1603_16_508 Mozambique
-# gh_repo_create_1603_16_N "1603_16_508"
+# gh_repo_create_numerordinatio "1603_16_508"
 
 # gh_repo_fetch_lexicographi_sine_finibus
 

@@ -27,7 +27,9 @@ __lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
 __lsf_1603_45_16_lib="${__lsf_clone_local}/officina/999999999/1603_45_16.lib.sh"
 _ROOTDIR="${__lsf_clone_local}/officina"
 
-# Angola	024	AGO
+GH_ORG="${GH_ORG:-"MDCIII"}"
+GH_ORG_DEST="${GH_ORG_DEST:$GH_ORG}"
+
 # Brazil	076	BRA
 # Cabo Verde	132	CPV
 # Guinea-Bissau	624	GNB
@@ -97,17 +99,17 @@ fi
 
 #######################################
 # Initialize local repository with with very rudimentar content.
-# WARNING. This does not handle cases where the remote repository already exist
-# but does not exist locallu
+# If directory does not exist locally, will try check from remote first.
 #
 # Globals:
 #   ROOTDIR
+#   GH_ORG
 # Arguments:
 #   numerodinatio please use _ as delimitator (eg. 1603_16_24)
 # Outputs:
 #
 #######################################
-gh_repo_create_1603_16_N() {
+gh_repo_create_numerordinatio() {
   numerodinatio="$1"
 
   # opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.apothecae.todo.txt"
@@ -118,12 +120,22 @@ gh_repo_create_1603_16_N() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerodinatio] ${tty_normal}"
 
+  # @TODO check if repository exists on remote, then sync to local
+  #       repo if already not in sync
+  # gh repo list MDCIII --json=name
+  # @see https://stackoverflow.com/questions/23914896/check-that-git-repository-exists
+
+  if [ ! -d "$trivium_basi" ]; then
+    echo "local repo not exist. Trying to pull remote first ..."
+    gh_repo_sync_pull "$numerodinatio"
+  fi
+
   if [ ! -d "$trivium_basi" ]; then
     echo "mkdir [$trivium_basi] ...."
     mkdir "$trivium_basi"
   else
-    echo "INFO: base dir already exist (mkdir [$trivium_basi])"
-    echo "SKIPING NOW all steps"
+    echo "INFO: base dir already exist (mkdir [$trivium_basi]). Trying to pull"
+    gh_repo_sync_pull "$numerodinatio"
     printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
     return 0
   fi
@@ -168,6 +180,53 @@ gh_repo_create_1603_16_N() {
   echo "INFO: since its first time, adding an seep 30 to avoid create "
   echo "      repositories too fast"
   sleep 30
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Initialize local repository with with very rudimentar content.
+# WARNING. This does not handle cases where the remote repository already exist
+# but does not exist locallu
+#
+# Globals:
+#   ROOTDIR
+#   GH_ORG
+# Arguments:
+#   numerodinatio please use _ as delimitator (eg. 1603_16_24)
+# Outputs:
+#   Local repository syncronized with remote. If neither local git or
+#   remote have reference to the requested numerodinatio, it will make
+#   no changes
+#######################################
+gh_repo_sync_pull() {
+  numerodinatio="$1"
+  trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerodinatio] ${tty_normal}"
+
+  if [ -d "$trivium_basi" ]; then
+    # echo "local repo exist. Trying to pull ..."
+    set -x
+    git -C "${trivium_basi}" pull
+    set +x
+  else
+    gh_name_remote=$(curl --silent https://api.github.com/repos/${GH_ORG}/${numerodinatio} | jq .name)
+
+    # echo "gh_name_remote [curl --silent https://api.github.com/repos/${GH_ORG}/${numerodinatio} | jq .name]"
+    # echo "gh_name_remote [$gh_name_remote]"
+
+    if [ "$gh_name_remote" != "null" ]; then
+      echo "TODO pull to local dir"
+      set -x
+      mkdir "$trivium_basi"
+      git clone "git@github.com:${GH_ORG}/${numerodinatio}.git" "$trivium_basi"
+      set +x
+    else
+      echo "Either API error or remote not exist. Continuing without changes"
+    fi
+  fi
+  # echo "DEBUG ABORTING NOW"
+  # exit 0
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
@@ -321,7 +380,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
   for i in "${UN_M49_CPLP[@]}"; do
     echo "$i"
     # or do whatever with individual element of the array
-    gh_repo_create_1603_16_N "1603_16_$i"
+    gh_repo_create_numerordinatio "1603_16_$i"
   done
 
   # gh_repo_name="1603_16_24"
@@ -409,7 +468,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       echo "        ${linea[*]}"
 
       gh_repo_name="1603_16_${unm49}"
-      gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
+      # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       # fontem_archivum_basi="${ROOTDIR}/${__group_path}/${unm49}"
       __group_path=$(numerordinatio_neo_separatum "$numerordinatio_praefixo" "/")
       # bootstrap_1603_45_16__item_no1 "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"

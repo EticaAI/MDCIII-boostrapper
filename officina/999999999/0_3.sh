@@ -26,6 +26,7 @@
 set -e
 
 ROOTDIR="$(pwd)"
+# shellcheck disable=SC2034
 NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # The next part is necessary because we assume 999999999.lib.sh is not at the
@@ -33,7 +34,7 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 #### Fancy colors constants - - - - - - - - - - - - - - - - - - - - - - - - - -
 tty_blue=$(tput setaf 4)
 tty_green=$(tput setaf 2)
-tty_red=$(tput setaf 1)
+# tty_red=$(tput setaf 1)
 tty_normal=$(tput sgr0)
 
 ## Example
