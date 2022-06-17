@@ -42,6 +42,24 @@ jobs:
           repository: EticaAI/lexicographi-sine-finibus
           path: officina/999999/3133368/999999_1603_16
 
+      - name: "Merge 999999 [MDCIII/999999_1603_16 -> EticaAI/lexicographi-sine-finibus]"
+        run: rsync --verbose --human-readable --checksum --recursive officina/999999/3133368/999999_1603_16/999999/ officina/999999/3133368/lexicographi-sine-finibus/officina/999999
+        continue-on-error: true
+
+      # - name: "Merge 999999 [MDCIII/999999_1603_16 -> EticaAI/lexicographi-sine-finibus]"
+      #   run: rsync --dry-run --verbose --human-readable --checksum --recursive officina/999999/3133368/999999_1603_16/999999/ officina/999999/3133368/lexicographi-sine-finibus/officina/999999
+      #   continue-on-error: true
+
+      ### Symlinks
+      - run: ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/1603 1603
+        continue-on-error: true
+
+      - run: ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/999999/1603 999999/1603
+        continue-on-error: true
+
+      - run: ln --relative --symbolic 999999/3133368/lexicographi-sine-finibus/officina/999999999/0 999999999/0
+        continue-on-error: true
+
       #### Python ______________________________________________________________
       # @see https://github.com/actions/setup-python
       - uses: actions/setup-python@v4
