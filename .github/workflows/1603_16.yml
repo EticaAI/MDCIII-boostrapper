@@ -1,7 +1,46 @@
+#===============================================================================
+#
+#          FILE:  1603_16.yml
+#
+#         USAGE:  - See https://docs.github.com/en/actions
+#                       /learn-github-actions/understanding-github-actions
+#                 - Add .github/workflows/1603_16.yml to repository. This will
+#                   not work for forks
+#                 - Setup SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022
+#                   for your agent (such as @eticaaibot)
+#
+#   DESCRIPTION:  Quick introduction:
+#
+#                 1. This action runs the 1603_16 namespace from
+#                    https://github.com/EticaAI/lexicographi-sine-finibus.
+#                 2. All operations can be done using a local account (see
+#                    the shell files at officina/999999999) without emulating
+#                    entire GitHub runner (aka https://github.com/nektos/act)
+#                 3. Very few operations (even for boostrapping 1603_16)
+#                    are not here (but are on shell script): they're mostly
+#                    to create very first time the repositories with data, so
+#                    you really not need then unless you're recreating from
+#                    zero (which may never be necessary)
+#                 4. Some operations that could be done by requesting the
+#                    shell scripts locally (but are easier to do with YAML
+#                    on GitHub Actions runner) may be done here without calling
+#                    the shell scripts.
+#
+#       OPTIONS:  ---
+#
+#  REQUIREMENTS:  ---
+#          BUGS:  ---
+#         NOTES:  ---
+#        AUTHOR:  Emerson Rocha <rocha[at]ieee.org>
+#       COMPANY:  EticaAI
+#       LICENSE:  Public Domain dedication or Zero-Clause BSD
+#                 SPDX-License-Identifier: Unlicense OR 0BSD
+#       VERSION:  v1.0
+#       CREATED:  2022-06-16 31:38 UTC started.
+#      REVISION:  ---
+#===============================================================================
 # SPDX-License-Identifier: Unlicense OR 0BSD
-#
-# .github/workflows/1603_16.yml
-#
+
 # @TODO eventually make it run weekly
 # @TODO organize log messages when running on github actions to allow be grouped
 #       docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
@@ -27,6 +66,20 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      #### Low level ssh-agent _________________________________________________
+      # @see https://github.com/marketplace/actions/webfactory-ssh-agent
+      # REASONING: this is not necessary for read-only requests to public
+      #            repositories, but for use GitHub Actions runner, we need
+      #            something far more dynamic than write YAML for every
+      #            repository we would create with shell scripting
+      - name: ID_ED25519__GITHUBRUNNER2022
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+      # - run: ssh -T git@github.com
+      #   continue-on-error: true
+
       #### Fetch data __________________________________________________________
 
       - name: EticaAI/MDCIII-boostrapper
@@ -40,11 +93,13 @@ jobs:
 
       - name: MDCIII/999999_1603_16
         uses: actions/checkout@v3
+        continue-on-error: true
         with:
-          repository: EticaAI/lexicographi-sine-finibus
+          repository: MDCIII/999999_1603_16
           path: officina/999999/3133368/999999_1603_16
 
       # Debug part, remove later, START
+      - run: pwd
       - run: find * -type f
         continue-on-error: true
       # Debug part, remove later, END
@@ -61,8 +116,9 @@ jobs:
       #   continue-on-error: true
 
       # Debug part, remove later, START
+      - run: pwd
       - run: ls -lha
-      - run: ls -lha 99999/
+      - run: ls -lha 999999/
         continue-on-error: true
       - run: ls -lha 999999/3133368/
         continue-on-error: true
@@ -146,3 +202,10 @@ jobs:
       #### ssh keys
       # @see https://github.com/webfactory/ssh-agent
       # SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022
+
+      - run: ssh -T git@github.com
+        continue-on-error: true
+
+      # @TODO beyond bare 'git', also configure gh (GitHub CLI) to use the
+      #       machine operator like @eticaaibot, not the human user. See
+      # docs.github.com/pt/actions/using-workflows/using-github-cli-in-workflows
