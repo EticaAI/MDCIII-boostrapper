@@ -38,6 +38,12 @@ echo 'SELECT * { ?s ?p ?o } LIMIT 10' > /tmp/salve-mundi.rq
 sparql --data=https://raw.githubusercontent.com/MDCIII/1603_16_24/main/1603/16/24/1/1603_16_24_1.no1.owl.ttl --query=/tmp/salve-mundi.rq
 ```
 
+#### D (local server)
+```bash
+echo 'SELECT * { ?s ?p ?o } LIMIT 10' > /tmp/salve-mundi.rq
+sparql --data=http://127.0.0.1:1603/1603/16/24/1/1603_16_24_1.no1.owl.ttl --query=/tmp/salve-mundi.rq
+```
+
 
 <!--
 @TODO need to find latin term for debug. Previously using 

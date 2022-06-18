@@ -33,6 +33,16 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # Test
 #   hxltmcli --help
 #   ./999999999/1603_16.sh
+#
+# Local web server (Python)
+#    cd /workspace/git/EticaAI/MDCIII-boostrapper/
+#    python3 -m http.server 1603 --bind 127.0.0.1 --directory ./officina/
+#    # Open http://127.0.0.1:1603/
+#
+# Local web server (PHP)
+#    cd /workspace/git/EticaAI/MDCIII-boostrapper/
+#    php -S 127.0.0.1:1603 -t ./officina/
+#    # Open http://127.0.0.1:1603/
 
 printf '\n\t\e[1;32m%-6s\e[m\n' "999999999/0_3.sh"
 bash "${ROOTDIR}/999999999/0_3.sh"
