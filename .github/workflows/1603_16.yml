@@ -106,6 +106,15 @@ jobs:
         continue-on-error: true
       # Debug part, remove later, END
 
+      # 1603_1_99 is not stored with main repository, but is required by
+      # scripts that generate Codex. For now we're simply downloading
+      # from the older EticaAI/lsf-cache/ repository
+      - name: "Temporary fix [1603/1/99/1603_1_99.no1.tm.hxl.csv]"
+        run: >
+          curl --output 1603/1/99/1603_1_99.no1.tm.hxl.csv
+          https://raw.githubusercontent.com/EticaAI/lsf-cache/main/1603/1/99/1603_1_99.no1.tm.hxl.csv
+        continue-on-error: true
+
       - name: "Merge 999999 [MDCIII/999999_1603_16 -> EticaAI/lexicographi-sine-finibus]"
         run: >
           rsync --verbose --human-readable --checksum --recursive
