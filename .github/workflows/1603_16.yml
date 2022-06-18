@@ -54,13 +54,15 @@ on:
     branches:
       - main
 
+env:
+  # Fix: 'tput: No value for $TERM and no -T specified'
+  TERM: xterm
+
 defaults:
   run:
     working-directory: ./officina
 
 jobs:
-  # flutter-quick-test #########################################################
-  # _[por-Latn] Teste rápido: se é para falhar, falhe rápido! [por-Latn]_
   "aN1603_16":
     name: aN1603_16
     runs-on: ubuntu-latest
@@ -211,8 +213,8 @@ jobs:
       # docs.github.com/pt/actions/using-workflows/using-github-cli-in-workflows
 
       ### 1603_16 ----------------------------------------------------------
-      - run: ./999999999/1603_16.workflow.sh
+      - run: ./999999999/999999_1603_16.workflow.sh
         continue-on-error: true
 
-      - run: ./999999999/999999_1603_16.workflow.sh
+      - run: ./999999999/1603_16.workflow.sh
         continue-on-error: true
