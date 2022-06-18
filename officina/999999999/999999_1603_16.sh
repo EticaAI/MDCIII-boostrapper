@@ -73,6 +73,7 @@ gh_repo_sync_push "999999_1603_16"
 
 # Merges
 # rsync --dry-run --verbose --human-readable --checksum --recursive officina/999999/3133368/999999_1603_16/999999/ officina/999999/3133368/lexicographi-sine-finibus/officina/999999
+# rsync --dry-run --verbose --human-readable --checksum --recursive 999999/3133368/999999_1603_16/999999/ 999999/3133368/lexicographi-sine-finibus/officina/999999
 
 # 1603_16_24 Angola
 # gh_repo_create_numerordinatio "1603_16_24"

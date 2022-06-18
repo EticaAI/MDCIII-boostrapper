@@ -209,3 +209,10 @@ jobs:
       # @TODO beyond bare 'git', also configure gh (GitHub CLI) to use the
       #       machine operator like @eticaaibot, not the human user. See
       # docs.github.com/pt/actions/using-workflows/using-github-cli-in-workflows
+
+      ### 1603_16 ----------------------------------------------------------
+      - run: ./999999999/1603_16.workflow.sh
+        continue-on-error: true
+
+      - run: ./999999999/999999_1603_16.workflow.sh
+        continue-on-error: true

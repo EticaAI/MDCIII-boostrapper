@@ -101,6 +101,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     # we cannot use --dept 1
     # @see
     # git fetch --unshallow
+
     git status
     echo "git --git-dir /workspace/git/EticaAI/n-data.git-metadata --work-tree ${trivium_basi} gui"
 
@@ -109,6 +110,16 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     cd "$ROOTDIR" || exit
     set +x
   fi
+
+  # @TODO 1603_1_99 is used to generate documentation. We need better way
+  #       to have a cache of files such as this. For now just a quick hacky
+  _temp_1603_1_99="$trivium_basi/officina/1603/1/99/1603_1_99.no1.tm.hxl.csv"
+  _temp_1603_1_99_lsfcache="https://raw.githubusercontent.com/EticaAI/lsf-cache/main/1603/1/99/1603_1_99.no1.tm.hxl.csv"
+  if [ ! -f "$_temp_1603_1_99" ]; then
+    curl --output "$_temp_1603_1_99" "$_temp_1603_1_99_lsfcache"
+  fi
+
+  # https://raw.githubusercontent.com/EticaAI/lsf-cache/main/1603/1/99/1603_1_99.no1.tm.hxl.csv
 
   echo "TO PURGE:"
   echo "    rm -r ${trivium_basi}"

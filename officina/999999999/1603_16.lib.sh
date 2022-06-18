@@ -339,7 +339,6 @@ gh_repo_fetch_lexicographi_sine_finibus() {
     set +x
   fi
 
-
   gh_repo_combine "" ""
   echo "TODO merge 999999_1603_16"
 
@@ -465,7 +464,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       gh_repo_name="1603_16_${unm49}"
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       # fontem_archivum_basi="${ROOTDIR}/${__group_path}/${unm49}"
-      __group_path=$(numerordinatio_neo_separatum "$numerordinatio_praefixo" "/")
+      # __group_path=$(numerordinatio_neo_separatum "$numerordinatio_praefixo" "/")
       # bootstrap_1603_45_16__item_no1 "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
       # bootstrap_1603_45_16__item_rdf "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
 
@@ -494,12 +493,45 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${ROOTDIR}"
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${ROOTDIR}"
 
+        _codex_meta="{\"#item+rem+i_qcc+is_zxxx+ix_n1603\": \"${gh_repo_name_et_level}\", \"#item+rem+i_mul+is_zyyy\": \"${gh_repo_name_et_level}\"}"
+
+        # _datapackage_cod_ab_lvl="${ROOTDIR}/${__group_path}/datapackage.json"
+        _datapackage_cod_ab_lvl="${__group_path}/datapackage.json"
+
+        CODEX_AD_HOC_NUMERORDINATIO="$_codex_meta" \
+          "${ROOTDIR}/999999999/0/1603_1.py" --methodus='status-quo' \
+          --status-quo-in-datapackage \
+          --codex-de="${gh_repo_name_et_level}" \
+          >"${ROOTDIR}/${_datapackage_cod_ab_lvl}"
+
+        frictionless validate "${ROOTDIR}/${_datapackage_cod_ab_lvl}"
+        lsf1603_to_gh_repo_local_file "$gh_repo_name" "$_datapackage_cod_ab_lvl" "${ROOTDIR}"
+
       done
+
+      # __group_path_basi=$(numerordinatio_neo_separatum "${gh_repo_name}" "/")
+      # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
+      _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
+      _numerodinatio_cod_ab_all="1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3"
+
+      DATA_APOTHECAE_MINIMIS="1" \
+        "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+        --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+        --data-apothecae-ad="$_datapackage_cod_ab_all__localrepo"
+
+      cd "999999/3133368/${gh_repo_name}"
+      pwd
+      frictionless validate "datapackage.json" || echo "FIX ME [${gh_repo_name}]. Know bug. not sure why frictionless is complaining here but works in production. Maybe permissions?"
+      cd "${ROOTDIR}" || true
+      # No need to move (already is at the local repo)
+      # lsf1603_to_gh_repo_local_file "$gh_repo_name" "$_datapackage_cod_ab_all" "${ROOTDIR}"
+
+      # /999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_45_1,1603_45_31' --data-apothecae-ad='999999/0/apotheca2e.datapackage.json'
 
       gh_repo_sync_push "${gh_repo_name}"
 
-      # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 5 (@TODO disable me later)] ${tty_normal}"
-      # sleep 5
+      # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
+      # sleep 10
     done
   } <"${opus_temporibus_temporarium}"
 
