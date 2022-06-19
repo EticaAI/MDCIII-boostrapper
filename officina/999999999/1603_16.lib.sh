@@ -207,7 +207,7 @@ gh_repo_sync_pull() {
     # echo "gh_name_remote [$gh_name_remote]"
 
     if [ "$gh_name_remote" != "null" ]; then
-      echo "TODO pull to local dir"
+      # echo "TODO pull to local dir"
       set -x
       mkdir "$trivium_basi"
       git clone "git@github.com:${GH_ORG}/${numerodinatio}.git" "$trivium_basi"
@@ -512,12 +512,15 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       # __group_path_basi=$(numerordinatio_neo_separatum "${gh_repo_name}" "/")
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
+      _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
       _numerodinatio_cod_ab_all="1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3"
 
       DATA_APOTHECAE_MINIMIS="1" \
         "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="$_datapackage_cod_ab_all__localrepo"
+
+      # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
 
       cd "999999/3133368/${gh_repo_name}"
       pwd

@@ -43,6 +43,8 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 #    cd /workspace/git/EticaAI/MDCIII-boostrapper/
 #    php -S 127.0.0.1:1603 -t ./officina/
 #    # Open http://127.0.0.1:1603/
+# Protege
+#    /opt/Protege-5.5.0/run.sh
 
 printf '\n\t\e[1;32m%-6s\e[m\n' "999999999/0_3.sh"
 bash "${ROOTDIR}/999999999/0_3.sh"
@@ -67,3 +69,6 @@ bash "${ROOTDIR}/999999999/1603_16.sh"
 # ./999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_45_1,1603_45_31' --data-apothecae-ad='999999/0/apothecae.datapackage.json'
 
 # ./999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad='999999/0/apothecae.datapackage.json'
+
+# python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --help
+# python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad='999999/0/catalog-v001.xml'
