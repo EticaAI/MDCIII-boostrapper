@@ -40,8 +40,9 @@ __temp_999999_1603_16_boostraper() {
   trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
   lsf_xlsx="/workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999/1603/45/16/xlsx"
   if [ -d "$trivium_basi" ]; then
-    echo "TODO"
+    # echo "TODO"
     objectivum_basi="$trivium_basi/999999/1603/45/16/xlsx"
+    objectivum_index="$trivium_basi/999999/1603/45/16/1603_45_16.index.hxl.csv"
 
     if [ ! -d "$objectivum_basi" ]; then
       # echo "creating dir [$objectivum_basi]"
@@ -57,6 +58,14 @@ __temp_999999_1603_16_boostraper() {
       # echo "file_xlsx [$file_xlsx]"
       archivum_copiae_simplici "$file_path" "$objectivum_basi/$file_xlsx"
     done
+
+    # @TODO 1603_1_99 is used to generate documentation. We need better way
+    #       to have a cache of files such as this. For now just a quick hacky
+    # _temp_1603_1_99="$trivium_basi/officina/1603/1/99/1603_1_99.no1.tm.hxl.csv"
+    _temp_1603_1_99_lsfcache="https://raw.githubusercontent.com/EticaAI/lsf-cache/main/999999/1603/45/16/1603_45_16.index.hxl.csv"
+    if [ ! -f "$objectivum_index" ]; then
+      curl --output "$objectivum_index" "$_temp_1603_1_99_lsfcache"
+    fi
   else
     echo "ERROR repo [$numerodinatio] not initialized"
     exit 1

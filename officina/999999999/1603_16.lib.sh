@@ -472,6 +472,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
 
       bootstrap_1603_45_16__item_no1 "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
       bootstrap_1603_45_16__item_rdf "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
+      arr__numerodinatio_cod_ab=()
 
       for ((i = 0; i <= cod_ab_level_max; i++)); do
         cod_level="$i"
@@ -480,6 +481,8 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
 
         archivum_no1__relative="${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
         archivum_rdf_owl__relative="${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
+
+        arr__numerodinatio_cod_ab+=("${gh_repo_name_et_level}")
 
         # if [ "$_iso3661p1a3_lower" == "bra" ] && [ "$cod_level" == "2" ]; then
         #   echo ""
@@ -512,15 +515,26 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       # __group_path_basi=$(numerordinatio_neo_separatum "${gh_repo_name}" "/")
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
-      _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
-      _numerodinatio_cod_ab_all="1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3"
+      _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v004.xml"
 
+      _numerodinatio_cod_ab_all=$(printf ",%s" "${arr__numerodinatio_cod_ab[@]}")
+      _numerodinatio_cod_ab_all=${_numerodinatio_cod_ab_all:1}
+      # echo "_numerodinatio_cod_ab_all [$_numerodinatio_cod_ab_all]"
+      # exit 1
+      # _numerodinatio_cod_ab_all="1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3"
+
+      set -x
       DATA_APOTHECAE_MINIMIS="1" \
         "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="$_datapackage_cod_ab_all__localrepo"
 
-      # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
+      "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+        --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+        --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
+      set +x
+
+      # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex="$_datapackage_cod_ab_all__localrepo" --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
 
       cd "999999/3133368/${gh_repo_name}"
       pwd

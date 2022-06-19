@@ -159,6 +159,18 @@ jobs:
           https://raw.githubusercontent.com/EticaAI/lsf-cache/main/1603/1/99/1603_1_99.no1.tm.hxl.csv
         continue-on-error: true
 
+      - name: "Temporary fix [999999/1603/45/16/1603_45_16.index.hxl.csv]"
+        run: >
+          curl --output 999999/1603/45/16/1603_45_16.index.hxl.csv
+          https://raw.githubusercontent.com/EticaAI/lsf-cache/main/999999/1603/45/16/1603_45_16.index.hxl.csv
+        continue-on-error: true
+
+      - run: ls -lha 1603/1/99/1603_1_99.no1.tm.hxl.csv
+        continue-on-error: true
+
+      - run: ls -lha 999999/1603/45/16/1603_45_16.index.hxl.csv
+        continue-on-error: true
+
       #### Python ______________________________________________________________
       # @see https://github.com/actions/setup-python
       - uses: actions/setup-python@v4
@@ -214,14 +226,20 @@ jobs:
       # @see https://github.com/webfactory/ssh-agent
       # SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022
 
-      - run: ssh -T git@github.com
-        continue-on-error: true
+      # - run: ssh -T git@github.com
+      #   continue-on-error: true
 
       # @TODO beyond bare 'git', also configure gh (GitHub CLI) to use the
       #       machine operator like @eticaaibot, not the human user. See
       # docs.github.com/pt/actions/using-workflows/using-github-cli-in-workflows
 
       ### 1603_16 ----------------------------------------------------------
+      - run: ls -lha 999999/1603/45/16/
+        continue-on-error: true
+
+      - run: ls -lha 999999/1603/45/16/1603_45_16.index.hxl.csv
+        continue-on-error: true
+
       - run: ./999999999/999999_1603_16.workflow.sh
         continue-on-error: true
 
