@@ -72,3 +72,19 @@ bash "${ROOTDIR}/999999999/1603_16.sh"
 
 # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --help
 # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad='999999/0/catalog-v001.xml'
+
+#### 1568346 (Testcase 2022-06-19) _____________________________________________
+# 999999999/1568346
+# > - https://www.wikidata.org/wiki/Q1568346
+# >   - > test case (Q1568346)
+# 
+# 
+# echo "  sudo chown 1000:1603 -R 999999/"
+# echo "  sudo chmod 1775 -R 999999/"
+# echo "  sudo chown 1603:1603 -R 999999/3133368/"
+
+# 1568346_20220619
+
+# gh repo create "1568346_20220619" --disable-issues --disable-wiki --license UNLICENSE --public
+
+

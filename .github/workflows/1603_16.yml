@@ -194,6 +194,11 @@ jobs:
       - uses: foooomio/setup-jena@v2
       - run: sparql --version
 
+      ### Rapper (tool for work with low level RDF) ----------------------------
+      # @see https://github.com/foooomio/setup-jena
+      - run: apt install -y raptor-utils
+        continue-on-error: true
+
       #### Debug _______________________________________________________________
       # _[por-Latn] Lista arquivos locais (útil para saber o que fazer upload [por-Latn]_
       - run: ls -lha
