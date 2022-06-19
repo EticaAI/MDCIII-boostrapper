@@ -195,8 +195,7 @@ jobs:
       - run: sparql --version
 
       ### Rapper (tool for work with low level RDF) ----------------------------
-      # @see https://github.com/foooomio/setup-jena
-      - run: apt install -y raptor-utils
+      - run: sudo apt-get install -y raptor-utils
         continue-on-error: true
 
       #### Debug _______________________________________________________________

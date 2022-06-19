@@ -77,14 +77,16 @@ bash "${ROOTDIR}/999999999/1603_16.sh"
 # 999999999/1568346
 # > - https://www.wikidata.org/wiki/Q1568346
 # >   - > test case (Q1568346)
-# 
-# 
+#
+#
 # echo "  sudo chown 1000:1603 -R 999999/"
 # echo "  sudo chmod 1775 -R 999999/"
 # echo "  sudo chown 1603:1603 -R 999999/3133368/"
 
 # 1568346_20220619
 
-# gh repo create "1568346_20220619" --disable-issues --disable-wiki --license UNLICENSE --public
+# gh repo create "MDCIII/1568346_20220619" --disable-issues --disable-wiki --license UNLICENSE --public
+# gh repo clone MDCIII/1568346_20220619
 
-
+# @TODO make a cached version of 1603/1 path. The @EticaAI/lsf-cache, even
+#       only the last commit, have unecessary higher times
