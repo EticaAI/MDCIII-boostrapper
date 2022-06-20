@@ -30,6 +30,8 @@ _ROOTDIR="${__lsf_clone_local}/officina"
 GH_ORG="${GH_ORG:-"MDCIII"}"
 GH_ORG_DEST="${GH_ORG_DEST:$GH_ORG}"
 
+AUTOMATON__1603_16__CPLP_UNICAE="${AUTOMATON__1603_16__CPLP_UNICAE:-"1"}"
+
 # Brazil	076	BRA
 # Cabo Verde	132	CPV
 # Guinea-Bissau	624	GNB
@@ -114,7 +116,8 @@ bootstrap_1603_45_16__item_rdf() {
   # objectivum_archivum_basi="${_basim_objectivum}/1603/45/16/${unm49}"
   objectivum_archivum_basi="${_basim_objectivum}/${__group_path}/${unm49}"
   # opus_temporibus_temporarium="${ROOTDIR}/999999/0/${unm49}~lvl.tsv"
-  opus_temporibus_temporarium="${DESTDIR}/999999/0/${unm49}.ttl"
+  opus_temporibus_temporarium="${DESTDIR}/999999/0/${unm49}~1.ttl"
+  opus_temporibus_temporarium_2="${DESTDIR}/999999/0/${unm49}~2.ttl"
 
   printf "\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [$numerordinatio_praefixo] [$unm49] [$iso3661p1a3] [$pcode_praefixo]${tty_normal}"
 
@@ -145,6 +148,7 @@ bootstrap_1603_45_16__item_rdf() {
     objectivum_archivum_no1="${objectivum_archivum_basi_lvl}/${numerordinatio_praefixo}_${unm49}_${cod_level}.no1.tm.hxl.csv"
 
     objectivum_archivum_no1_owl_ttl="${objectivum_archivum_basi_lvl}/${numerordinatio_praefixo}_${unm49}_${cod_level}.no1.owl.ttl"
+    objectivum_archivum_no1_skos_ttl="${objectivum_archivum_basi_lvl}/${numerordinatio_praefixo}_${unm49}_${cod_level}.no1.skos.ttl"
 
     # set -x
     # rm "$objectivum_archivum_no1" || true
@@ -159,37 +163,23 @@ bootstrap_1603_45_16__item_rdf() {
 
     rdf_trivio=$((5000 + cod_level))
 
-    # set -x
-    # "${ROOTDIR}/999999999/0/999999999_54872.py" \
-    #   --objectivum-formato=_temp_no1 \
-    #   --rdf-trivio="${rdf_trivio}" \
-    #   "${objectivum_archivum_no1}" |
-    #   rapper --quiet --input=turtle --output=turtle /dev/fd/0 \
-    #   > "${objectivum_archivum_no1_owl_ttl}"
-    # set +x
-    set -x
+    ##  Computational-like RDF serialization, "OWL version" --------------------
 
-    # "${ROOTDIR}/999999999/0/999999999_7200235.py" \
-    #   --methodus=xlsx_ad_no1 \
-    #   --numerordinatio-praefixo="$numerordinatio_praefixo" \
-    #   --ordines="$cod_level" \
-    #   --pcode-praefix="$pcode_praefixo" \
-    #   --unm49="$unm49" \
-    #   "$fontem_archivum" >"${objectivum_archivum_no1}"
-    # "${ROOTDIR}/999999999/0/999999999_54872.py" \
-    #   --objectivum-formato=_temp_no1 \
-    #   --rdf-trivio="${rdf_trivio}" \
-    #   "${objectivum_archivum_no1}"
+    # @TODO fix generation of invalid format if
+    #       --rdf-sine-spatia-nominalibus=skos,devnull is enabled
 
-    # @
     # "${ROOTDIR}/999999999/0/999999999_54872.py" \
     #   --objectivum-formato=_temp_no1 \
+    #   --numerordinatio-cum-antecessoribus \
+    #   --rdf-sine-spatia-nominalibus=skos,devnull \
+    #   --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
     #   --rdf-trivio="${rdf_trivio}" \
-    #   "${objectivum_archivum_no1}" >"${opus_temporibus_temporarium}"
+    #   <"${objectivum_archivum_no1}" >"${opus_temporibus_temporarium}"
 
     "${ROOTDIR}/999999999/0/999999999_54872.py" \
       --objectivum-formato=_temp_no1 \
       --numerordinatio-cum-antecessoribus \
+      --rdf-sine-spatia-nominalibus=devnull \
       --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
       --rdf-trivio="${rdf_trivio}" \
       <"${objectivum_archivum_no1}" >"${opus_temporibus_temporarium}"
@@ -199,23 +189,39 @@ bootstrap_1603_45_16__item_rdf() {
       >"${objectivum_archivum_no1_owl_ttl}"
 
     riot --validate "${objectivum_archivum_no1_owl_ttl}"
+
+    ##  Linguistic-like RDF serialization, "SKOS version" ----------------------
+    # @TODO fix invalid generation if disabling OWL with
+    #        --rdf-sine-spatia-nominalibus=owl
+
+    # "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    #   --objectivum-formato=_temp_no1 \
+    #   --numerordinatio-cum-antecessoribus \
+    #   --rdf-sine-spatia-nominalibus=owl,obo,p,geo,devnull \
+    #   --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
+    #   --rdf-trivio="${rdf_trivio}" \
+    #   <"${objectivum_archivum_no1}" >"${opus_temporibus_temporarium_2}"
+
+    "${ROOTDIR}/999999999/0/999999999_54872.py" \
+      --objectivum-formato=_temp_no1 \
+      --numerordinatio-cum-antecessoribus \
+      --rdf-sine-spatia-nominalibus=obo,p,geo,devnull \
+      --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
+      --rdf-trivio="${rdf_trivio}" \
+      <"${objectivum_archivum_no1}" >"${opus_temporibus_temporarium_2}"
+
+    rapper --quiet --input=turtle --output=turtle \
+      "${opus_temporibus_temporarium_2}" \
+      >"${objectivum_archivum_no1_skos_ttl}"
+
+    riot --validate "${objectivum_archivum_no1_skos_ttl}"
     set +x
 
     echo "OWL TTL: [${objectivum_archivum_no1_owl_ttl}]"
-
-    # sleep 10
-
-    # set -x
-    # "${ROOTDIR}/999999999/0/999999999_7200235.py" \
-    #   --methodus=xlsx_ad_no1 \
-    #   --numerordinatio-praefixo="$numerordinatio_praefixo" \
-    #   --ordines="$cod_level" \
-    #   --pcode-praefix="$pcode_praefixo" \
-    #   --unm49="$unm49" \
-    #   "$fontem_archivum" >"${objectivum_archivum_no1}"
-    # set +x
+    echo "SKOS TTL: [${objectivum_archivum_no1_skos_ttl}]"
 
     rm "$opus_temporibus_temporarium"
+    rm "$opus_temporibus_temporarium_2"
 
   done
 
@@ -523,6 +529,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 #
 # Globals:
 #   ROOTDIR
+#   AUTOMATON__1603_16__CPLP_UNICAE
 # Arguments:
 #
 # Outputs:
@@ -538,6 +545,12 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
   # for item in "$UN_M49_CPLP" do
   #   echo "$item"
   # done
+
+  if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+    echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+  else
+    echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+  fi
 
   for i in "${UN_M49_CPLP[@]}"; do
     echo "$i"
@@ -584,6 +597,12 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
   echo ""
   echo "  LIST HERE <${opus_temporibus_temporarium}>"
   echo ""
+
+  if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+    echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+  else
+    echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+  fi
 
   # while IFS=, read -r iso3 source_url; do
   {
@@ -649,6 +668,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
 
         archivum_no1__relative="${__group_path}/${gh_repo_name_et_level}.no1.tm.hxl.csv"
         archivum_rdf_owl__relative="${__group_path}/${gh_repo_name_et_level}.no1.owl.ttl"
+        archivum_rdf_skos__relative="${__group_path}/${gh_repo_name_et_level}.no1.skos.ttl"
 
         arr__numerodinatio_cod_ab+=("${gh_repo_name_et_level}")
 
@@ -663,6 +683,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
 
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${ROOTDIR}"
         lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${ROOTDIR}"
+        lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_skos__relative" "${ROOTDIR}"
 
         _codex_meta="{\"#item+rem+i_qcc+is_zxxx+ix_n1603\": \"${gh_repo_name_et_level}\", \"#item+rem+i_mul+is_zyyy\": \"${gh_repo_name_et_level}\"}"
 
@@ -683,7 +704,8 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
       # __group_path_basi=$(numerordinatio_neo_separatum "${gh_repo_name}" "/")
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
-      _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v004.xml"
+      _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
+      _catalogxml_cod_ab_all__localrepo_old="999999/3133368/${gh_repo_name}/catalog-v004.xml"
 
       _numerodinatio_cod_ab_all=$(printf ",%s" "${arr__numerodinatio_cod_ab[@]}")
       _numerodinatio_cod_ab_all=${_numerodinatio_cod_ab_all:1}
@@ -701,6 +723,11 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
       set +x
+
+      if [ -f "$_catalogxml_cod_ab_all__localrepo_old" ]; then
+        echo "Deleting old file [$_catalogxml_cod_ab_all__localrepo_old]"
+        rm "$_catalogxml_cod_ab_all__localrepo_old"
+      fi
 
       # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex="$_datapackage_cod_ab_all__localrepo" --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
 
