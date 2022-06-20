@@ -64,6 +64,9 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 ### 1. Initialize bare minimum
 # Already done with 0_3.sh (also called by 0_2.sh)
 
+# AUTOMATON__1603_16__CPLP_UNICAE="1"
+# AUTOMATON__1603_16__CPLP_UNICAE="0"
+
 ### 2. Download main repository   ----------------------------------------------
 ## 2.1 The repository itself
 # Download (if necessary) https://github.com/EticaAI/lexicographi-sine-finibus
@@ -71,6 +74,6 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 gh_repo_fetch_lexicographi_sine_finibus
 
 ## 2.2 Fetch new external data, if relevant
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all
+gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
+gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
 

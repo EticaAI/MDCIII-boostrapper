@@ -68,6 +68,5 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 gh_repo_fetch_lexicographi_sine_finibus
 
 ## 2.2 Fetch new external data, if relevant
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all
-
+gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
+gh_repo_update_lexicographi_sine_finibus_1603_16_NNN

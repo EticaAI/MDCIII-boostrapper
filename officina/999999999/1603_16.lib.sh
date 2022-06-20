@@ -520,7 +520,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
   echo "    rm -r ${trivium_basi}"
 
   echo "Note: if this is first time, you need to initialize also the data"
-  echo "   gh_repo_fetch_lexicographi_sine_finibus_1603_16_init"
+  echo "   gh_repo_init_lexicographi_sine_finibus_1603_16_NNN"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
@@ -535,28 +535,89 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
+gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 
-  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] ${tty_normal}"
 
-  # bootstrap_1603_45_16__item_no1 "1603_16" "24" "AGO" "AO" "3" "1" "0"
-  # bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0"
+  opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
 
-  # for item in "$UN_M49_CPLP" do
-  #   echo "$item"
+  # set -x
+  NUMERORDINATIO_BASIM="$NUMERORDINATIO_BASIM" "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus='cod_ab_index' \
+    --punctum-separato-ad-tab \
+    --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated' \
+    >"${opus_temporibus_temporarium}"
+  # set +x
+
+  echo ""
+  echo "  LIST HERE <${opus_temporibus_temporarium}>"
+  echo ""
+
+  # if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+  #   echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+  # else
+  #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+  # fi
+
+  # for i in "${UN_M49_CPLP[@]}"; do
+  #   echo "$i"
+  #   # or do whatever with individual element of the array
+  #   # gh_repo_create_numerordinatio "1603_16_$i"
   # done
 
-  if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
-    echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
-  else
-    echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
-  fi
 
-  for i in "${UN_M49_CPLP[@]}"; do
-    echo "$i"
-    # or do whatever with individual element of the array
-    gh_repo_create_numerordinatio "1603_16_$i"
-  done
+  # while IFS=, read -r iso3 source_url; do
+  {
+    # remove read -r to not skip first line
+    read -r
+    while IFS=$'\t' read -r -a linea; do
+      unm49="${linea[0]}"
+      v_iso3="${linea[1]}"
+      v_iso2="${linea[2]}"
+      cod_ab_level_max="${linea[3]}"
+      # numerordinatio_praefixo="1603_45_16"
+      # echo ""
+      echo "        ${linea[*]}"
+      # echo "unm49 $unm49"
+      # echo "v_iso3 $v_iso3"
+      # echo "v_iso2 $v_iso2"
+
+      if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+        echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+        # shellcheck disable=SC2076
+        if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
+          # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+          echo "CPLP [${unm49}]..."
+        else
+          echo "Skiping [${unm49}] CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]"
+          continue
+        fi
+      # else
+      #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+      fi
+
+      if [ "$unm49" = "426" ]; then
+        echo " 2022-05-23: we will skip LSA admin1 for now as it cannot extract"
+        echo " number (it use 3-letter P-codes)"
+        ## 2022-05-23: we will skip LSA admin1 for now as it cannot extract
+        ## number (it use 3-letter P-codes)
+        # admin1Name_en	admin1Pcode
+        # Maseru	LSA
+        # Butha-Buthe	LSB
+        # Leribe	LSC
+        # (...)
+        continue
+      fi
+
+      # echo "        ${linea[*]}"
+
+      # gh_repo_name="1603_16_${unm49}"
+      gh_repo_create_numerordinatio "1603_16_${unm49}"
+
+      printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
+      sleep 10
+    done
+  } <"${opus_temporibus_temporarium}"
 
   # gh_repo_name="1603_16_24"
   # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
@@ -579,7 +640,7 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_fetch_lexicographi_sine_finibus_1603_16_init__all() {
+gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   echo "${FUNCNAME[0]} TODO..."

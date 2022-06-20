@@ -125,7 +125,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
   echo "    rm -r ${trivium_basi}"
 
   echo "Note: if this is first time, you need to initialize also the data"
-  echo "   gh_repo_fetch_lexicographi_sine_finibus_1603_16_init"
+  echo "   gh_repo_init_lexicographi_sine_finibus_1603_16_NNN"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
 
