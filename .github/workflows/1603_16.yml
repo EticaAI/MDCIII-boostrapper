@@ -59,6 +59,12 @@ env:
   TERM: xterm
   # AUTOMATON__1603_16__CPLP_UNICAE: "1"
   AUTOMATON__1603_16__CPLP_UNICAE: "0"
+  # When running too many git clones at once, the scripts will
+  # default to ARTIFICIAL_THROTTLING=1 (1 second). Next part force higher time.
+  ARTIFICIAL_THROTTLING: 0
+  # AUTOMATON__1603_16__CPLP_UNICAE="0", define range of UN M49 to operate
+  UNM49_INITIALI: 700
+  UNM49_FINALI: 999
 
 defaults:
   run:

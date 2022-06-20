@@ -29,6 +29,9 @@ _ROOTDIR="${__lsf_clone_local}/officina"
 
 GH_ORG="${GH_ORG:-"MDCIII"}"
 GH_ORG_DEST="${GH_ORG_DEST:$GH_ORG}"
+ARTIFICIAL_THROTTLING="${ARTIFICIAL_THROTTLING:-"1"}"
+UNM49_INITIALI="${UNM49_INITIALI:-"0"}"
+UNM49_FINALI="${UNM49_FINALI:-"999"}"
 
 AUTOMATON__1603_16__CPLP_UNICAE="${AUTOMATON__1603_16__CPLP_UNICAE:-"1"}"
 
@@ -531,6 +534,8 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 # Globals:
 #   ROOTDIR
 #   AUTOMATON__1603_16__CPLP_UNICAE
+#   UNM49_INITIALI
+#   UNM49_FINALI
 # Arguments:
 #
 # Outputs:
@@ -538,7 +543,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 #######################################
 gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 
-  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] ${tty_normal}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] [initiale [$UNM49_INITIALI]] [finale [$UNM49_FINALI]] ${tty_normal}"
 
   opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
 
@@ -577,10 +582,22 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       cod_ab_level_max="${linea[3]}"
       # numerordinatio_praefixo="1603_45_16"
       # echo ""
-      echo "        ${linea[*]}"
+      # echo "        ${linea[*]}"
       # echo "unm49 $unm49"
       # echo "v_iso3 $v_iso3"
       # echo "v_iso2 $v_iso2"
+
+      idnow="$unm49"
+      initialis="$UNM49_INITIALI"
+      finalis="$UNM49_FINALI"
+      # echo " $idnow $initialis $finalis"
+      if ((idnow < initialis)); then
+        continue
+      fi
+      if ((idnow > finalis)); then
+        continue
+      fi
+      echo "        ${linea[*]}"
 
       if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
         # echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
@@ -615,8 +632,8 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       gh_repo_create_numerordinatio "1603_16_${unm49}"
 
       if [ "$AUTOMATON__1603_16__CPLP_UNICAE" != "1" ]; then
-        printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep 1s ${tty_normal}"
-        sleep 1
+        printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep [$ARTIFICIAL_THROTTLING]s ${tty_normal}"
+        sleep "$ARTIFICIAL_THROTTLING"
       fi
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
@@ -641,6 +658,8 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 # Globals:
 #   ROOTDIR
 #   AUTOMATON__1603_16__CPLP_UNICAE
+#   UNM49_INITIALI
+#   UNM49_FINALI
 # Arguments:
 #
 # Outputs:
@@ -648,7 +667,7 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 #######################################
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 
-  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] [initiale [$UNM49_INITIALI]] [finale [$UNM49_FINALI]] ${tty_normal}"
   # echo "${FUNCNAME[0]} TODO..."
 
   opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
@@ -665,11 +684,11 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
   echo "  LIST HERE <${opus_temporibus_temporarium}>"
   echo ""
 
-  if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
-    echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
-  else
-    echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
-  fi
+  # if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+  #   echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+  # else
+  #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+  # fi
 
   # while IFS=, read -r iso3 source_url; do
   {
@@ -686,6 +705,17 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       # echo "unm49 $unm49"
       # echo "v_iso3 $v_iso3"
       # echo "v_iso2 $v_iso2"
+
+      idnow="$unm49"
+      initialis="$UNM49_INITIALI"
+      finalis="$UNM49_FINALI"
+      # echo " $idnow $initialis $finalis"
+      if ((idnow < initialis)); then
+        continue
+      fi
+      if ((idnow > finalis)); then
+        continue
+      fi
 
       if [ "$unm49" = "426" ]; then
         echo " 2022-05-23: we will skip LSA admin1 for now as it cannot extract"
@@ -826,8 +856,8 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 
       ## Disabled artificial forced sleep; previous steps already take time.
       # if [ "$AUTOMATON__1603_16__CPLP_UNICAE" != "1" ]; then
-      #   printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep 1s ${tty_normal}"
-      #   sleep 1
+      #   printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep [$ARTIFICIAL_THROTTLING]s ${tty_normal}"
+      #   sleep "$ARTIFICIAL_THROTTLING"
       # fi
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"

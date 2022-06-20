@@ -66,14 +66,16 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 
 AUTOMATON__1603_16__CPLP_UNICAE="1"
 # AUTOMATON__1603_16__CPLP_UNICAE="0"
+# UNM49_INITIALI="800"
+# UNM49_FINALI="500"
 
 ### 2. Download main repository   ----------------------------------------------
 ## 2.1 The repository itself
 # Download (if necessary) https://github.com/EticaAI/lexicographi-sine-finibus
 # to local dir
-gh_repo_fetch_lexicographi_sine_finibus
+# gh_repo_fetch_lexicographi_sine_finibus
 
 ## 2.2 Fetch new external data, if relevant
-gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
+# gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
 

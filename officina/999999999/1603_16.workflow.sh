@@ -28,17 +28,23 @@ set -e
 # > COMMENT: these "issues" are not really problematic, but likely be in place
 #            to mitigate acidental self-DDoS as we manipulate too many
 #            repositories at same time.
+# > curl --silent -I https://api.github.com/users/eticaaibot | grep x-ratelimit
+# > https://docs.github.com/en
+#   /rest/overview/resources-in-the-rest-api#checking-your-rate-limit-status
+#
 #
 # 1. Even simple "git clone" (no github-cli) fails around 64 serial operations
 #   in 50s.
 #   - Issue not triggered if restricting 1603_16 to CPLP administrative regions
 #     - (e.g. less than 10 safe to run full speed)
 #   - All admin regions (> 140) around country 64 it will fail
-#     - No idea how many seconds until these 64, but maybe less than 1 minute
-#       but since the entire first run 6973398895 took 1min32s, we 1
+#     - 64 git clone in 50s = error
+#     - 64 git clone in 1min50s = error (delay 1s not sufficient ONLY if
+#       on GitHub runner, but okay of remote host. Strange)
+#
 #   - Workaround used:
 #     - ONLY if 1603_16 runs all regions, adding intentional artificial delay:
-#       - 1 second delay at "git clone" operation
+#       - 1 second delay at "git clone" operation (if not inside GitHub runner)
 #       - No delay at "git push" operations
 #         - git push only happens git status have changes. As we already have
 #           cached version with git clone we know this upfront
