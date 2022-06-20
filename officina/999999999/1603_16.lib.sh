@@ -342,9 +342,9 @@ gh_repo_create_numerordinatio() {
 
   set +x
 
-  echo "INFO: since its first time, adding an seep 30 to avoid create "
+  echo "INFO: since its first time, adding an seep 15 to avoid create "
   echo "      repositories too fast"
-  sleep 30
+  sleep 15
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
@@ -614,8 +614,8 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       # gh_repo_name="1603_16_${unm49}"
       gh_repo_create_numerordinatio "1603_16_${unm49}"
 
-      printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
-      sleep 10
+      # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
+      # sleep 10
     done
   } <"${opus_temporibus_temporarium}"
 

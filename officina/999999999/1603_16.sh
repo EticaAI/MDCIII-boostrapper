@@ -64,7 +64,7 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 ### 1. Initialize bare minimum
 # Already done with 0_3.sh (also called by 0_2.sh)
 
-# AUTOMATON__1603_16__CPLP_UNICAE="1"
+AUTOMATON__1603_16__CPLP_UNICAE="1"
 # AUTOMATON__1603_16__CPLP_UNICAE="0"
 
 ### 2. Download main repository   ----------------------------------------------

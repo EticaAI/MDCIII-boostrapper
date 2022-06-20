@@ -57,7 +57,8 @@ on:
 env:
   # Fix: 'tput: No value for $TERM and no -T specified'
   TERM: xterm
-  AUTOMATON__1603_16__CPLP_UNICAE: "1"
+  # AUTOMATON__1603_16__CPLP_UNICAE: "1"
+  AUTOMATON__1603_16__CPLP_UNICAE: "0"
 
 defaults:
   run:
