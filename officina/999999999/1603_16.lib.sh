@@ -390,6 +390,7 @@ gh_repo_sync_pull() {
       echo "Either API error or remote not exist. Continuing without changes"
     fi
   fi
+
   # echo "DEBUG ABORTING NOW"
   # exit 0
 
@@ -565,7 +566,6 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
   #   # gh_repo_create_numerordinatio "1603_16_$i"
   # done
 
-
   # while IFS=, read -r iso3 source_url; do
   {
     # remove read -r to not skip first line
@@ -583,7 +583,7 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       # echo "v_iso2 $v_iso2"
 
       if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
-        echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+        # echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
         # shellcheck disable=SC2076
         if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
           # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
@@ -614,6 +614,11 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       # gh_repo_name="1603_16_${unm49}"
       gh_repo_create_numerordinatio "1603_16_${unm49}"
 
+      if [ "$AUTOMATON__1603_16__CPLP_UNICAE" != "1" ]; then
+        printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep 1s ${tty_normal}"
+        sleep 1
+      fi
+
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
       # sleep 10
     done
@@ -631,10 +636,11 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 }
 
 #######################################
-# Initialize
+# Update all repositories (if necessary)
 #
 # Globals:
 #   ROOTDIR
+#   AUTOMATON__1603_16__CPLP_UNICAE
 # Arguments:
 #
 # Outputs:
@@ -643,7 +649,7 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
-  echo "${FUNCNAME[0]} TODO..."
+  # echo "${FUNCNAME[0]} TODO..."
 
   opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
 
@@ -694,16 +700,31 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
         continue
       fi
 
-      # if [ "$unm49" != "24" ]; then
+      # # if [ "$unm49" != "24" ]; then
+      # # if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
+      # # shellcheck disable=SC2076
       # if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
-      # shellcheck disable=SC2076
-      if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
-        # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
-        echo "CPLP [${unm49}]..."
-      else
-        echo "Skiping [${unm49}]"
-        continue
+      #   # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+      #   echo "CPLP [${unm49}]..."
+      # else
+      #   echo "Skiping [${unm49}]"
+      #   continue
+      # fi
+
+      if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+        # echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+        # shellcheck disable=SC2076
+        if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
+          # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+          echo "CPLP [${unm49}]..."
+        else
+          echo "Skiping [${unm49}] CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]"
+          continue
+        fi
+      # else
+      #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
       fi
+
       # echo "sleeping 10 @todo remove me"
       # sleep 10
       # echo ""
@@ -802,6 +823,12 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       # /999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_45_1,1603_45_31' --data-apothecae-ad='999999/0/apotheca2e.datapackage.json'
 
       gh_repo_sync_push "${gh_repo_name}"
+
+      ## Disabled artificial forced sleep; previous steps already take time.
+      # if [ "$AUTOMATON__1603_16__CPLP_UNICAE" != "1" ]; then
+      #   printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep 1s ${tty_normal}"
+      #   sleep 1
+      # fi
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
       # sleep 10
