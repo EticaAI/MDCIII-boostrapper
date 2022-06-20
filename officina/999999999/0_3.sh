@@ -206,6 +206,8 @@ local_permisions_fix() {
   echo "${FUNCNAME[0]}..."
 
   echo "RUN THIS:"
+  echo "  sudo chown 1000:1603 -R /workspace/git/EticaAI/MDCIII-boostrapper/"
+  echo ""
   echo "  sudo chown 1000:1603 -R 999999/"
   echo "  sudo chmod 1775 -R 999999/"
   echo "  sudo chown 1603:1603 -R 999999/3133368/"

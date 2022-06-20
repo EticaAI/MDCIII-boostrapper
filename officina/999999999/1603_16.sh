@@ -56,6 +56,10 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # echo "Login shell?"
 # shopt login_shell
 
+# bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0" "4"
+# lsf1603_to_gh_repo_local_file "1603_16_24" "1603/16/24/1/1603_16_24_1.no1.owl.ttl" "${ROOTDIR}"
+# exit 0
+
 #### The Happy Path ____________________________________________________________
 ### 1. Initialize bare minimum
 # Already done with 0_3.sh (also called by 0_2.sh)
