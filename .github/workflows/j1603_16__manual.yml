@@ -23,6 +23,31 @@ on:
         required: false
         description: environment description
 
+      # New, de facto used
+      AUTOMATON__1603_16__CPLP_UNICAE:
+        # type: boolean
+        type: choice
+        description: AUTOMATON__1603_16__CPLP_UNICAE
+        options:
+          - "1"
+          - "0"
+        required: false
+      ARTIFICIAL_THROTTLING:
+        type: string
+        description: ARTIFICIAL_THROTTLING
+        required: false
+      UNM49_INITIALI:
+        type: string
+        description: UNM49_INITIALI
+        required: false
+      UNM49_FINALI:
+        type: string
+        description: UNM49_FINALI
+        required: false
+
+    # secrets:
+    #   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
 # jobs:
 #   do-it:
 #     runs-on: ubuntu-latest
@@ -40,3 +65,16 @@ jobs:
     steps:
       - name: Send greeting
         run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    # environment: production
+    steps:
+      - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+        with:
+          AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
+          ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
+          UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
+          UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
+          # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}

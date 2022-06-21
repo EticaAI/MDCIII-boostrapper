@@ -16,17 +16,6 @@ defaults:
   run:
     working-directory: ./officina
 
-# jobs:
-#   reusable_workflow_job:
-#     runs-on: ubuntu-latest
-#     # environment: production
-#     steps:
-#       # - uses: ./.github/workflows/my-action
-#       - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
-#         with:
-#           username: ${{ inputs.username }}
-#           token: ${{ secrets.envPAT }}
-
 jobs:
   do-it:
     runs-on: ubuntu-latest
@@ -46,3 +35,16 @@ jobs:
     # secrets:
     #   envPAT: teste123
     #   # envPAT: ${{ secrets.envPAT }}
+
+  reusable_workflow_job333:
+    runs-on: ubuntu-latest
+    # environment: production
+    steps:
+      - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+        with:
+          AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
+          ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
+          UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
+          UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
+          # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
