@@ -23,8 +23,6 @@
 #===============================================================================
 set -e
 
-
-
 ROOTDIR="$(pwd)"
 # DESTDIR is used to inform shell libs from main repository we're in another dir
 DESTDIR="$ROOTDIR"
@@ -64,18 +62,20 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 ### 1. Initialize bare minimum
 # Already done with 0_3.sh (also called by 0_2.sh)
 
-AUTOMATON__1603_16__CPLP_UNICAE="1"
-# AUTOMATON__1603_16__CPLP_UNICAE="0"
-# UNM49_INITIALI="800"
-# UNM49_FINALI="500"
+# AUTOMATON__1603_16__CPLP_UNICAE="1"
+AUTOMATON__1603_16__CPLP_UNICAE="0"
+UNM49_INITIALI="0"
+UNM49_FINALI="300"
+# 68 COL
+# UNM49_INITIALI="67"
+# UNM49_FINALI="70"
 
 ### 2. Download main repository   ----------------------------------------------
 ## 2.1 The repository itself
 # Download (if necessary) https://github.com/EticaAI/lexicographi-sine-finibus
 # to local dir
-# gh_repo_fetch_lexicographi_sine_finibus
+gh_repo_fetch_lexicographi_sine_finibus
 
 ## 2.2 Fetch new external data, if relevant
-# gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
+gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
-

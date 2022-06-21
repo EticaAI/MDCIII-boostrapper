@@ -24,7 +24,6 @@
 #===============================================================================
 set -e
 
-
 ROOTDIR="$(pwd)"
 # DESTDIR is used to inform shell libs from main repository we're in another dir
 DESTDIR="$ROOTDIR"
@@ -78,7 +77,6 @@ __temp_999999_1603_16_boostraper() {
 gh_repo_create_numerordinatio "999999_1603_16"
 __temp_999999_1603_16_boostraper
 gh_repo_sync_push "999999_1603_16"
-
 
 # Merges
 # rsync --dry-run --verbose --human-readable --checksum --recursive officina/999999/3133368/999999_1603_16/999999/ officina/999999/3133368/lexicographi-sine-finibus/officina/999999

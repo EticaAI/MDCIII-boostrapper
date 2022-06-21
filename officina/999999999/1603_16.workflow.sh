@@ -53,7 +53,6 @@ set -e
 #
 #### Know issues + workarounds, END ############################################
 
-
 ROOTDIR="$(pwd)"
 # DESTDIR is used to inform shell libs from main repository we're in another dir
 DESTDIR="$ROOTDIR"
@@ -62,30 +61,13 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # shellcheck source=1603_16.lib.sh
 . "$ROOTDIR"/999999999/1603_16.lib.sh
 
-# ---------------------------------------------------------------------------- #
-## Example of log as local user
-#     cd /workspace/git/EticaAI/MDCIII-boostrapper/officina
-#     sudo su mdciii
-#     source ~/.profile
-# Test
-#   hxltmcli --help
-#   ./999999999/1603_16.sh
-#
-## Example with GitHub actions
-#   @TODO
-# ---------------------------------------------------------------------------- #
-
-# 1603_16_24 Angola
-# gh_repo_create_numerordinatio "1603_16_24"
-# 1603_16_508 Mozambique
-# gh_repo_create_numerordinatio "1603_16_508"
-
-# gh_repo_fetch_lexicographi_sine_finibus
-
-# echo "Login shell?"
-# shopt login_shell
-
 #### The Happy Path ____________________________________________________________
+### 0. Inform machine commiter user for the GitHub runner
+# This is not necessary locally, but every time runs on a CI enviroment, it
+# will ask again.
+git config --global user.email "etica.of.a.ai@gmail.com"
+git config --global user.name "EticaAI Bot"
+
 ### 1. Initialize bare minimum
 # Already done with 0_3.sh (also called by 0_2.sh)
 
