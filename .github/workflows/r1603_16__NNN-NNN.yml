@@ -77,8 +77,7 @@ on:
     secrets:
       # # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
       SSH_PRIVATE_KEY:
-        required: true
-
+        required: false
 
 env:
   # Fix: 'tput: No value for $TERM and no -T specified'
@@ -148,6 +147,10 @@ jobs:
       #            repository we would create with shell scripting
       - name: ID_ED25519__GITHUBRUNNER2022
         uses: webfactory/ssh-agent@v0.5.4
+        # We allow to fail since some commands may only need read-only access
+        # @TODO assume that if secrets.SSH_PRIVATE_KEY is undefined, this
+        #       task can be skiped
+        continue-on-error: true
         with:
           # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}

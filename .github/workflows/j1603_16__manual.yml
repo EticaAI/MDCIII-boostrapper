@@ -70,6 +70,8 @@ jobs:
     runs-on: ubuntu-latest
     # environment: production
     steps:
+      - uses: actions/checkout@v3
+
       - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
         with:
           AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
