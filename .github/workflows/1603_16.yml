@@ -47,6 +47,11 @@
 # @TODO test gh (github cli). Maybe tehre is less verbose way to sync the
 #       repositories than editing 'git commit' directly.
 #       docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
+# @TODO about reusable workflows
+#       - https://dev.to/n3wt0n/avoid-duplication-github-actions-reusable-workflows-3ae8
+#       - https://www.youtube.com/watch?v=4lH_7b5lmjo
+#       - https://github.com/n3wt0n/ReusableWorkflow/blob/main/.github/workflows/buildAndPublishDockerImage.yml
+#       - https://github.com/n3wt0n/ActionsTest/blob/main/.github/workflows/reusableWorkflowsUser.yml
 name: "aN1603_16"
 
 on:
@@ -63,8 +68,10 @@ env:
   # default to ARTIFICIAL_THROTTLING=1 (1 second). Next part force higher time.
   ARTIFICIAL_THROTTLING: 0
   # AUTOMATON__1603_16__CPLP_UNICAE="0", define range of UN M49 to operate
-  UNM49_INITIALI: 700
-  UNM49_FINALI: 999
+  # UNM49_INITIALI: 700
+  # UNM49_FINALI: 999
+  UNM49_INITIALI: 400
+  UNM49_FINALI: 700
 
 defaults:
   run:

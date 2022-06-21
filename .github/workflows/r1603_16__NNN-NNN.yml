@@ -1,0 +1,98 @@
+#===============================================================================
+#
+#          FILE:  r1603_16__NNN-NNN.yml
+#
+#         USAGE:  - See https://docs.github.com/en/actions
+#                       /learn-github-actions/understanding-github-actions
+#                 - See https://docs.github.com/en/actions
+#                       /using-workflows/reusing-workflows
+#
+#   DESCRIPTION:  Reusable workflow (draft)
+#       OPTIONS:  ---
+#
+#  REQUIREMENTS:  ---
+#          BUGS:  ---
+#         NOTES:  ---
+#        AUTHOR:  Emerson Rocha <rocha[at]ieee.org>
+#       COMPANY:  EticaAI
+#       LICENSE:  Public Domain dedication or Zero-Clause BSD
+#                 SPDX-License-Identifier: Unlicense OR 0BSD
+#       VERSION:  v1.0
+#       CREATED:  2022-06-21 02:06 UTC started. Based on 1603_16.yml
+#      REVISION:  ---
+#===============================================================================
+# SPDX-License-Identifier: Unlicense OR 0BSD
+
+# name: Reusable workflow
+
+# on:
+#   workflow_call:
+#     inputs:
+#       username:
+#         required: true
+#         type: string
+#     secrets:
+#       envPAT:
+#         required: true
+# jobs:
+#   reusable_workflow_job:
+#     runs-on: ubuntu-latest
+#     environment: production
+#     steps:
+#       - uses: ./.github/workflows/my-action
+#         with:
+#           username: ${{ inputs.username }}
+#           token: ${{ secrets.envPAT }}
+
+name: Reusable workflow example
+
+on:
+  workflow_call:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: false
+        type: string
+
+jobs:
+  print-username:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print the input name to STDOUT
+        run: echo The username is ${{ inputs.username }}
+
+# on:
+#   workflow_call:
+#     inputs:
+#       username:
+#         type: string
+#         required: false
+#       tag:
+#         type: string
+#         required: false
+#     # secrets:
+#     #   token:
+#     #     required: true
+
+# jobs:
+#   example_job:
+#     name: Pass input and secrets to my-action
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: echo "Hello"
+#       - name: Set the tag
+#         run: |
+#           if [ -z "${{inputs.tag}}" ]
+#           then
+#             echo "final_tag=latest" >> $GITHUB_ENV
+#           else
+#             echo "final_tag=${{inputs.tag}}" >> $GITHUB_ENV
+#           fi
+
+#   do-something-else:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - run: echo "Hello"

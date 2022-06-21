@@ -41,6 +41,8 @@ set -e
 #     - 64 git clone in 50s = error
 #     - 64 git clone in 1min50s = error (delay 1s not sufficient ONLY if
 #       on GitHub runner, but okay of remote host. Strange)
+#   - 700-999 full post-initial worked; 10min13s; 27 updated with new missing
+#     data
 #
 #   - Workaround used:
 #     - ONLY if 1603_16 runs all regions, adding intentional artificial delay:
@@ -50,6 +52,8 @@ set -e
 #           cached version with git clone we know this upfront
 #         - even if have changes for every repository, the previus steps to
 #           generate the files requires time beyond 1s (even on fast machines)
+#     - variables UNM49_INITIALI and UNM49_FINALI now allow to partition
+#       the regions.
 #
 #### Know issues + workarounds, END ############################################
 
