@@ -1,4 +1,4 @@
-name: "aN1603_16"
+name: "j1603_16__0_100"
 
 on:
   push:
@@ -28,7 +28,6 @@ defaults:
 #           token: ${{ secrets.envPAT }}
 
 jobs:
-
   do-it:
     runs-on: ubuntu-latest
 
@@ -43,7 +42,7 @@ jobs:
     uses: ./.github/workflows/r1603_16__NNN-NNN.yml
     with:
       username: mona
-      tag: tagnumber
-    secrets:
-      envPAT: teste123
-      # envPAT: ${{ secrets.envPAT }}
+    #   tag: tagnumber
+    # secrets:
+    #   envPAT: teste123
+    #   # envPAT: ${{ secrets.envPAT }}

@@ -1,0 +1,26 @@
+# https://github.community/t/set-env-variables-for-scheduled-workflow-based-on-cron-expression/124860
+# https://crontab.guru/#*/6_*_*_*_*
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onschedule
+
+name: jcron-test
+on:
+  schedule:
+    # - cron:  '*/6 * * * *'   # define cron setting
+    - cron:  '30 */6 * * *'   # define cron setting
+    # - cron:  '*/7 * * * *'
+    - cron:  '30 */7 * * *'
+jobs:
+  jobenv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setenv
+        if: github.event.schedule=='30 */6 * * *'         # set-env value
+        run: |
+          echo "::set-env name=cronenv::midnight_run"
+      - name: setenv2
+        if: github.event.schedule=='30 */7 * * *'   # set env value
+        run: |
+          echo "::set-env name=cronenv::morning_run"
+      - name: check env value  # check env value
+        run: |
+          echo $cronenv   

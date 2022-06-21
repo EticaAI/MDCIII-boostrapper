@@ -1,0 +1,42 @@
+# https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+# https://github.blog/changelog/2021-11-10-github-actions-input-types-for-manual-workflows/
+name: "j1603_16__manual"
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Who to greet
+        options:
+          - monalisa
+          - cschleiden
+        required: false
+      message:
+        required: true
+        description: message description
+      use-emoji:
+        type: boolean
+        description: Include  emojis
+        required: false
+      environment:
+        type: environment
+        required: false
+        description: environment description
+
+# jobs:
+#   do-it:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v2
+
+#       - name: Run a one-line script
+#         run: echo Hello, world!
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send greeting
+        run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", ""]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"

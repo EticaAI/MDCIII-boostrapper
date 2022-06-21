@@ -52,6 +52,8 @@
 #       - https://www.youtube.com/watch?v=4lH_7b5lmjo
 #       - https://github.com/n3wt0n/ReusableWorkflow/blob/main/.github/workflows/buildAndPublishDockerImage.yml
 #       - https://github.com/n3wt0n/ActionsTest/blob/main/.github/workflows/reusableWorkflowsUser.yml
+#       - https://docs.github.com/en/actions/using-workflows/using-github-cli-in-workflows
+#       - https://free-for.dev/#/?id=source-code-repos
 name: "aN1603_16"
 
 on:
@@ -70,8 +72,10 @@ env:
   # AUTOMATON__1603_16__CPLP_UNICAE="0", define range of UN M49 to operate
   # UNM49_INITIALI: 700
   # UNM49_FINALI: 999
-  UNM49_INITIALI: 400
-  UNM49_FINALI: 700
+  # UNM49_INITIALI: 400
+  # UNM49_FINALI: 700
+  UNM49_INITIALI: 100
+  UNM49_FINALI: 400
 
 defaults:
   run:

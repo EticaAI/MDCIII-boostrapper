@@ -44,7 +44,7 @@
 #           username: ${{ inputs.username }}
 #           token: ${{ secrets.envPAT }}
 
-name: Reusable workflow example
+name: r1603_16__NNN-NNN
 
 on:
   workflow_call:
