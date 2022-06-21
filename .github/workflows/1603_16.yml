@@ -64,8 +64,8 @@ on:
 env:
   # Fix: 'tput: No value for $TERM and no -T specified'
   TERM: xterm
-  # AUTOMATON__1603_16__CPLP_UNICAE: "1"
-  AUTOMATON__1603_16__CPLP_UNICAE: "0"
+  AUTOMATON__1603_16__CPLP_UNICAE: "1"
+  # AUTOMATON__1603_16__CPLP_UNICAE: "0"
   # When running too many git clones at once, the scripts will
   # default to ARTIFICIAL_THROTTLING=1 (1 second). Next part force higher time.
   ARTIFICIAL_THROTTLING: 0
@@ -74,8 +74,8 @@ env:
   # UNM49_FINALI: 999
   # UNM49_INITIALI: 400
   # UNM49_FINALI: 700
-  UNM49_INITIALI: 100
-  UNM49_FINALI: 400
+  # UNM49_INITIALI: 100
+  # UNM49_FINALI: 400
 
 defaults:
   run:

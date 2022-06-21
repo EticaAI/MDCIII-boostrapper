@@ -1,26 +1,44 @@
 # https://github.community/t/set-env-variables-for-scheduled-workflow-based-on-cron-expression/124860
 # https://crontab.guru/#*/6_*_*_*_*
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onschedule
+# https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
 
 name: jcron-test
 on:
   schedule:
     # - cron:  '*/6 * * * *'   # define cron setting
-    - cron:  '30 */6 * * *'   # define cron setting
+    - cron: "30 */6 * * *" # define cron setting
     # - cron:  '*/7 * * * *'
-    - cron:  '30 */7 * * *'
+    - cron: "30 */7 * * *"
 jobs:
   jobenv:
     runs-on: ubuntu-latest
     steps:
       - name: setenv
-        if: github.event.schedule=='30 */6 * * *'         # set-env value
+        if: github.event.schedule=='30 */6 * * *'
         run: |
-          echo "::set-env name=cronenv::midnight_run"
+          echo "cronenv=midnight_run" >> $GITHUB_ENV
+
       - name: setenv2
-        if: github.event.schedule=='30 */7 * * *'   # set env value
+        if: github.event.schedule=='30 */7 * * *'
         run: |
-          echo "::set-env name=cronenv::morning_run"
-      - name: check env value  # check env value
+          echo "cronenv=morning_run" >> $GITHUB_ENV
+
+      - name: check env value
         run: |
-          echo $cronenv   
+          # echo $cronenv
+          echo "${{ env.cronenv }}"
+
+      # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-debug-message
+      - run: |
+          echo "::debug::Set the Octocat variable"
+
+      - name: Group of log lines
+        run: |
+          echo "::group::My title"
+          echo "Inside group"
+          echo "::endgroup::"
+
+      # @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary
+      - run: |
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
