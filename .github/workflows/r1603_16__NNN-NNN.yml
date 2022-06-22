@@ -61,19 +61,19 @@ on:
         type: string
       ARTIFICIAL_THROTTLING:
         description: "ARTIFICIAL_THROTTLING seconds)"
-        default: 0
+        default: '0'
         required: false
         type: number
       UNM49_INITIALI:
         description: "UNM49_INITIALI"
-        default: 0
+        default: '0'
         required: false
-        type: number
+        type: string  # number would be better, but manual run fails
       UNM49_FINALI:
         description: "UNM49_INITIALI"
-        default: 0
+        default: '999'
         required: false
-        type: number
+        type: string  # number would be better, but manual run fails
     secrets:
       # # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
       SSH_PRIVATE_KEY:

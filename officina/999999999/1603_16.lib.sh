@@ -529,7 +529,25 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 }
 
 #######################################
-# Initialize
+# Initialize "world level" level 1603_16
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_init_lexicographi_sine_finibus_1603_16_1() {
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  gh_repo_create_numerordinatio "1603_16_1"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+
+}
+
+#######################################
+# Initialize "country" level 1603_16
 #
 # Globals:
 #   ROOTDIR
@@ -873,6 +891,32 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 #
 # Globals:
 #   ROOTDIR
+#   GH_ORG_DEST
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_edit_1603_16_1__topics() {
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  # echo "${FUNCNAME[0]} TODO..."
+
+  gh_repo_name="1603_16_1"
+  repo_topics="unm49-001,world"
+
+  # echo gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
+  gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Update GitHub topics of 1603_16_NNN repositories, the "country" level ones
+#
+# Globals:
+#   ROOTDIR
+#   GH_ORG_DEST
 #   AUTOMATON__1603_16__CPLP_UNICAE
 #   UNM49_INITIALI
 #   UNM49_FINALI

@@ -1,7 +1,5 @@
 # EticaAI/lexicographi-sine-finibus agent
 
-
-
 ## Apothēcae
 
 > **Data per automatīs**
@@ -16,8 +14,6 @@
 ### Apothēca arēnāriō Ad GitHub
 
 Nūllus
-
-
 
 <!--
 @TODO need to enable some way to keep alive before 60 days passed.

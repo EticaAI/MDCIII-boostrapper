@@ -56,6 +56,9 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0" "4"
 # lsf1603_to_gh_repo_local_file "1603_16_24" "1603/16/24/1/1603_16_24_1.no1.owl.ttl" "${ROOTDIR}"
+
+# gh_repo_init_lexicographi_sine_finibus_1603_16_1
+# gh_repo_edit_1603_16_1__topics
 # exit 0
 
 #### The Happy Path ____________________________________________________________
@@ -76,10 +79,16 @@ AUTOMATON__1603_16__CPLP_UNICAE="1"
 # to local dir
 gh_repo_fetch_lexicographi_sine_finibus
 
-## 2.2 Fetch new external data, if relevant
+### 3. Prepare "country" level 1603_16 -----------------------------------------
+# Create repositories if cannot clone externaly
 gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
+
+# Fetch new external data, if relevant
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
 
-### 3. Special cases / initializations _________________________________________
+### 4. World level / Bigger region levels --------------------------------------
+
+
+### 5. Special cases / initializations  ----------------------------------------
 # This can be used first time to populate github topics.
 # gh_repo_edit_1603_16_NNN__topics

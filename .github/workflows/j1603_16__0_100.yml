@@ -7,10 +7,10 @@ on:
 
 env:
   TERM: xterm
-  AUTOMATON__1603_16__CPLP_UNICAE: "0"
-  ARTIFICIAL_THROTTLING: 0
-  UNM49_INITIALI: 0
-  UNM49_FINALI: 100
+  # AUTOMATON__1603_16__CPLP_UNICAE: "0"
+  # ARTIFICIAL_THROTTLING: '0'
+  # UNM49_INITIALI: '0'
+  # UNM49_FINALI: '100'
 
 defaults:
   run:
@@ -41,10 +41,10 @@ jobs:
   reusable_workflow_job111:
     uses: ./.github/workflows/r1603_16__NNN-NNN.yml
     with:
-      AUTOMATON__1603_16__CPLP_UNICAE: ${{ env.AUTOMATON__1603_16__CPLP_UNICAE }}
-      ARTIFICIAL_THROTTLING: ${{ env.ARTIFICIAL_THROTTLING }}
-      UNM49_INITIALI: ${{ env.UNM49_INITIALI }}
-      UNM49_FINALI: ${{ env.UNM49_FINALI }}
+      AUTOMATON__1603_16__CPLP_UNICAE: '0'
+      ARTIFICIAL_THROTTLING: '0'
+      UNM49_INITIALI: '0'
+      UNM49_FINALI: '100'  # env.VAR do not work in this scope
       # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
