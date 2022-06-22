@@ -44,6 +44,7 @@ jobs:
       UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
       UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
       # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
 
   # reusable_workflow_job333:

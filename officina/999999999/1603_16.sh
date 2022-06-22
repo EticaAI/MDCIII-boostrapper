@@ -57,10 +57,6 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0" "4"
 # lsf1603_to_gh_repo_local_file "1603_16_24" "1603/16/24/1/1603_16_24_1.no1.owl.ttl" "${ROOTDIR}"
 # exit 0
-AUTOMATON__1603_16__CPLP_UNICAE=0
-gh_repo_edit_1603_16_NNN__topics
-
-exit 0
 
 #### The Happy Path ____________________________________________________________
 ### 1. Initialize bare minimum
@@ -83,3 +79,7 @@ gh_repo_fetch_lexicographi_sine_finibus
 ## 2.2 Fetch new external data, if relevant
 gh_repo_init_lexicographi_sine_finibus_1603_16_NNN
 gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
+
+### 3. Special cases / initializations _________________________________________
+# This can be used first time to populate github topics.
+# gh_repo_edit_1603_16_NNN__topics
