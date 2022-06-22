@@ -869,6 +869,91 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 }
 
 #######################################
+# Update all repositories (if necessary)
+#
+# Globals:
+#   ROOTDIR
+#   AUTOMATON__1603_16__CPLP_UNICAE
+#   UNM49_INITIALI
+#   UNM49_FINALI
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_edit_1603_16_NNN__topics() {
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] [initiale [$UNM49_INITIALI]] [finale [$UNM49_FINALI]] ${tty_normal}"
+  # echo "${FUNCNAME[0]} TODO..."
+
+  opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
+
+  # set -x
+  NUMERORDINATIO_BASIM="$NUMERORDINATIO_BASIM" "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus='cod_ab_index' \
+    --punctum-separato-ad-tab \
+    --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated' \
+    >"${opus_temporibus_temporarium}"
+  # set +x
+
+  echo ""
+  echo "  LIST HERE <${opus_temporibus_temporarium}>"
+  echo ""
+
+  {
+    # remove read -r to not skip first line
+    read -r
+    while IFS=$'\t' read -r -a linea; do
+      unm49="${linea[0]}"
+      v_iso3="${linea[1]}"
+      v_iso2="${linea[2]}"
+      cod_ab_level_max="${linea[3]}"
+      # numerordinatio_praefixo="1603_45_16"
+      # echo ""
+      # echo "        ${linea[*]}"
+      # echo "unm49 $unm49"
+      # echo "v_iso3 $v_iso3"
+      # echo "v_iso2 $v_iso2"
+
+      idnow="$unm49"
+      initialis="$UNM49_INITIALI"
+      finalis="$UNM49_FINALI"
+      # echo " $idnow $initialis $finalis"
+      if ((idnow <= initialis)); then
+        continue
+      fi
+      if ((idnow >= finalis)); then
+        continue
+      fi
+
+      if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
+        # echo "TODO 1 AUTOMATON__1603_16__CPLP_UNICAE"
+        # shellcheck disable=SC2076
+        if [[ " ${UN_M49_CPLP[*]} " =~ " ${unm49} " ]]; then
+          # echo " (quicktesting) Skiping non AGO  <${linea[*]}>"
+          echo "CPLP [${unm49}]..."
+        else
+          echo "Skiping [${unm49}] CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]"
+          continue
+        fi
+      # else
+      #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
+      fi
+
+      echo "        ${linea[*]}"
+
+      gh_repo_name="1603_16_${unm49}"
+      echo "TODO $gh_repo_name"
+
+      # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
+      # sleep 10
+    done
+  } <"${opus_temporibus_temporarium}"
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
 # Fech github.com/EticaAI/lexicographi-sine-finibus (if necessary)
 #
 #
