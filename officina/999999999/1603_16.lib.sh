@@ -4,7 +4,7 @@
 #          FILE:  1603_16.lib.sh
 #
 #         USAGE:  #import on other scripts
-#                 . "$ROOTDIR"/999999999/999999999.lib.sh
+#                 . "$ROOTDIR"/999999999/1603_16.lib.sh
 #
 #   DESCRIPTION:  ---
 #

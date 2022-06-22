@@ -23,27 +23,6 @@
 #===============================================================================
 # SPDX-License-Identifier: Unlicense OR 0BSD
 
-# name: Reusable workflow
-
-# on:
-#   workflow_call:
-#     inputs:
-#       username:
-#         required: true
-#         type: string
-#     secrets:
-#       envPAT:
-#         required: true
-# jobs:
-#   reusable_workflow_job:
-#     runs-on: ubuntu-latest
-#     environment: production
-#     steps:
-#       - uses: ./.github/workflows/my-action
-#         with:
-#           username: ${{ inputs.username }}
-#           token: ${{ secrets.envPAT }}
-
 name: r1603_16__NNN-NNN
 
 on:
@@ -61,19 +40,19 @@ on:
         type: string
       ARTIFICIAL_THROTTLING:
         description: "ARTIFICIAL_THROTTLING seconds)"
-        default: '0'
+        default: "0"
         required: false
-        type: number
+        type: string # number would be better, but manual run fails
       UNM49_INITIALI:
         description: "UNM49_INITIALI"
-        default: '0'
+        default: "0"
         required: false
-        type: string  # number would be better, but manual run fails
+        type: string # number would be better, but manual run fails
       UNM49_FINALI:
         description: "UNM49_INITIALI"
-        default: '999'
+        default: "999"
         required: false
-        type: string  # number would be better, but manual run fails
+        type: string # number would be better, but manual run fails
     secrets:
       # # ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
       SSH_PRIVATE_KEY:

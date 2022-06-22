@@ -1,5 +1,5 @@
 
-| `.ext`?             |  GitHub Topics      | Wikipedia           |
+| `.ext`?             |  GitHub      | Vicipaedia           |
 | ------------------- | ------------------- | ------------------- |
 | `.no1.owl.ttl`      |  [owl](https://github.com/topics/owl), [graph-database](https://github.com/topics/graph-database), [reasoning](https://github.com/topics/reasoning), [protege](https://github.com/topics/protege) | [Q826165 <sup>OWL</sup>](https://www.wikidata.org/wiki/Q826165) |
 | `.no1.skos.ttl`     | [skos](https://github.com/topics/skos), [thesaurus](https://github.com/topics/thesaurus), [multilingual](https://github.com/topics/multilingual), [vocabularies](https://github.com/topics/vocabularies) | [Q2288360 <sup>SKOS</sup>](https://www.wikidata.org/wiki/Q2288360) |
