@@ -57,6 +57,7 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # bootstrap_1603_45_16__item_rdf "1603_16" "24" "AGO" "AO" "3" "1" "0" "4"
 # lsf1603_to_gh_repo_local_file "1603_16_24" "1603/16/24/1/1603_16_24_1.no1.owl.ttl" "${ROOTDIR}"
 # exit 0
+AUTOMATON__1603_16__CPLP_UNICAE=0
 gh_repo_edit_1603_16_NNN__topics
 
 exit 0

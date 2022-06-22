@@ -28,7 +28,7 @@ __lsf_1603_45_16_lib="${__lsf_clone_local}/officina/999999999/1603_45_16.lib.sh"
 _ROOTDIR="${__lsf_clone_local}/officina"
 
 GH_ORG="${GH_ORG:-"MDCIII"}"
-GH_ORG_DEST="${GH_ORG_DEST:$GH_ORG}"
+GH_ORG_DEST="${GH_ORG_DEST:-$GH_ORG}"
 ARTIFICIAL_THROTTLING="${ARTIFICIAL_THROTTLING:-"1"}"
 UNM49_INITIALI="${UNM49_INITIALI:-"0"}"
 UNM49_FINALI="${UNM49_FINALI:-"999"}"
@@ -888,13 +888,13 @@ gh_repo_edit_1603_16_NNN__topics() {
 
   opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
 
-  # set -x
+  set -x
   NUMERORDINATIO_BASIM="$NUMERORDINATIO_BASIM" "${ROOTDIR}/999999999/0/999999999_7200235.py" \
     --methodus='cod_ab_index' \
     --punctum-separato-ad-tab \
-    --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated' \
+    --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated,#country+name+ref,#country+name+alt' \
     >"${opus_temporibus_temporarium}"
-  # set +x
+  set +x
 
   echo ""
   echo "  LIST HERE <${opus_temporibus_temporarium}>"
@@ -908,6 +908,8 @@ gh_repo_edit_1603_16_NNN__topics() {
       v_iso3="${linea[1]}"
       v_iso2="${linea[2]}"
       cod_ab_level_max="${linea[3]}"
+      name_ref="${linea[6]}"
+      name_alt="${linea[6]}"
       # numerordinatio_praefixo="1603_45_16"
       # echo ""
       # echo "        ${linea[*]}"
@@ -940,13 +942,28 @@ gh_repo_edit_1603_16_NNN__topics() {
       #   echo "TODO 0 AUTOMATON__1603_16__CPLP_UNICAE"
       fi
 
-      echo "        ${linea[*]}"
+      # echo "        ${linea[*]}"
+
+      # repo_topic=$(echo "$name_ref" | tr -cd '[:print:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-')
+      repo_topic=$(echo "$name_alt" | tr -cd '[:print:]' | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-')
+
+      # @TODO we need to somewhat infer github topic. eventualy this could be reviewned
+      #       https://www.wikidata.org/wiki/Property:P9100
+
+      # No topiics at all
+      # - saint-vincent-and-the-grenadines
+      #   - https://www.wikidata.org/wiki/Q757
+
+      # Differences
+      # - syrian-arab-republic( https://www.wikidata.org/wiki/Q858 )
+      #  - syria
 
       gh_repo_name="1603_16_${unm49}"
-      echo "TODO $gh_repo_name"
+      echo "TODO gh repo edit \"$GH_ORG_DEST/$gh_repo_name\" --add-topic \"$repo_topic\""
 
-      # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
-      # sleep 10
+      # _ARTIFICIAL_THROTTLING=0
+      # printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep [$_ARTIFICIAL_THROTTLING]s ${tty_normal}"
+      # sleep "$_ARTIFICIAL_THROTTLING"
     done
   } <"${opus_temporibus_temporarium}"
 
