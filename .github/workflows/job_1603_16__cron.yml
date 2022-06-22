@@ -1,0 +1,162 @@
+# SPDX-License-Identifier: Unlicense OR 0BSD
+# .github/workflows/job_1603_16__cron.yml
+
+name: job_1603_16__cron
+
+on:
+  schedule:
+    # we will split by UNm49 to avoid overload jobs at once
+    - cron: "30 0 * * *"
+    - cron: "30 1 * * *"
+    - cron: "30 2 * * *"
+    - cron: "30 3 * * *"
+    - cron: "30 4 * * *"
+    - cron: "30 5 * * *"
+    - cron: "30 6 * * *"
+    - cron: "30 7 * * *"
+    - cron: "30 8 * * *"
+    - cron: "30 9 * * *"
+
+jobs:
+  job_1603_16__cron__common:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 0-99
+        if: github.event.schedule=='30 0 * * *'
+        run: |
+          echo "TODO 0-99"
+
+      - name: 100-199
+        if: github.event.schedule=='30 1 * * *'
+        run: |
+          echo "TODO 100-199"
+
+      - name: 200-299
+        if: github.event.schedule=='30 2 * * *'
+        run: |
+          echo "TODO 200-299"
+
+      - name: 300-399
+        if: github.event.schedule=='30 3 * * *'
+        run: |
+          echo "TODO 300-399"
+
+      - name: 400-499
+        if: github.event.schedule=='30 4 * * *'
+        run: |
+          echo "TODO 400-499"
+
+      - name: 500-599
+        if: github.event.schedule=='30 5 * * *'
+        run: |
+          echo "TODO 500-599"
+
+      - name: 600-699
+        if: github.event.schedule=='30 6 * * *'
+        run: |
+          echo "TODO 600-699"
+
+      - name: 700-799
+        if: github.event.schedule=='30 7 * * *'
+        run: |
+          echo "TODO 700-799"
+
+      - name: 800-899
+        if: github.event.schedule=='30 8 * * *'
+        run: |
+          echo "TODO 800-899"
+
+      - name: 900-999
+        if: github.event.schedule=='30 9 * * *'
+        run: |
+          echo "TODO 900-999"
+
+  job_1603_16__cron__0-99:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 0 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 0
+      UNM49_FINALI: 99
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__100-199:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 1 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 100
+      UNM49_FINALI: 199
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__200-299:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 2 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 200
+      UNM49_FINALI: 299
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__300-399:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 3 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 300
+      UNM49_FINALI: 399
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__400-399:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 4 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 400
+      UNM49_FINALI: 499
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__500-599:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 5 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 500
+      UNM49_FINALI: 599
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__600-699:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 6 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 600
+      UNM49_FINALI: 699
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__700-799:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 7 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 700
+      UNM49_FINALI: 799
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__800-899:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 8 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 800
+      UNM49_FINALI: 899
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+  job_1603_16__cron__900-999:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    if: github.event.schedule=='30 9 * * *'
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: "0"
+      UNM49_INITIALI: 900
+      UNM49_FINALI: 999
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}

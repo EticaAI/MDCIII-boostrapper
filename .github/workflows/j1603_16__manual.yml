@@ -72,7 +72,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+      # Uses same repository, but need specify organization and repository
+      - uses: EticaAI/MDCIII-boostrapper/.github/workflows/r1603_16__NNN-NNN.yml@main
         with:
           AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
           ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}

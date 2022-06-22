@@ -36,11 +36,22 @@ jobs:
     #   envPAT: teste123
     #   # envPAT: ${{ secrets.envPAT }}
 
+  reusable_workflow_job111:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
+      ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
+      UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
+      UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
+      # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
   reusable_workflow_job333:
     runs-on: ubuntu-latest
     # environment: production
     steps:
-      - uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+      # Uses same repository, but need specify organization and repository
+      - uses: EticaAI/MDCIII-boostrapper/.github/workflows/r1603_16__NNN-NNN.yml@main
         with:
           AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
           ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
@@ -48,3 +59,4 @@ jobs:
           UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
           # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
