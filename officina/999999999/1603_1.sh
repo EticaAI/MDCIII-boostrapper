@@ -23,14 +23,17 @@
 #===============================================================================
 set -e
 
-echo "DEBUG: starting 1603_1.sh"
+# echo "DEBUG: starting 1603_1.sh"
 
 ROOTDIR="$(pwd)"
 # DESTDIR is used to inform shell libs from main repository we're in another dir
 DESTDIR="$ROOTDIR"
-NUMERORDINATIO_BASIM="$ROOTDIR"
+# NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # shellcheck source=1603_1.lib.sh
 . "$ROOTDIR"/999999999/1603_1.lib.sh
 
-echo "TODO"
+# echo "TODO"
+
+gh_repo_init_1603_16_1
+# gh_repo_edit_1603_16_1__topics

@@ -22,25 +22,50 @@
 #      REVISION:  ---
 #===============================================================================
 
-echo "DEBUG: starting 1603_1.lib.sh"
+# echo "DEBUG: starting 1603_1.lib.sh"
 
 # shellcheck source=3133368.lib.sh
 . "${ROOTDIR}/999999999/3133368.lib.sh"
 
-# # __lsf_clone_local="${ROOTDIR}/999999/3133368/lexicographi-sine-finibus"
-# __3133368_lib="${ROOTDIR}/999999999/3133368.lib.sh"
-# # # __lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
-# # # __lsf_999999999_lib="${__lsf_clone_local}/officina/999999999/999999999.lib.sh"
-# # # __lsf_1603_45_16_lib="${__lsf_clone_local}/officina/999999999/1603_45_16.lib.sh"
-# # _ROOTDIR="${__lsf_clone_local}/officina"
+#######################################
+# Update all repositories (if necessary)
+#
+# Globals:
+#   ROOTDIR
+#   GH_ORG_DEST
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_edit_1603_16_1__topics() {
 
-# # GH_ORG="${GH_ORG:-"MDCIII"}"
-# # GH_ORG_DEST="${GH_ORG_DEST:-$GH_ORG}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  # echo "${FUNCNAME[0]} TODO..."
 
-# if [ -f "$__3133368_lib" ]; then
-#   # shellcheck source=../999999/3133368/lexicographi-sine-finibus/officina/999999999/999999999.lib.sh
-#   . "$__3133368_lib"
-# else
-#   echo "ERROR: LSF not cached."
-#   exit 1
-# fi
+  gh_repo_name="1603_16_1"
+  repo_topics="unm49-001,world"
+
+  # echo gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
+  gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
+
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Initialize "world level" level 1603_16
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_init_1603_16_1() {
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  gh_repo_create_numerordinatio "1603_16_1" "🌐"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+
+}
