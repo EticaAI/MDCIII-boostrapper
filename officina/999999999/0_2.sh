@@ -90,3 +90,40 @@ bash "${ROOTDIR}/999999999/1603_16.sh"
 
 # @TODO make a cached version of 1603/1 path. The @EticaAI/lsf-cache, even
 #       only the last commit, have unecessary higher times
+
+#### .github/profile/README.md
+# https://github.com/MDCIII
+
+gh_repo_create_MDCIII_dot_github() {
+  # Used only first time.
+  mkdir /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/.github
+  cd /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/.github
+  git init
+  cp -r /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/42302/MDCIII/.github/* /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/.github/
+  git add .
+  git commit -m 'fīat lūx'
+  git checkout master
+  git branch -m main
+  gh repo create "MDCIII/.github" --public --disable-issues --disable-wiki --source=. --homepage="https://github.com/EticaAI/lexicographi-sine-finibus"
+  git push --set-upstream origin main
+  gh repo edit "MDCIII/.github" --enable-projects=false
+}
+
+gh_repo_update_MDCIII_dot_github() {
+  # echo "TODO..."
+  # cd "$ROOTDIR" || true
+  # # rsync --dry-run --verbose --human-readable --checksum --recursive 999999999/42302/MDCIII/.github/ 999999/3133368/.github
+  # rsync --verbose --human-readable --checksum --recursive 999999999/42302/MDCIII/.github/ 999999/3133368/.github
+  # git -C 999999999/42302/MDCIII/.github/ status
+
+  # # sudo chown 1603:1603 -R /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/42302/MDCIII/.github
+  # cd /tmp || true
+  # git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/42302/MDCIII/.github status
+
+  # (...)
+  cd /tmp || true
+  git clone git@github.com:MDCIII/.github.git
+  cd /tmp/.github
+  rsync --dry-run --verbose --human-readable --checksum --recursive /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/42302/MDCIII/.github/ /tmp/.github
+  rsync --verbose --human-readable --checksum --recursive /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/42302/MDCIII/.github/ /tmp/.github
+}

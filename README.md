@@ -1,6 +1,22 @@
 # EticaAI/lexicographi-sine-finibus agent
 
+
+
+## Apothēcae
+
+> **Data per automatīs**
+>
 > - https://github.com/EticaAI/MDCIII-boostrapper/actions
+>   - https://github.com/EticaAI/MDCIII-boostrapper
+
+### Apothēca pūblicīs Ad GitHub 
+- @MDCIII
+  - https://github.com/MDCIII
+
+### Apothēca arēnāriō Ad GitHub
+
+Nūllus
+
 
 
 <!--
