@@ -45,8 +45,12 @@ on:
         description: UNM49_FINALI
         required: false
 
-    secrets:
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+    # # This syntax is invalid, not allowed here
+    # secrets:
+    #   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
+# env:
+#   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
 
 # jobs:
 #   do-it:
@@ -73,8 +77,10 @@ jobs:
       ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
       UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
       UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
 
     # runs-on: ubuntu-latest
     # # environment: production

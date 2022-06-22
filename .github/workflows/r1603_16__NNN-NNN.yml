@@ -134,7 +134,7 @@ defaults:
     working-directory: ./officina
 
 jobs:
-  "aN1603_16":
+  "r1603_16__NNN-NNN":
     name: aN1603_16
     runs-on: ubuntu-latest
     continue-on-error: true

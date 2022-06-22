@@ -35,14 +35,16 @@ jobs:
     # secrets:
     #   envPAT: teste123
     #   # envPAT: ${{ secrets.envPAT }}
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
 
   reusable_workflow_job111:
     uses: ./.github/workflows/r1603_16__NNN-NNN.yml
     with:
-      AUTOMATON__1603_16__CPLP_UNICAE: ${{ inputs.AUTOMATON__1603_16__CPLP_UNICAE }}
-      ARTIFICIAL_THROTTLING: ${{ inputs.ARTIFICIAL_THROTTLING }}
-      UNM49_INITIALI: ${{ inputs.UNM49_INITIALI }}
-      UNM49_FINALI: ${{ inputs.UNM49_FINALI }}
+      AUTOMATON__1603_16__CPLP_UNICAE: ${{ env.AUTOMATON__1603_16__CPLP_UNICAE }}
+      ARTIFICIAL_THROTTLING: ${{ env.ARTIFICIAL_THROTTLING }}
+      UNM49_INITIALI: ${{ env.UNM49_INITIALI }}
+      UNM49_FINALI: ${{ env.UNM49_FINALI }}
       # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
