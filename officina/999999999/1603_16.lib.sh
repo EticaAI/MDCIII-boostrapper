@@ -608,6 +608,8 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
       _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
       _catalogxml_cod_ab_all__localrepo_old="999999/3133368/${gh_repo_name}/catalog-v004.xml"
+      _gitattributes__localrepo="999999/3133368/${gh_repo_name}/.gitattributes"
+      _gitattributes__templated="999999999/42302/.gitattributes"
 
       _numerodinatio_cod_ab_all=$(printf ",%s" "${arr__numerodinatio_cod_ab[@]}")
       _numerodinatio_cod_ab_all=${_numerodinatio_cod_ab_all:1}
@@ -629,6 +631,13 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       if [ -f "$_catalogxml_cod_ab_all__localrepo_old" ]; then
         echo "Deleting old file [$_catalogxml_cod_ab_all__localrepo_old]"
         rm "$_catalogxml_cod_ab_all__localrepo_old"
+      fi
+
+      # @TODO when templated .gitattributes changes, this logic will need to
+      #       be manually changed at least once
+      if [ ! -f "$_gitattributes__localrepo" ]; then
+        echo "Adding .gitattributes first time [$_gitattributes__localrepo]"
+        cp "$_gitattributes__templated" "$_gitattributes__localrepo"
       fi
 
       gh_repo_edit_readme "$gh_repo_name" "${emoji_country_flag}"
