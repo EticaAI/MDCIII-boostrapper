@@ -59,6 +59,11 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # gh_repo_init_lexicographi_sine_finibus_1603_16_1
 # gh_repo_edit_1603_16_1__topics
+# gh_repo_edit_description "1603_16_24" "🇦🇴"
+# AUTOMATON__1603_16__CPLP_UNICAE="0"
+# UNM49_INITIALI="67"
+# UNM49_FINALI="70"
+# gh_repo_edit_1603_16_NNN__topics_and_description
 # exit 0
 
 #### The Happy Path ____________________________________________________________
@@ -88,7 +93,6 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN
 
 ### 4. World level / Bigger region levels --------------------------------------
 
-
 ### 5. Special cases / initializations  ----------------------------------------
 # This can be used first time to populate github topics.
-# gh_repo_edit_1603_16_NNN__topics
+# gh_repo_edit_1603_16_NNN__topics_and_description

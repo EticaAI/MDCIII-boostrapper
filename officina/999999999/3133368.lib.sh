@@ -189,14 +189,14 @@ gh_repo_create_numerordinatio() {
   git checkout master
   git branch -m main
 
-  gh repo create "MDCIII/${numerodinatio}" --source="${trivium_basi}" \
+  gh repo create "${GH_ORG}/${numerodinatio}" --source="${trivium_basi}" \
     --public \
     --description="${_gh_description}" \
     --homepage="${_gh_homepage}" \
     --disable-issues --disable-wiki
 
   git push --set-upstream origin main
-  gh repo edit "MDCIII/${numerodinatio}" --enable-projects=false
+  gh repo edit "${GH_ORG}/${numerodinatio}" --enable-projects=false
 
   set +x
 
@@ -208,7 +208,65 @@ gh_repo_create_numerordinatio() {
 }
 
 #######################################
-# Edit metadata from a project already on 999999/3133368/NNNN_NN_NN directory.
+# Templated edit of description of a repository
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#   numerodinatio  (please use _ as delimitator (eg. 1603_16_24))
+#   emojis         (Optional. Emojis to label the repository)
+# Outputs:
+#   999999/3133368/NNNN_NN_NN/README.md
+#######################################
+gh_repo_edit_description() {
+  numerodinatio="$1"
+  emojis="${2:-""}"
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+
+  # opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.apothecae.todo.txt"
+  trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
+  tmeta_trivae="${ROOTDIR}/999999/0/${numerodinatio}.tmeta.json"
+
+  # https://unicode-table.com/en/003A/
+  # numerodinatio_u005f=$(numerordinatio_neo_separatum "$numerodinatio" "_")
+  numerodinatio_u005f="$numerodinatio"
+  # https://unicode-table.com/en/005F/
+  numerodinatio_u003a=$(numerordinatio_neo_separatum "$numerodinatio" ":")
+
+  # https://stackoverflow.com/questions/48470049/build-a-json-string-with-bash-variables
+  JSON_STRING=$(jq -n \
+    --arg nn "$numerodinatio_u005f" \
+    --arg nn3a "$numerodinatio_u003a" \
+    --arg emojis "$emojis" \
+    '{numerodinatio: $nn, numerodinatio_u005f: $nn,
+numerodinatio_u003a: $nn3a, emojis: $emojis}')
+
+  echo "$JSON_STRING" >"$tmeta_trivae"
+
+  formulae_triviae="${ROOTDIR}/999999999/42302/github-descriptioni.🗣️.txt"
+  # archivum_trivio="${ROOTDIR}/999999/0/README.md"
+  # archivum_trivio="${trivium_basi}/README.md"
+
+  # echo "JSON_STRING $JSON_STRING"
+
+  # hxltmcli requires some HXL file as data, giving a generic one
+  hxltm_trivo="999999/999999/hxltm-exemplum-linguam.tm.hxl.csv"
+  description=$(hxltmcli "$hxltm_trivo" \
+    --objectivum-formulam="$formulae_triviae" \
+    --tmeta="$tmeta_trivae" | xargs echo -n)
+
+  # echo "description [$description]"
+  # exit 0
+
+  # echo gh repo edit "${GH_ORG}/${numerodinatio}" --description="$description"
+  gh repo edit "${GH_ORG}/${numerodinatio}" --description="$description"
+
+  rm "$tmeta_trivae"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Edit README from a project already on 999999/3133368/NNNN_NN_NN directory.
 #
 # Globals:
 #   ROOTDIR

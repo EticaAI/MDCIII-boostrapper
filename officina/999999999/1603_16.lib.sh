@@ -674,7 +674,7 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_edit_1603_16_NNN__topics() {
+gh_repo_edit_1603_16_NNN__topics_and_description() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED [CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]] [initiale [$UNM49_INITIALI]] [finale [$UNM49_FINALI]] ${tty_normal}"
   # echo "${FUNCNAME[0]} TODO..."
@@ -885,15 +885,23 @@ gh_repo_edit_1603_16_NNN__topics() {
       #  - syria
 
       gh_repo_name="1603_16_${unm49}"
+      gh_repo_emojis=$(emoji_country_flag_from_iso3661p1a2 "$v_iso2")
+
       # echo "TODO gh repo edit \"$GH_ORG_DEST/$gh_repo_name\" --add-topic \"$repo_topic\""
       # echo "TODO gh repo edit \"$GH_ORG_DEST/$gh_repo_name\" --add-topic \"$repo_topics\""
+
+      # echo "TODO gh_repo_name [$gh_repo_name] [$gh_repo_emojis]"
+
+      gh_repo_edit_description "$gh_repo_name" "$gh_repo_emojis"
 
       # echo gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
       gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
 
       # gh repo edit "MDCIII/1603_16_76" --add-topic "unm49-076,bra,brazil"
 
-      _ARTIFICIAL_THROTTLING=10
+      echo "https://github.com/${GH_ORG_DEST}/${gh_repo_name}"
+
+      _ARTIFICIAL_THROTTLING=3
       printf "\t%40s\n" "${tty_blue} INFO: artificial forced sleep [$_ARTIFICIAL_THROTTLING]s ${tty_normal}"
       sleep "$_ARTIFICIAL_THROTTLING"
     done
