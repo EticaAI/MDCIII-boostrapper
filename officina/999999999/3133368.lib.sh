@@ -208,6 +208,45 @@ gh_repo_create_numerordinatio() {
 }
 
 #######################################
+# Low level edit file based on template and HXLTM dataset with translations
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#   formulae_triviae      Full path to the file template to generate result
+#   archivum_trivio       Full path to the file to generate
+#   tmeta_trivae          (optional) Path to YAML/JSON with metadata
+#   hxltm_trivo           (optional) Path to tabular linguistic data
+#   objectivum_linguam    (optional) Objective language
+#   agendum_linguam       (optional) Auxiliary languages if Objetive is empty
+# Outputs:
+#   File at path [archivum_trivio]
+#######################################
+gh_repo_edit_templated_file() {
+  formulae_triviae="$1"
+  archivum_trivio="$2"
+  tmeta_trivae="${3:-""}"
+  hxltm_trivo="${4:-"999999/999999/hxltm-exemplum-linguam.tm.hxl.csv"}"
+  objectivum_linguam="${5:-"lat-Latn"}"
+  agendum_linguam="${6:-"lat-Latn"}"
+  # hxltmcli 999999/999999/hxltm-exemplum-linguam.tm.hxl.csv --objectivum-formulam='999999999/42302/exemplum-linguam.🗣️.json' --tmeta='999999/999999/hxltm-exemplum-linguam.tmeta.yml'
+
+  # gh_repo_edit_templated_file
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  # echo "TODO"
+  set -x
+  hxltmcli "$hxltm_trivo" \
+    --objectivum-formulam="$formulae_triviae" \
+    --tmeta="$tmeta_trivae" \
+    --objectivum-linguam="$objectivum_linguam" \
+    --agendum-linguam="$agendum_linguam" \
+    >"$archivum_trivio"
+  set +x
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
 # Initialize local repository with with very rudimentar content.
 # WARNING. This does not handle cases where the remote repository already exist
 # but does not exist locallu

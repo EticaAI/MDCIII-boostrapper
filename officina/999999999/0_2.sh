@@ -76,6 +76,8 @@ bash "${ROOTDIR}/999999999/1603_16.sh"
 # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --help
 # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex='1603_16_24_0,1603_16_24_1,1603_16_24_2,1603_16_24_3' --data-apothecae-ad='999999/0/catalog-v001.xml'
 
+# hxltmcli 999999/999999/hxltm-exemplum-linguam.tm.hxl.csv --objectivum-formulam='999999999/42302/exemplum-linguam.🗣️.json' --tmeta='999999/999999/hxltm-exemplum-linguam.tmeta.yml'
+
 #### 1568346 (Testcase 2022-06-19) _____________________________________________
 # 999999999/1568346
 # > - https://www.wikidata.org/wiki/Q1568346

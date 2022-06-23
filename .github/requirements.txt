@@ -1,4 +1,7 @@
 hxltm-eticaai
+python-liquid
+langcodes
+pyyaml
 libhxl
 openpyxl
 frictionless

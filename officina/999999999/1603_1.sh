@@ -36,6 +36,8 @@ DESTDIR="$ROOTDIR"
 # echo "TODO"
 
 #### Quick tests _______________________________________________________________
+# hxltmcli 999999/999999/hxltm-exemplum-linguam.tm.hxl.csv --objectivum-formulam='999999999/42302/exemplum-linguam.🗣️.json' --tmeta='999999/999999/hxltm-exemplum-linguam.tmeta.yml'
+gh_repo_edit_templated_file "999999999/42302/exemplum-linguam.🗣️.json" "999999/0/teste.json"
 
 emoji_country_flag_from_iso3661p1a2 "br"
 
