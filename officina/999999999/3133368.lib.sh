@@ -208,6 +208,49 @@ gh_repo_create_numerordinatio() {
 }
 
 #######################################
+# Edit metadata from a project already on 999999/3133368/NNNN_NN_NN directory.
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#   numerodinatio  (please use _ as delimitator (eg. 1603_16_24))
+# Outputs:
+#   999999/3133368/NNNN_NN_NN/README.md
+#######################################
+gh_repo_edit_readme() {
+  numerodinatio="$1"
+  emojis="${2:-""}"
+
+  # opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.apothecae.todo.txt"
+  trivium_basi="${ROOTDIR}/999999/3133368/${numerodinatio}"
+  tmeta_trivae="${ROOTDIR}/999999/0/${numerodinatio}.tmeta.json"
+
+  # https://unicode-table.com/en/003A/
+  # numerodinatio_u005f=$(numerordinatio_neo_separatum "$numerodinatio" "_")
+  numerodinatio_u005f="$numerodinatio"
+  # https://unicode-table.com/en/005F/
+  numerodinatio_u003a=$(numerordinatio_neo_separatum "$numerodinatio" ":")
+
+  # https://stackoverflow.com/questions/48470049/build-a-json-string-with-bash-variables
+  JSON_STRING=$(jq -n \
+    --arg nn "$numerodinatio_u005f" \
+    --arg nn3a "$numerodinatio_u003a" \
+    --arg emojis "$emojis" \
+    '{numerodinatio: $nn, numerodinatio_u005f: $nn,
+numerodinatio_u003a: $nn3a, emojis: $emojis}')
+
+  echo "$JSON_STRING" >"$tmeta_trivae"
+
+  formulae_triviae="${ROOTDIR}/999999999/42302/README.🗣️.md"
+  # archivum_trivio="${ROOTDIR}/999999/0/README.md"
+  archivum_trivio="${trivium_basi}/README.md"
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  gh_repo_edit_templated_file "$formulae_triviae" "$archivum_trivio" "$tmeta_trivae"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
 # Low level edit file based on template and HXLTM dataset with translations
 #
 # Globals:

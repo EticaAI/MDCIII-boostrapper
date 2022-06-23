@@ -550,13 +550,14 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       echo "        ${linea[*]}"
 
       gh_repo_name="1603_16_${unm49}"
+      emoji_country_flag=$(emoji_country_flag_from_iso3661p1a2 "$v_iso2")
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       # fontem_archivum_basi="${ROOTDIR}/${__group_path}/${unm49}"
       # __group_path=$(numerordinatio_neo_separatum "$numerordinatio_praefixo" "/")
       # bootstrap_1603_45_16__item_no1 "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
       # bootstrap_1603_45_16__item_rdf "$numerordinatio_praefixo" "$unm49" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
 
-      echo "cod_ab_levels $cod_ab_level_max"
+      echo "cod_ab_levels [$cod_ab_level_max] emoji_country_flag [$emoji_country_flag]"
 
       bootstrap_1603_45_16__item_no1 "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0"
       bootstrap_1603_45_16__item_rdf "1603_16" "${unm49}" "$v_iso3" "$v_iso2" "$cod_ab_level_max" "1" "0" "4"
@@ -629,6 +630,8 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
         echo "Deleting old file [$_catalogxml_cod_ab_all__localrepo_old]"
         rm "$_catalogxml_cod_ab_all__localrepo_old"
       fi
+
+      gh_repo_edit_readme "$gh_repo_name" "${emoji_country_flag}"
 
       # python3 /workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ex="$_datapackage_cod_ab_all__localrepo" --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
 
