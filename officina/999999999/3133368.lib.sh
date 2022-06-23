@@ -40,6 +40,50 @@ else
 fi
 
 #######################################
+# Convert a ISO 3166 part 1 alpha 2 into Unicode emoji
+#
+# Globals:
+#
+# Arguments:
+#   iso3661p1a2
+# Outputs:
+#   Emoji  (may be not well formated)
+#######################################
+emoji_country_flag_from_iso3661p1a2() {
+  iso3661p1a2="$1"
+
+  emoji_flag=""
+  for ((i = 0; i < ${#iso3661p1a2}; i++)); do
+    # echo "${iso3661p1a2:$i:1}"
+    emoji_part=$(emoji_from_alpha "${iso3661p1a2:$i:1}")
+    emoji_flag="${emoji_flag}${emoji_part}"
+  done
+  echo "$emoji_flag"
+}
+
+#######################################
+# Convert an Latin Letter to Unicode-style Emojis. The way implementers
+# merge the final result may render things like country flags (see
+# emoji_country_flag_from_iso3661p1a2)
+#
+# Globals:
+#
+# Arguments:
+#   iso3661p1a2
+# Outputs:
+#   Emoji  (may be not well formated)
+#######################################
+emoji_from_alpha() {
+  alpha="$1"
+  alpha=${alpha^^}
+
+  char_int=$(printf '%d' "'$alpha")
+  char_int_unicode=$((char_int + 127397))
+  emoji=$(echo $char_int_unicode | awk '{printf("%c", $1)}')
+  echo "$emoji"
+}
+
+#######################################
 # For two repositories already saved at officina/999999/3133368, copy files
 # from first repository to the second repository.
 #

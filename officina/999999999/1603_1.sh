@@ -35,5 +35,15 @@ DESTDIR="$ROOTDIR"
 
 # echo "TODO"
 
+#### Quick tests _______________________________________________________________
+
+emoji_country_flag_from_iso3661p1a2 "br"
+
+# echo ""
+# emoji_from_alpha "b"
+exit 0
+
+#### Main ______________________________________________________________________
+
 gh_repo_init_1603_16_1
 # gh_repo_edit_1603_16_1__topics

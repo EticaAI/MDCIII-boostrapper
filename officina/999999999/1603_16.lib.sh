@@ -679,11 +679,11 @@ gh_repo_edit_1603_16_NNN__topics() {
   opus_temporibus_temporarium="${ROOTDIR}/999999/0/1603_45_16.todo.tsv"
 
   # set -x
-  # NUMERORDINATIO_BASIM="$NUMERORDINATIO_BASIM" "${ROOTDIR}/999999999/0/999999999_7200235.py" \
-  #   --methodus='cod_ab_index' \
-  #   --punctum-separato-ad-tab \
-  #   --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated,#country+name+ref,#country+name+alt' \
-  #   >"${opus_temporibus_temporarium}"
+  NUMERORDINATIO_BASIM="$NUMERORDINATIO_BASIM" "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus='cod_ab_index' \
+    --punctum-separato-ad-tab \
+    --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated,#country+name+ref,#country+name+alt' \
+    >"${opus_temporibus_temporarium}"
   # set +x
 
   echo ""
@@ -698,6 +698,7 @@ gh_repo_edit_1603_16_NNN__topics() {
       v_iso3="${linea[1]}"
       v_iso2="${linea[2]}"
       cod_ab_level_max="${linea[3]}"
+      # shellcheck disable=SC2034
       name_ref="${linea[6]}"
       name_alt="${linea[6]}"
       # numerordinatio_praefixo="1603_45_16"

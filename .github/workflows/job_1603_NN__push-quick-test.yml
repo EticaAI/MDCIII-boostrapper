@@ -1,0 +1,72 @@
+#===============================================================================
+#
+#          FILE:  job_1603_NN__push-quick-test.yml
+#
+#         USAGE:  - See https://docs.github.com/en/actions
+#                       /learn-github-actions/understanding-github-actions
+#                 - Add this file to the repository. This will
+#                   not work for forks
+#                 - Setup SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022
+#                   for your agent (such as @eticaaibot)
+#
+#   DESCRIPTION:  This is just a quick test done every time the repository is
+#                 edited (likely by an Human) which may reveal untested human
+#                 errors not relevant to external data. By enablint this means
+#                 we can test early what would fail on cronjobs later
+#                 
+#                 Quick introduction:
+#
+#                 1. This action runs the 1603_16 namespace from
+#                    https://github.com/EticaAI/lexicographi-sine-finibus.
+#                 2. All operations can be done using a local account (see
+#                    the shell files at officina/999999999) without emulating
+#                    entire GitHub runner (aka https://github.com/nektos/act)
+#                 3. Very few operations (even for boostrapping 1603_16)
+#                    are not here (but are on shell script): they're mostly
+#                    to create very first time the repositories with data, so
+#                    you really not need then unless you're recreating from
+#                    zero (which may never be necessary)
+#                 4. Some operations that could be done by requesting the
+#                    shell scripts locally (but are easier to do with YAML
+#                    on GitHub Actions runner) may be done here without calling
+#                    the shell scripts.
+#
+#       OPTIONS:  ---
+#
+#  REQUIREMENTS:  ---
+#          BUGS:  ---
+#         NOTES:  ---
+#        AUTHOR:  Emerson Rocha <rocha[at]ieee.org>
+#       COMPANY:  EticaAI
+#       LICENSE:  Public Domain dedication or Zero-Clause BSD
+#                 SPDX-License-Identifier: Unlicense OR 0BSD
+#       VERSION:  v1.1
+#       CREATED:  2022-06-16 21:38 UTC started as 1603_16.yml
+#      REVISION:  2022-06-22 23:47 UTC v1.1 renamed job_1603_NN__push-quick-test
+#                                      and made it a quick test for push events
+#===============================================================================
+# SPDX-License-Identifier: Unlicense OR 0BSD
+name: "job_1603_NN__push-quick-test"
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: ./officina
+
+jobs:
+
+  job_push-quick-test:
+    uses: ./.github/workflows/r1603_16__NNN-NNN.yml
+    with:
+      AUTOMATON__1603_16__CPLP_UNICAE: '1'
+      # ARTIFICIAL_THROTTLING: '0'
+      # UNM49_INITIALI: '0'
+      # UNM49_FINALI: '100'  # env.VAR do not work in this scope
+      # # SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY__ID_ED25519__GITHUBRUNNER2022 }}
+
