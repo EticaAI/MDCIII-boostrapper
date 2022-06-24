@@ -45,7 +45,8 @@ DESTDIR="$ROOTDIR"
 
 # echo ""
 # emoji_from_alpha "b"
-# exit 0
+gh_repo_update_1603_16_1
+exit 0
 
 #### Main ______________________________________________________________________
 # @TODO note to self: thsi file is named 1603_16_1.sh, but calling 1603_16_1.

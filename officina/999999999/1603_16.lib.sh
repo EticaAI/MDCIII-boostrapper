@@ -386,6 +386,10 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
       if ((idnow >= finalis)); then
         continue
       fi
+
+      gh_action_subgroup="1603_16_${unm49}"
+      echo "::group::${gh_action_subgroup}"
+
       echo "        ${linea[*]}"
 
       if [ "$AUTOMATON__1603_16__CPLP_UNICAE" = "1" ]; then
@@ -396,6 +400,7 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
           echo "CPLP [${unm49}]..."
         else
           echo "Skiping [${unm49}] CPLP_UNICAE [$AUTOMATON__1603_16__CPLP_UNICAE]"
+          echo "::endgroup::"
           continue
         fi
       # else
@@ -427,6 +432,7 @@ gh_repo_init_lexicographi_sine_finibus_1603_16_NNN() {
 
       # printf "\t%40s\n" "${tty_red} DEBUG: [Sleep 10 (@TODO disable me later)] ${tty_normal}"
       # sleep 10
+      echo "::endgroup::"
     done
   } <"${opus_temporibus_temporarium}"
 

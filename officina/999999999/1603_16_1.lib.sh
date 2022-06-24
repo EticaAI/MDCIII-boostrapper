@@ -38,16 +38,19 @@
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_edit_1603_16_1__topics() {
+gh_repo_edit_1603_16_1__topics_and_description() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   # echo "${FUNCNAME[0]} TODO..."
 
   gh_repo_name="1603_16_1"
   repo_topics="unm49-001,world"
+  gh_repo_emojis="🌐"
 
   # echo gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
   gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
+
+  gh_repo_edit_description "$gh_repo_name" "$gh_repo_emojis"
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
@@ -84,7 +87,68 @@ gh_repo_init_1603_16_1() {
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
 gh_repo_update_1603_16_1() {
-  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED  ${tty_normal}"
-  echo "TODO"
+  gh_repo_name="1603_16_1"
+  gh_repo_emojis="🌐"
+
+  echo "::group::${gh_repo_name}"
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  # echo "TODO"
+
+  archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
+  archivum_rdf_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
+
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus='cod_ab_ad_no1_csv' \
+    --numerordinatio-praefixo="1603_16" \
+    >"${DESTDIR}/$archivum_no1__relative"
+
+  frictionless validate "${DESTDIR}/$archivum_no1__relative"
+
+  "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus='cod_ab_index_levels_ttl' \
+    --numerordinatio-praefixo="1603_16" \
+    >"${DESTDIR}/$archivum_rdf_owl__relative"
+  set +x
+
+  # echo "@TODO also export the .no1.tm.hxl.csv"
+
+  lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${DESTDIR}"
+  lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${DESTDIR}"
+
+  _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
+  _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
+  _numerodinatio_cod_ab_all="${gh_repo_name}_0"
+
+  set -x
+  DATA_APOTHECAE_MINIMIS="1" \
+    "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+    --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+    --data-apothecae-ad="$_datapackage_cod_ab_all__localrepo"
+
+  "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+    --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+    --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
+  set +x
+
+  # shellcheck disable=SC2164
+  cd "${DESTDIR}/999999/3133368/${gh_repo_name}"
+
+  pwd
+  frictionless validate "datapackage.json" || echo "FIX ME [${gh_repo_name}]. Know bug. not sure why frictionless is complaining here BUT works in production. Leaving notice here anyway"
+
+  # shellcheck disable=SC2164
+  cd "${ROOTDIR}"
+
+  gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
+  gh_repo_sync_push "${gh_repo_name}"
+
+  # ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv'
+
+  # ./999999999/0/999999999_7200235.py --methodus='cod_ab_index' --punctum-separato-ad-tab --cum-columnis='#country+code+v_unm49,#country+code+v_iso3,#country+code+v_iso2,#meta+source+cod_ab_level,#date+created,#date+updated'
+
+  echo "::endgroup::"
+
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
