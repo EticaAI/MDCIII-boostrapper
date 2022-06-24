@@ -1,10 +1,10 @@
 #!/bin/bash
 #===============================================================================
 #
-#          FILE:  1603_1.lib.sh
+#          FILE:  1603_16_1.lib.sh
 #
 #         USAGE:  #import on other scripts
-#                 . "$ROOTDIR"/999999999/1603_1.lib.sh
+#                 . "$ROOTDIR"/999999999/1603_16_1.lib.sh
 #
 #   DESCRIPTION:  ---
 #
@@ -22,7 +22,7 @@
 #      REVISION:  ---
 #===============================================================================
 
-# echo "DEBUG: starting 1603_1.lib.sh"
+# echo "DEBUG: starting 1603_16_1.lib.sh"
 
 # shellcheck source=3133368.lib.sh
 . "${ROOTDIR}/999999999/3133368.lib.sh"
@@ -68,4 +68,23 @@ gh_repo_init_1603_16_1() {
   gh_repo_create_numerordinatio "1603_16_1" "🌐"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 
+}
+
+#######################################
+# Update 1603_16_1
+#
+# Globals:
+#   ROOTDIR
+#   AUTOMATON__1603_16__CPLP_UNICAE
+#   UNM49_INITIALI
+#   UNM49_FINALI
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_update_1603_16_1() {
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED  ${tty_normal}"
+  echo "TODO"
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
