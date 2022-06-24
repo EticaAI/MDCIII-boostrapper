@@ -117,6 +117,9 @@ gh_repo_update_1603_16_1() {
   lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${DESTDIR}"
   lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${DESTDIR}"
 
+  _gitattributes__localrepo="999999/3133368/${gh_repo_name}/.gitattributes"
+  _gitattributes__templated="999999999/42302/.gitattributes"
+
   _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
   _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
   _numerodinatio_cod_ab_all="${gh_repo_name}_0"
@@ -140,6 +143,13 @@ gh_repo_update_1603_16_1() {
 
   # shellcheck disable=SC2164
   cd "${ROOTDIR}"
+
+  # @TODO when templated .gitattributes changes, this logic will need to
+  #       be manually changed at least once
+  if [ ! -f "$_gitattributes__localrepo" ]; then
+    echo "Adding .gitattributes first time [$_gitattributes__localrepo]"
+    cp "$_gitattributes__templated" "$_gitattributes__localrepo"
+  fi
 
   gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
   gh_repo_sync_push "${gh_repo_name}"
