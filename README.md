@@ -1,5 +1,11 @@
 # EticaAI/lexicographi-sine-finibus agentī
 
+<!--
+- https://en.wikipedia.org/wiki/Ontology_components
+  - https://en.wikipedia.org/wiki/Type%E2%80%93token_distinction
+    - https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation
+-->
+
 ## Apothēcae
 
 > **Data per automatīs**
@@ -14,6 +20,19 @@
 ### Apothēca arēnāriō Ad GitHub
 
 Nūllus
+
+## .ext?
+
+| `.ext`?             |  GitHub      | Vicipaedia           |
+| ------------------- | ------------------- | ------------------- |
+| `.no1.owl.ttl`      |  [owl](https://github.com/topics/owl), [graph-database](https://github.com/topics/graph-database), [reasoning](https://github.com/topics/reasoning), [protege](https://github.com/topics/protege) | [Q826165 <sup>OWL</sup>](https://www.wikidata.org/wiki/Q826165) |
+| `.no1.skos.ttl`     | [skos](https://github.com/topics/skos), [thesaurus](https://github.com/topics/thesaurus), [multilingual](https://github.com/topics/multilingual), [vocabularies](https://github.com/topics/vocabularies) | [Q2288360 <sup>SKOS</sup>](https://www.wikidata.org/wiki/Q2288360) |
+| `.no1.tm.hxl.csv`   | [tabular-data](https://github.com/topics/tabular-data), [sql](https://github.com/topics/sql) | -- |
+| `.r2rml.ttl`  |  [r2rml](https://github.com/topics/r2rml), [obda](https://github.com/topics/obda), [rml-mapping](https://github.com/topics/rml-mapping) | [Q108249512 <sup>RDF Mapping language</sup>](https://www.wikidata.org/wiki/Q108249512) | [Q108249512 <sup>RDF Mapping language</sup>](https://www.wikidata.org/wiki/Q108249512 |
+| `catalog-v001.xml`  | [oasis-xml-catalogs](https://github.com/topics/oasis-xml-catalogs), [urn](https://github.com/topics/urn), [resolver](https://github.com/topics/resolver), [protege](https://github.com/topics/protege) | -- |
+| `csv-metadata.json`  |  [csvw](https://github.com/topics/csvw), [linked-data](https://github.com/topics/data-package) | -- |
+| `datapackage.json`  |  [frictionlessdata](https://github.com/topics/frictionlessdata), [data-package](https://github.com/topics/data-package) | -- |
+
 
 <!--
 @TODO need to enable some way to keep alive before 60 days passed.
@@ -30,6 +49,22 @@ Nūllus
 ## Project test cases
 - /workspace/git/mdciii/1568346_20220619
 - https://github.com/MDCIII/1568346_20220619/
+
+## Potential tools to look
+- https://github.com/SDM-TIB/SDM-RDFizer
+  - https://rml.io/implementation-report/
+  - https://rml.io/docs/rml/data-retrieval/
+    - https://github.com/RMLio/rml-fno-test-cases
+
+## Potential data sources
+### Population
+- https://github.com/datasets/population/issues/10
+  - Worldbank
+    - http://api.worldbank.org/v2/country/all/indicator/SP.POP.TOTL?format=jsonstat
+  - https://data.worldbank.org/indicator/SP.POP.TOTL
+
+## New formats?
+- JSON stat (?): https://json-stat.org/
 
 ## Requires more tunning
 - https://protegewiki.stanford.edu/wiki/Scalability_and_Tuning

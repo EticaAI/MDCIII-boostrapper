@@ -241,15 +241,19 @@ local_permisions_fix() {
 local_system_dependencies_python() {
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
 
-  pip3 install hxltm-eticaai
+  # pip3 install hxltm-eticaai
+  # echo "NOTICE: intalling hxltm-eticaai from unreleased version"
+  # set -x
+  # pip3 install --force-reinstall https://github.com/EticaAI/hxltm/archive/refs/heads/main.zip
+  # echo "NOTICE: intalling hxltm-eticaai from unreleased version"
+  set -x
+  pip3 install --upgrade --pre hxltm-eticaai
+
   pip3 install libhxl
   pip3 install openpyxl
   pip3 install frictionless
-
-  echo "Testing versions"
-
-  echo "hxltmcli --versionem"
   hxltmcli --versionem
+  set +x
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 }
