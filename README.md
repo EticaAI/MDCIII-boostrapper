@@ -1,4 +1,4 @@
-# EticaAI/lexicographi-sine-finibus agentī
+# EticaAI/lexicographi-sine-finibus automatō agentī
 
 <!--
 - https://en.wikipedia.org/wiki/Ontology_components

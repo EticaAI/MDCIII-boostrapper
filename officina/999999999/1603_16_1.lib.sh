@@ -122,6 +122,8 @@ gh_repo_update_1603_16_1() {
 
   _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
   _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
+  _csvmetadata_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/csv-metadata.json"
+  _r2rml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/mdciii.r2rml.ttl"
   _numerodinatio_cod_ab_all="${gh_repo_name}_0"
 
   set -x
@@ -133,6 +135,20 @@ gh_repo_update_1603_16_1() {
   "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
     --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
     --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
+
+  "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+    --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+    --data-apothecae-formato='csvw' \
+    --data-apothecae-ad-stdout \
+    > "$_csvmetadata_cod_ab_all__localrepo"
+
+  "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+    --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+    --data-apothecae-formato='r2rml' \
+    --data-apothecae-ad-stdout \
+    > "$_r2rml_cod_ab_all__localrepo"
+
+  # ./999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ad-stdout --data-apothecae-formato='r2rml' --data-apothecae-ex-suffixis='no1.tm.hxl.csv,no11.tm.hxl.csv' --data-apothecae-ex-praefixis='1603_1_1'
   set +x
 
   # shellcheck disable=SC2164
