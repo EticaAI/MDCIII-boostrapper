@@ -636,15 +636,17 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="$_datapackage_cod_ab_all__localrepo"
 
-      "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+      DATA_APOTHECAE_MINIMIS="1" \
+        "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
 
-      "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+      DATA_APOTHECAE_MINIMIS="1" \
+        "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-formato='csvw' \
         --data-apothecae-ad-stdout \
-        > "$_csvmetadata_cod_ab_all__localrepo"
+        >"$_csvmetadata_cod_ab_all__localrepo"
 
       # Not enabling yet r2rml for all (2022-06-26)
       # "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
