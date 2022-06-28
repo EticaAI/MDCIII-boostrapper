@@ -618,6 +618,8 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       # gh_repo_local="${ROOTDIR}/999999/3133368/${gh_repo_name}"
       _datapackage_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/datapackage.json"
       _catalogxml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/catalog-v001.xml"
+      _csvmetadata_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/csv-metadata.json"
+      _r2rml_cod_ab_all__localrepo="999999/3133368/${gh_repo_name}/mdciii.r2rml.ttl"
       _catalogxml_cod_ab_all__localrepo_old="999999/3133368/${gh_repo_name}/catalog-v004.xml"
       _gitattributes__localrepo="999999/3133368/${gh_repo_name}/.gitattributes"
       _gitattributes__templated="999999999/42302/.gitattributes"
@@ -637,6 +639,20 @@ gh_repo_update_lexicographi_sine_finibus_1603_16_NNN() {
       "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
         --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
         --data-apothecae-ad="${_catalogxml_cod_ab_all__localrepo}"
+
+      "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+        --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+        --data-apothecae-formato='csvw' \
+        --data-apothecae-ad-stdout \
+        > "$_csvmetadata_cod_ab_all__localrepo"
+
+      # Not enabling yet r2rml for all (2022-06-26)
+      # "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
+      #   --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
+      #   --data-apothecae-formato='r2rml' \
+      #   --data-apothecae-ad-stdout \
+      #   > "$_r2rml_cod_ab_all__localrepo"
+
       set +x
 
       if [ -f "$_catalogxml_cod_ab_all__localrepo_old" ]; then

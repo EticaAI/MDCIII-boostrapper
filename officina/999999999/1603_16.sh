@@ -73,12 +73,12 @@ NUMERORDINATIO_BASIM="$ROOTDIR"
 # Already done with 0_3.sh (also called by 0_2.sh)
 
 AUTOMATON__1603_16__CPLP_UNICAE="1"
-# AUTOMATON__1603_16__CPLP_UNICAE="0"
+AUTOMATON__1603_16__CPLP_UNICAE="0"
 # UNM49_INITIALI="0"
 # UNM49_FINALI="300"
 # 68 COL
-# UNM49_INITIALI="67"
-# UNM49_FINALI="70"
+UNM49_INITIALI="67"
+UNM49_FINALI="70"
 
 ### 2. Download main repository   ----------------------------------------------
 ## 2.1 The repository itself

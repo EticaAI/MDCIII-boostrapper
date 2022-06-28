@@ -55,6 +55,7 @@ Nūllus
   - https://rml.io/implementation-report/
   - https://rml.io/docs/rml/data-retrieval/
     - https://github.com/RMLio/rml-fno-test-cases
+- https://csvw.org/tools.html
 
 ## Potential data sources
 ### Population
