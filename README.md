@@ -56,6 +56,7 @@ Nūllus
   - https://rml.io/docs/rml/data-retrieval/
     - https://github.com/RMLio/rml-fno-test-cases
 - https://csvw.org/tools.html
+- https://github.com/cldf/csvw
 
 ## Potential data sources
 ### Population
@@ -322,6 +323,20 @@ WHERE \"status\" = 1"""
       rr:template "http://example.org/uni2/person/{pid}";
       rr:termType rr:IRI
     ] .
+
+```
+
+## preview data tricks
+
+```
+# via https://www.stefaanlippens.net/pretty-csv.html
+cat data.csv | sed 's/,/ ,/g' | column -t -s, | less -S
+```
+
+```
+/workspace/git/EticaAI/MDCIII-boostrapper/officina/999999999/0/999999999_7200235.py --methodus=xlsx_ad_no1 --numerordinatio-praefixo=1603_16 --ordines=1 --pcode-praefix=BO --unm49=68 /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/1603/45/16/xlsx/bol.xlsx | sed 's/,/ ,/g' | column -t -s, | less -S
+
+/workspace/git/EticaAI/lexicographi-sine-finibus/officina/999999999/0/999999999_7200235.py --methodus=xlsx_ad_no1 --numerordinatio-praefixo=1603_16 --ordines=1 --pcode-praefix=BO --unm49=68 --experimentum-est /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/1603/45/16/xlsx/bol.xlsx | sed 's/,/ ,/g' | column -t -s, | less -S
 
 ```
 -->

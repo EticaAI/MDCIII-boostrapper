@@ -252,6 +252,7 @@ local_system_dependencies_python() {
   pip3 install libhxl
   pip3 install openpyxl
   pip3 install frictionless
+  pip3 install csvkit
   hxltmcli --versionem
   set +x
 
