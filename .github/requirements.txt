@@ -2,7 +2,8 @@ hxltm-eticaai
 python-liquid
 langcodes
 pyyaml
-libhxl
+# @see https://github.com/EticaAI/hxltm/issues/14
+libhxl==4.25
 openpyxl
 frictionless
 csvkit
