@@ -69,7 +69,7 @@ set -e
 # __temp_999999_1603_16_boostraper
 # gh_repo_sync_push "999999_1603_16"
 
-echo "999999_1603_16.workflow.sh already done via standard GitHub Actions"
-echo "or via manual operations. Nothing to to."
+echo "INFO: 999999_1603_16.workflow.sh already done via standard GitHub Actions"
+echo "      or via manual operations. Nothing to to."
 
 exit 0

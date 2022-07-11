@@ -326,6 +326,17 @@ WHERE \"status\" = 1"""
 
 ```
 
+## mustache
+https://github.com/noahmorrison/chevron
+
+```
+pip3 install chevron
+chevron --help
+
+echo '{"var1": "value1"}' > 999999/0/mustache-data-test.json
+
+```
+
 ## preview data tricks
 
 ```
