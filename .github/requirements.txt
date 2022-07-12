@@ -1,9 +1,10 @@
 hxltm-eticaai
+# Locking version at 4.25.1 for libhxl (used by hxltm-eticaai, which at the
+# moment does not enforce any versions of dependencies)
+libhxl==4.25.1
 python-liquid
 langcodes
 pyyaml
-# @see https://github.com/EticaAI/hxltm/issues/14
-libhxl==4.25
 openpyxl
 frictionless
 csvkit
