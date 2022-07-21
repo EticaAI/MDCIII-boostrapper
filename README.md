@@ -44,7 +44,14 @@ Nūllus
       - https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile
         - .github/profile/README.md
       - Organization picture from https://unsplash.com/photos/_YzGQvASeMk
-
+@TODO why 'data-package-catalog' is not validating, despite being described at 
+      https://specs.frictionlessdata.io/patterns/#overview-9?
+      Maybe:
+      1) not as part of
+      github.com/frictionlessdata/frictionless-py/tree/main/frictionless/assets/profiles/package
+      2) cannot be mixed if the current dataset actually have reference for
+         all data inline (without need to fetch all datapackages referenced)
+         by other paths.
 
 ## Project test cases
 - /workspace/git/mdciii/1568346_20220619
@@ -334,6 +341,9 @@ pip3 install chevron
 chevron --help
 
 echo '{"var1": "value1"}' > 999999/0/mustache-data-test.json
+echo '# Hello [{{ var1 }}]! ' > 999999/0/mustache-template-test.md
+
+chevron --data=999999/0/mustache-data-test.json 999999/0/mustache-template-test.md
 
 ```
 

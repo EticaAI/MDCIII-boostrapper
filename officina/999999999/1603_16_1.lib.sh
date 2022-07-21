@@ -168,7 +168,7 @@ gh_repo_update_1603_16_1() {
   fi
 
   gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
-  gh_repo_sync_push "${gh_repo_name}"
+  # gh_repo_sync_push "${gh_repo_name}"
 
   # ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv'
 

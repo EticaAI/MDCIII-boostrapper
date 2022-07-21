@@ -54,3 +54,14 @@ exit 0
 gh_repo_init_1603_16_1
 # gh_repo_edit_1603_16_1__topics
 gh_repo_update_1603_16_1
+
+
+# ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv' --numerordinatio-praefixo="1603_16"
+
+# ./999999999/0/1603_3_12.py --help
+# printf "P17\n" | ./999999999/0/1603_3_12.py --actionem-sparql --de=P --query --ex-interlinguis
+# printf "P17\n" | ./999999999/0/1603_3_12.py --actionem-sparql --de=P --query --ex-interlinguis | ./999999999/0/1603_3_12.py --actionem-sparql --csv --hxltm
+
+# https://github.com/topics/csvw
+# https://github.com/bencomp/csvw-mustaches
+# https://github.com/rdf-ext/rdf-parser-csvw/issues/11

@@ -220,10 +220,19 @@ jobs:
           https://raw.githubusercontent.com/EticaAI/lsf-cache/main/999999/1603/45/16/1603_45_16.index.hxl.csv
         continue-on-error: true
 
+      - name: "Temporary fix [999999/1603/3/45/16/1/1/1603_3_45_16_1_1.no11.tm.hxl.csv]"
+        run: >
+          curl --output 999999/1603/3/45/16/1/1/1603_3_45_16_1_1.no11.tm.hxl.csv
+          https://raw.githubusercontent.com/EticaAI/lsf-cache/main/999999/1603/3/45/16/1/1/1603_3_45_16_1_1.no11.tm.hxl.csv
+        continue-on-error: true
+
       - run: ls -lha 1603/1/99/1603_1_99.no1.tm.hxl.csv
         continue-on-error: true
 
       - run: ls -lha 999999/1603/45/16/1603_45_16.index.hxl.csv
+        continue-on-error: true
+
+      - run: ls -lha 999999/1603/3/45/16/1/1/1603_3_45_16_1_1.no11.tm.hxl.csv
         continue-on-error: true
 
       #### Python ______________________________________________________________
