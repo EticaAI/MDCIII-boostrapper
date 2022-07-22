@@ -94,6 +94,10 @@ gh_repo_fetch_lexicographi_sine_finibus() {
 
   else
     printf "\t%40s\n" "${tty_blue} INFO: base dir already exist [$trivium_basi] ${tty_normal}"
+
+    echo "TO PURGE:"
+    echo "    rm -rf ${trivium_basi}"
+
     set -x
     cd "${trivium_basi}" || exit
     # ls -lha
@@ -122,7 +126,7 @@ gh_repo_fetch_lexicographi_sine_finibus() {
   # https://raw.githubusercontent.com/EticaAI/lsf-cache/main/1603/1/99/1603_1_99.no1.tm.hxl.csv
 
   echo "TO PURGE:"
-  echo "    rm -r ${trivium_basi}"
+  echo "    rm -rf ${trivium_basi}"
 
   echo "Note: if this is first time, you need to initialize also the data"
   echo "   gh_repo_init_lexicographi_sine_finibus_1603_16_NNN"
@@ -253,6 +257,7 @@ local_system_dependencies_python() {
   pip3 install openpyxl
   pip3 install frictionless
   pip3 install csvkit
+  pip3 install 'rdflib>=6.0.0'
   hxltmcli --versionem
   set +x
 
