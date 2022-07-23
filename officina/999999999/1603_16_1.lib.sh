@@ -77,10 +77,7 @@ gh_repo_init_1603_16_1() {
 # Update 1603_16_1
 #
 # Globals:
-#   ROOTDIR
-#   AUTOMATON__1603_16__CPLP_UNICAE
-#   UNM49_INITIALI
-#   UNM49_FINALI
+#   DESTDIR
 # Arguments:
 #
 # Outputs:
@@ -140,13 +137,13 @@ gh_repo_update_1603_16_1() {
     --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
     --data-apothecae-formato='csvw' \
     --data-apothecae-ad-stdout \
-    > "$_csvmetadata_cod_ab_all__localrepo"
+    >"$_csvmetadata_cod_ab_all__localrepo"
 
   "${ROOTDIR}/999999999/0/1603_1.py" --methodus='data-apothecae' \
     --data-apothecae-ex="${_numerodinatio_cod_ab_all}" \
     --data-apothecae-formato='r2rml' \
     --data-apothecae-ad-stdout \
-    > "$_r2rml_cod_ab_all__localrepo"
+    >"$_r2rml_cod_ab_all__localrepo"
 
   # ./999999999/0/1603_1.py --methodus='data-apothecae' --data-apothecae-ad-stdout --data-apothecae-formato='r2rml' --data-apothecae-ex-suffixis='no1.tm.hxl.csv,no11.tm.hxl.csv' --data-apothecae-ex-praefixis='1603_1_1'
   set +x
@@ -177,4 +174,84 @@ gh_repo_update_1603_16_1() {
   echo "::endgroup::"
 
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
+}
+
+#######################################
+# Update 1603_16_1_0 (ab level 0)
+# Similar to bootstrap_1603_16_1_0__radix(), however reuse
+# 1603_16_1_0.no1.tm.hxl.csv to re-generate the rest.
+#
+# Globals:
+#   DESTDIR
+# Arguments:
+#
+# Outputs:
+#    999999/3133368/lexicographi-sine-finibus
+#######################################
+gh_repo_update_1603_16_1__boostrap_0() {
+  gh_repo_name="1603_16_1"
+
+  _radix_apothecae="${DESTDIR}"
+  _radix_localrepo="${DESTDIR}/999999/3133368/${gh_repo_name}"
+
+  archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
+  archivum_no1_bcp47min__relative="1603/16/1/0/1603_16_1_0.no1.bcp47.csv"
+  archivum_no1_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
+  #archivum_no1_skos__relative="not applicable"
+
+  archivum_no11__relative="1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
+  archivum_no11_bcp47min__relative="1603/16/1/0/1603_16_1_0.no11.bcp47.csv"
+  #archivum_no11_owl__relative="not applicable"
+  archivum_no11_skos__relative="1603/16/1/0/1603_16_1_0.no11.skos.ttl"
+
+  archivum_wikiq__relative="1603/16/1/0/1603_16_1_0.wikiq.tm.hxl.csv"
+
+  csv_temporarium_1="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~1.csv"
+  csv_temporarium_2="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~2.csv"
+
+  ttl_temporarium_1="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~1.ttl"
+  ttl_temporarium_2="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~2.ttl"
+
+  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
+  start_time_fn_b=$(date +%s)
+
+  ls -lha 1603/16/1/0/
+  ls -lha "$_radix_localrepo"
+
+  ## NO1 bcp47 -----------------------------------------------------------------
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_no1_to_no1_shortnames \
+    --real-infile-path="${_radix_apothecae}/${archivum_no1__relative}" \
+    >"${csv_temporarium_1}"
+
+  # Temporary fix: remove some generated tags with error: +ix_error
+  # Somewhat temporary: remove non-merget alts: +ix_alt1|+ix_alt12|+ix_alt13
+  # Non-temporary: remove implicit tags: +ix_hxlattrs
+  hxlcut \
+    --exclude='#*+ix_error,#*+ix_hxlattrs,#*+ix_alt1,#*+ix_alt2,#*+ix_alt3' \
+    "${csv_temporarium_1}" >"${csv_temporarium_2}"
+
+  # Delete first line ,,,,,
+  sed -i '1d' "${csv_temporarium_2}"
+
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_data_hxl_to_bcp47 \
+    --real-infile-path="${csv_temporarium_2}" >"${csv_temporarium_1}"
+
+  frictionless validate "${csv_temporarium_1}"
+
+  set +x
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_1}" \
+    "${_radix_apothecae}/${archivum_no1_bcp47min__relative}"
+
+  ## NO1 bcp47 -----------------------------------------------------------------
+
+  set +x
+  ls -lha "$_radix_localrepo"
+
+  end_time=$(date +%s)
+  elapsed=$((end_time - start_time_fn_b))
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY in ${elapsed}s ${tty_normal}"
 }
