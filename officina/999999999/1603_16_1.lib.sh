@@ -190,6 +190,7 @@ gh_repo_update_1603_16_1() {
 #######################################
 gh_repo_update_1603_16_1__boostrap_0() {
   gh_repo_name="1603_16_1"
+  numerodinatio_group="${gh_repo_name}_0"
 
   _radix_apothecae="${DESTDIR}"
   _radix_localrepo="${DESTDIR}/999999/3133368/${gh_repo_name}"
@@ -217,6 +218,16 @@ gh_repo_update_1603_16_1__boostrap_0() {
 
   ls -lha 1603/16/1/0/
   ls -lha "$_radix_localrepo"
+
+  ## NO1 tm.hxl.csv ------------------------------------------------------------
+  # We just copy the internal table to the local repository
+  # set -x
+  frictionless validate "${_radix_apothecae}/${archivum_no1__relative}"
+  cp "${_radix_apothecae}/${archivum_no1__relative}" "$csv_temporarium_1"
+
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_1}" \
+    "${_radix_localrepo}/${archivum_no1__relative}"
 
   ## NO1 bcp47 -----------------------------------------------------------------
   set -x
@@ -246,10 +257,16 @@ gh_repo_update_1603_16_1__boostrap_0() {
     "${csv_temporarium_1}" \
     "${_radix_apothecae}/${archivum_no1_bcp47min__relative}"
 
-  ## NO1 bcp47 -----------------------------------------------------------------
+  ## wikiq.tm.hxl.csv ----------------------------------------------------------
+  set -x
+  ROOTDIR="$DESTDIR" \
+    file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
 
-  set +x
+  ## Fini ----------------------------------------------------------------------
+  set -x
+  ls -lha 1603/16/1/0/
   ls -lha "$_radix_localrepo"
+  set +x
 
   end_time=$(date +%s)
   elapsed=$((end_time - start_time_fn_b))
