@@ -222,6 +222,10 @@ gh_repo_update_1603_16_1__boostrap_0() {
   ## NO1 tm.hxl.csv ------------------------------------------------------------
   # We just copy the internal table to the local repository
   # set -x
+  # @TODO: move this part to the end. We should only copy files to local
+  #        repository if all steps worked well. Otherwise it adds noise
+  #        to failed jobs (which are likely to happens from time to time)
+
   frictionless validate "${_radix_apothecae}/${archivum_no1__relative}"
   cp "${_radix_apothecae}/${archivum_no1__relative}" "$csv_temporarium_1"
 
@@ -258,9 +262,101 @@ gh_repo_update_1603_16_1__boostrap_0() {
     "${_radix_apothecae}/${archivum_no1_bcp47min__relative}"
 
   ## wikiq.tm.hxl.csv ----------------------------------------------------------
+  # RESULT: 1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv
+  # NOTE:   this is the slowest step, as will fetch Wikidata translations
+
+  # ROOTDIR="$DESTDIR" \
+  #   file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+
+  ## NO11 tm.hxl.csv -----------------------------------------------------------
+  # RESULT: 1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv
+  # We merge no1 + wikiq files into no11
+
+  frictionless validate "1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
+  file_merge_numerordinatio_de_wiki_q "$numerodinatio_group" "0" "0"
+
+  ## NO1 bcp47min --------------------------------------------------------------
   set -x
-  ROOTDIR="$DESTDIR" \
-    file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_data_hxl_to_bcp47 \
+    --real-infile-path="${archivum_no1__relative}" >"${csv_temporarium_1}"
+
+  frictionless validate "${csv_temporarium_1}"
+  set +x
+
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_1}" \
+    "${_radix_apothecae}/${archivum_no1_bcp47min__relative}"
+
+  ## NO11 bcp47min -------------------------------------------------------------
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_data_hxl_to_bcp47 \
+    --real-infile-path="${archivum_no11__relative}" >"${csv_temporarium_1}"
+
+  frictionless validate "${csv_temporarium_1}"
+
+  set +x
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_1}" \
+    "${_radix_apothecae}/${archivum_no11_bcp47min__relative}"
+
+  ## NO1 RDF/OWL ------------------------------------------------------------------
+  # Computational-like RDF serialization, "OWL version"
+  # @TODO fix generation of invalid format if
+  #       --rdf-sine-spatia-nominalibus=skos,devnull is enabled
+  rdf_ontologia_ordinibus='4'
+  rdf_trivio='5000'
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_no1 \
+    --numerordinatio-cum-antecessoribus \
+    --rdf-sine-spatia-nominalibus=devnull \
+    --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
+    --rdf-trivio="${rdf_trivio}" \
+    <"${_radix_apothecae}/${archivum_no1__relative}" >"${ttl_temporarium_1}"
+
+  rdfpipe --input-format=turtle --output-format=longturtle \
+    "${ttl_temporarium_1}" \
+    >"${ttl_temporarium_2}"
+
+  riot --validate "${ttl_temporarium_2}"
+  set +x
+
+  file_update_if_necessary "skip-validation" \
+    "${ttl_temporarium_2}" \
+    "${_radix_apothecae}/${archivum_no1_owl__relative}"
+
+  ## NO11 RDF/SKOS -------------------------------------------------------------
+  # Linguistic-like RDF serialization, "SKOS version"
+  # @TODO fix invalid generation if disabling OWL with
+  #        --rdf-sine-spatia-nominalibus=owl
+
+  head -n 2 "${_radix_apothecae}/${archivum_no11__relative}"
+  sleep 5
+  rdf_ontologia_ordinibus='4'
+  rdf_trivio='5000'
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_no1 \
+    --numerordinatio-cum-antecessoribus \
+    --rdf-sine-spatia-nominalibus=obo,geo,wdata,devnull \
+    --rdf-ontologia-ordinibus="${rdf_ontologia_ordinibus}" \
+    --rdf-trivio="${rdf_trivio}" \
+    <"${_radix_apothecae}/${archivum_no11__relative}" >"${ttl_temporarium_1}"
+
+  rdfpipe --input-format=turtle --output-format=longturtle \
+    "${ttl_temporarium_1}" \
+    >"${ttl_temporarium_2}"
+
+  riot --validate "${ttl_temporarium_2}"
+  set +x
+
+  file_update_if_necessary "skip-validation" \
+    "${ttl_temporarium_2}" \
+    "${_radix_apothecae}/${archivum_no11_skos__relative}"
+
+  sleep 15
 
   ## Fini ----------------------------------------------------------------------
   set -x
