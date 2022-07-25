@@ -28,188 +28,6 @@
 . "${ROOTDIR}/999999999/3133368.lib.sh"
 
 #######################################
-# Merge no1.tm.hxl.csv with wikiq.tm.hxl.csv
-#
-# Globals:
-#   ROOTDIR
-# Arguments:
-#   numerordinatio
-#   est_temporarium_fontem (default "1", from 99999/)
-#   est_temporarium_objectivumm (dfault "0", from real namespace)
-#   est_non_normale
-#   hxlattrs (default "", example: '+rdf_p_skos_preflabel_s5000')
-# Outputs:
-#   Convert files
-#######################################
-file_merge_numerordinatio_de_wiki_q() {
-  numerordinatio="$1"
-  est_temporarium_fontem="${2:-"1"}"
-  est_temporarium_objectivum="${3:-"0"}"
-  est_non_normale="${4:-"0"}"
-  hxlattrs="${5:-""}"
-
-  echo "hxlattrs $hxlattrs"
-
-  # sleep 10
-
-  _path=$(numerordinatio_neo_separatum "$numerordinatio" "/")
-  _nomen=$(numerordinatio_neo_separatum "$numerordinatio" "_")
-  _prefix=$(numerordinatio_neo_separatum "$numerordinatio" ":")
-
-  if [ "$est_temporarium_fontem" -eq "1" ]; then
-    _basim_fontem="${ROOTDIR}/999999"
-  else
-    _basim_fontem="${ROOTDIR}"
-  fi
-  if [ "$est_temporarium_objectivum" -eq "1" ]; then
-    _basim_objectivum="${ROOTDIR}/999999"
-  else
-    _basim_objectivum="${ROOTDIR}"
-  fi
-
-  fontem_archivum="${_basim_fontem}/$_path/$_nomen.no1.tm.hxl.csv"
-  fontem_q_archivum="${_basim_fontem}/$_path/$_nomen.wikiq.tm.hxl.csv"
-  objectivum_archivum="${_basim_objectivum}/$_path/$_nomen.no11.tm.hxl.csv"
-  objectivum_archivum_temporarium="${ROOTDIR}/999999/0/$_nomen.no11.tm.hxl.csv"
-  fontem_q_archivum_temporarium="${ROOTDIR}/999999/0/$_nomen.wikiq.tm.hxl.csv"
-  fontem_q_archivum_temporarium_2="${ROOTDIR}/999999/0/$_nomen.wikiq.tm.hxl.csv"
-  # objectivum_archivum_temporarium_b="${ROOTDIR}/999999/0/$_nomen.q.txt"
-  # objectivum_archivum_temporarium_b_u="${ROOTDIR}/999999/0/$_nomen.uniq.q.txt"
-  # objectivum_archivum_temporarium_b_u_wiki="${ROOTDIR}/999999/0/$_nomen.wikiq.tm.hxl.csv"
-
-  # TODO: implement check if necessary to revalidate
-  echo "${FUNCNAME[0]} sources changed_recently. Reloading... [$fontem_archivum]"
-
-  # NOTE: explanation on the hotfix +ix_deleteme here:
-  #       https://github.com/EticaAI/multilingual-lexicography/issues/
-  #       29#issuecomment-1111707350
-  #       This may be removed when hxlmerge --replace works with so many
-  #       columns at once.
-
-  if [ "$est_non_normale" -eq "1" ]; then
-    # We apply 'hxlclean --lower' only on writting systems which this make
-    # sence. On this case at least '+is_latn,+is_cyrl'
-    hxlrename \
-      --rename='item+conceptum+codicem:#item+rem+i_qcc+is_zxxx+ix_wikiq' \
-      "$fontem_q_archivum" |
-      hxlclean --lower='#*+is_latn,#*+is_cyrl' \
-        >"$fontem_q_archivum_temporarium"
-  else
-    # We apply 'hxlclean --lower' only on writting systems which this make
-    # sence. On this case at least '+is_latn,+is_cyrl'
-    hxlrename \
-      --rename='item+conceptum+codicem:#item+rem+i_qcc+is_zxxx+ix_wikiq' \
-      "$fontem_q_archivum" \
-      >"$fontem_q_archivum_temporarium"
-  fi
-
-  # cat "$fontem_q_archivum_temporarium"
-  # exit 0
-
-  # @TODO this pure bash part is ugly. Better be by calling some of the py
-  #       scripts. But for now using this (Rocha, 2022-07-24 04:09 UTC)
-  if [ "$hxlattrs" != "" ]; then
-    echo "TODO..."
-    sed -i '1d' "${fontem_q_archivum_temporarium}"
-    _caput=$(head -n 1 "$fontem_q_archivum_temporarium")
-    _caput_novo_arr=()
-
-    cat "$fontem_q_archivum_temporarium" | head -n 2
-    # exit 0
-
-    echo "_caput [$_caput]"
-
-    for i in ${_caput//,/ }; do
-      # _item="$i"
-      # call your procedure/other scripts here below
-      # echo "$i"
-      if [[ "$i" =~ .*"+conceptum".* || "$i" =~ .*"+i_qcc+is_zxxx".* ]]; then
-        # explicity non linguitic; Use as it is
-        __caput_novo_arr+=("$i")
-        continue
-      fi
-      if [[ "$i" =~ .*"+rem+i_".* ]]; then
-        # Likely linguistic, Lets try check if already contais
-
-        if [[ "$i" =~ .*"$hxlattrs".* ]]; then
-          # Likely linguistic, Lets try check if already contais
-          __caput_novo_arr+=("$i")
-          continue
-        else
-          _caput_novo_arr+=("${i}${hxlattrs}")
-        fi
-        continue
-      fi
-      # Some check failed. Adding as it is
-      _caput_novo_arr+=("$i")
-    done
-    # echo "_caput_novo_arr"
-    # echo "${_caput_novo_arr[*]}"
-
-    # foo=('foo bar' 'foo baz' 'bar baz')
-    _caput_novo_str=$(printf ",%s" "${_caput_novo_arr[@]}")
-    _caput_novo_str=${_caput_novo_str:1}
-    echo "_caput_novo_str $_caput_novo_str"
-
-    echo "$_caput_novo_str" >"$fontem_q_archivum_temporarium_2"
-
-    cat "$fontem_q_archivum_temporarium" | head -n 2
-    exit 0
-    cat "$fontem_q_archivum_temporarium" | tail -n+2 >>"$fontem_q_archivum_temporarium_2"
-
-    echo "check $fontem_q_archivum_temporarium_2"
-
-    sleep 20
-  fi
-
-  # hxlmerge --keys='#item+rem+i_qcc+is_zxxx+ix_wikiq' \
-  #   --tags='#item+rem' \
-  #   --merge="$fontem_q_archivum" \
-  #   "$fontem_archivum" \
-  #   >"$objectivum_archivum_temporarium"
-
-  # echo "oi2"
-
-  hxlmerge --keys='#item+rem+i_qcc+is_zxxx+ix_wikiq' \
-    --tags='#item+rem' \
-    --merge="$fontem_q_archivum_temporarium" \
-    "$fontem_archivum" \
-    >"$objectivum_archivum_temporarium"
-
-  # BUG: if we use hxlmerge --replace, instead of not be repeated on final
-  #      dataset, we lost all additional column data. This migth be because
-  #      we're far beyond typical number of columns libhxl-python is tested to
-  #      work
-
-  # set -x
-  # hxlmerge --keys='#item+rem+i_qcc+is_zxxx+ix_wikiq' \
-  #   --replace \
-  #   --tags='#item+rem' \
-  #   --merge="$fontem_q_archivum_temporarium" \
-  #   "$fontem_archivum" \
-  #   >"$objectivum_archivum_temporarium"
-  # set +x
-
-  # | hxlcut --exclude='#item+rem+i_qcc+is_zxxx+ix_wikiq+ix_deleteme'
-
-  sed -i '1d' "${objectivum_archivum_temporarium}"
-
-  file_hotfix_duplicated_merge_key "${objectivum_archivum_temporarium}" '#item+rem+i_qcc+is_zxxx+ix_wikiq'
-
-  # cp "$objectivum_archivum_temporarium" "$objectivum_archivum_temporarium.tmp"
-  # rm "$fontem_q_archivum_temporarium"
-
-  # @TODO: disable this as file_update_if_necessary implemnt it
-  frictionless validate "${objectivum_archivum_temporarium}"
-
-  file_update_if_necessary "skip-validation" \
-    "$objectivum_archivum_temporarium" \
-    "$objectivum_archivum"
-
-  return 0
-}
-
-#######################################
 # Update all repositories (if necessary)
 #
 # Globals:
@@ -388,6 +206,7 @@ gh_repo_update_1603_16_1__boostrap_0() {
   archivum_no11_skos__relative="1603/16/1/0/1603_16_1_0.no11.skos.ttl"
 
   archivum_wikiq__relative="1603/16/1/0/1603_16_1_0.wikiq.tm.hxl.csv"
+  archivum_datapackage_unicae__relative="1603/16/1/0/datapackage.json"
 
   csv_temporarium_1="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~1.csv"
   csv_temporarium_2="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~2.csv"
@@ -409,37 +228,8 @@ gh_repo_update_1603_16_1__boostrap_0() {
   frictionless validate "${_radix_apothecae}/${archivum_no1__relative}"
   # cp "${_radix_apothecae}/${archivum_no1__relative}" "$csv_temporarium_1"
   set +x
-  # file_update_if_necessary "skip-validation" \
-  #   "${csv_temporarium_1}" \
-  #   "${_radix_localrepo}/${archivum_no1__relative}"
 
   ## NO1 bcp47 -----------------------------------------------------------------
-  # set -x
-  # "${ROOTDIR}/999999999/0/999999999_54872.py" \
-  #   --methodus=_temp_no1_to_no1_shortnames \
-  #   --real-infile-path="${_radix_apothecae}/${archivum_no1__relative}" \
-  #   >"${csv_temporarium_1}"
-
-  # # Temporary fix: remove some generated tags with error: +ix_error
-  # # Somewhat temporary: remove non-merget alts: +ix_alt1|+ix_alt12|+ix_alt13
-  # # Non-temporary: remove implicit tags: +ix_hxlattrs
-  # hxlcut \
-  #   --exclude='#*+ix_error,#*+ix_hxlattrs,#*+ix_alt1,#*+ix_alt2,#*+ix_alt3' \
-  #   "${csv_temporarium_1}" >"${csv_temporarium_2}"
-
-  # # Delete first line ,,,,,
-  # sed -i '1d' "${csv_temporarium_2}"
-
-  # "${ROOTDIR}/999999999/0/999999999_54872.py" \
-  #   --methodus=_temp_data_hxl_to_bcp47 \
-  #   --real-infile-path="${csv_temporarium_2}" >"${csv_temporarium_1}"
-
-  # frictionless validate "${csv_temporarium_1}"
-
-  # set +x
-  # file_update_if_necessary "skip-validation" \
-  #   "${csv_temporarium_1}" \
-  #   "${_radix_apothecae}/${archivum_no1_bcp47min__relative}"
 
   file_convert_bpc47min_de_numerordinatio "${numerodinatio_group}" "no1" "0" "0"
 
@@ -447,19 +237,17 @@ gh_repo_update_1603_16_1__boostrap_0() {
   # RESULT: 1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv
   # NOTE:   this is the slowest step, as will fetch Wikidata translations
 
-  # @TODO: uncomment next lines when this function is redy
-  # ROOTDIR="$DESTDIR" \
-  #   file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+  # @TODO: uncomment next lines when this function is ready
+  ROOTDIR="$DESTDIR" \
+    file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
 
   ## NO11 tm.hxl.csv -----------------------------------------------------------
   # RESULT: 1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv
   # We merge no1 + wikiq files into no11
 
-  frictionless validate "1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
-  file_merge_numerordinatio_de_wiki_q "$numerodinatio_group" "0" "0" "0" "+rdf_p_skos_preflabel_s5000"
-
-  echo "debug test exit early"
-  exit 0
+  # frictionless validate "1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
+  file_merge_numerordinatio_de_wiki_q "$numerodinatio_group" "0" "0" "0" "skos:prefLabel" "5000"
+  # file_merge_numerordinatio_de_wiki_q "$numerodinatio_group" "0" "0" "0"
 
   ## NO1 bcp47min --------------------------------------------------------------
   set -x
@@ -477,17 +265,17 @@ gh_repo_update_1603_16_1__boostrap_0() {
   # return 0
 
   ## NO11 bcp47min -------------------------------------------------------------
-  # set -x
-  # "${ROOTDIR}/999999999/0/999999999_54872.py" \
-  #   --methodus=_temp_data_hxl_to_bcp47 \
-  #   --real-infile-path="${archivum_no11__relative}" >"${csv_temporarium_1}"
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_data_hxl_to_bcp47 \
+    --real-infile-path="${archivum_no11__relative}" >"${csv_temporarium_1}"
 
-  # frictionless validate "${csv_temporarium_1}"
+  frictionless validate "${csv_temporarium_1}"
 
-  # set +x
-  # file_update_if_necessary "skip-validation" \
-  #   "${csv_temporarium_1}" \
-  #   "${_radix_apothecae}/${archivum_no11_bcp47min__relative}"
+  set +x
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_1}" \
+    "${_radix_apothecae}/${archivum_no11_bcp47min__relative}"
 
   file_convert_bpc47min_de_numerordinatio "${numerodinatio_group}" "no11" "0" "0"
 
@@ -548,12 +336,55 @@ gh_repo_update_1603_16_1__boostrap_0() {
 
   # sleep 15
 
+  ## datapackage.json ----------------------------------------------------------
+
+  set -x
+  "${ROOTDIR}/999999999/0/1603_1.py" \
+    --methodus='data-apothecae-unicae' \
+    --data-apothecae-ex="$numerodinatio_group" \
+    --data-apothecae-ad-stdout \
+    --data-apothecae-formato='datapackage' \
+    >"${_radix_apothecae}/${archivum_datapackage_unicae__relative}"
+
+  frictionless validate "${_radix_apothecae}/${archivum_datapackage_unicae__relative}"
+  set +x
+
   ## DEPLOY files to local repository ------------------------------------------
   # Note: at this point we assume all files are well validated and checked
 
   archivum_copiae_simplici \
     "${_radix_apothecae}/${archivum_no1__relative}" \
     "${_radix_localrepo}/${archivum_no1__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no1_bcp47min__relative}" \
+    "${_radix_localrepo}/${archivum_no1_bcp47min__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no1_owl__relative}" \
+    "${_radix_localrepo}/${archivum_no1_owl__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_wikiq__relative}" \
+    "${_radix_localrepo}/${archivum_wikiq__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no11__relative}" \
+    "${_radix_localrepo}/${archivum_no11__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no11_bcp47min__relative}" \
+    "${_radix_localrepo}/${archivum_no11_bcp47min__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no11_skos__relative}" \
+    "${_radix_localrepo}/${archivum_no11_skos__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_datapackage_unicae__relative}" \
+    "${_radix_localrepo}/${archivum_datapackage_unicae__relative}"
+
+  frictionless validate "${_radix_localrepo}/${archivum_datapackage_unicae__relative}"
 
   ## Fini ----------------------------------------------------------------------
   set -x
