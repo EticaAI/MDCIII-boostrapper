@@ -92,27 +92,35 @@ gh_repo_update_1603_16_1() {
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   # echo "TODO"
 
-  archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
-  archivum_rdf_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
+  # archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
+  # archivum_rdf_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
 
-  set -x
-  "${ROOTDIR}/999999999/0/999999999_7200235.py" \
-    --methodus='cod_ab_ad_no1_csv' \
-    --numerordinatio-praefixo="1603_16" \
-    >"${DESTDIR}/$archivum_no1__relative"
+  # NOTE: this will create all files already validated from
+  # 1603/16/1/0/ -> 999999/3133368/1603_16_1/
+  # However, we still need to generate/manage other top-level files
+  gh_repo_update_1603_16_1__boostrap_0 "data-localibus"
 
-  frictionless validate "${DESTDIR}/$archivum_no1__relative"
+  # echo "TODO"
+  # exit 0
 
-  "${ROOTDIR}/999999999/0/999999999_7200235.py" \
-    --methodus='cod_ab_index_levels_ttl' \
-    --numerordinatio-praefixo="1603_16" \
-    >"${DESTDIR}/$archivum_rdf_owl__relative"
-  set +x
+  # set -x
+  # "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+  #   --methodus='cod_ab_ad_no1_csv' \
+  #   --numerordinatio-praefixo="1603_16" \
+  #   >"${DESTDIR}/$archivum_no1__relative"
 
-  # echo "@TODO also export the .no1.tm.hxl.csv"
+  # frictionless validate "${DESTDIR}/$archivum_no1__relative"
 
-  lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${DESTDIR}"
-  lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${DESTDIR}"
+  # "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+  #   --methodus='cod_ab_index_levels_ttl' \
+  #   --numerordinatio-praefixo="1603_16" \
+  #   >"${DESTDIR}/$archivum_rdf_owl__relative"
+  # set +x
+
+  # # echo "@TODO also export the .no1.tm.hxl.csv"
+
+  # lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_no1__relative" "${DESTDIR}"
+  # lsf1603_to_gh_repo_local_file "$gh_repo_name" "$archivum_rdf_owl__relative" "${DESTDIR}"
 
   _gitattributes__localrepo="999999/3133368/${gh_repo_name}/.gitattributes"
   _gitattributes__templated="999999999/42302/.gitattributes"
@@ -165,7 +173,7 @@ gh_repo_update_1603_16_1() {
   fi
 
   gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
-  # gh_repo_sync_push "${gh_repo_name}"
+  gh_repo_sync_push "${gh_repo_name}"
 
   # ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv'
 
@@ -184,11 +192,15 @@ gh_repo_update_1603_16_1() {
 # Globals:
 #   DESTDIR
 # Arguments:
-#
+#    data_affinibus values: ["data-localibus", ""]; if "1" "data-localibus"
+#                           and cached wikiq.tm.hxl.csv exists, will avoid
+#                           re-fetch Wikidata
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
 gh_repo_update_1603_16_1__boostrap_0() {
+  data_affinibus="${1:-"data-localibus"}"
+
   gh_repo_name="1603_16_1"
   numerodinatio_group="${gh_repo_name}_0"
 
@@ -217,8 +229,8 @@ gh_repo_update_1603_16_1__boostrap_0() {
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   start_time_fn_b=$(date +%s)
 
-  ls -lha 1603/16/1/0/
-  ls -lha "$_radix_localrepo"
+  # ls -lha 1603/16/1/0/
+  # ls -lha "$_radix_localrepo"
 
   ## NO1 tm.hxl.csv ------------------------------------------------------------
   # 1603_16_1_0 is an special case which the table already is part of commited
@@ -230,16 +242,32 @@ gh_repo_update_1603_16_1__boostrap_0() {
   set +x
 
   ## NO1 bcp47 -----------------------------------------------------------------
-
+  # set -x
   file_convert_bpc47min_de_numerordinatio "${numerodinatio_group}" "no1" "0" "0"
 
   ## wikiq.tm.hxl.csv ----------------------------------------------------------
   # RESULT: 1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv
   # NOTE:   this is the slowest step, as will fetch Wikidata translations
 
-  # @TODO: uncomment next lines when this function is ready
-  ROOTDIR="$DESTDIR" \
-    file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+  if [ "$data_affinibus" = "data-localibus" ]; then
+    if [ -f "$archivum_wikiq__relative" ]; then
+      printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} \
+[data_affinibus=$data_affinibus] and cached \
+[$archivum_wikiq__relative] exists. No re-fetch Wikidata ${tty_normal}"
+    else
+      printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} \
+[data_affinibus=$data_affinibus] but not cached \
+[$archivum_wikiq__relative] exists. re-fetch Wikidata is necessary\
+${tty_normal}"
+      ROOTDIR="$DESTDIR" \
+        file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+    fi
+  else
+    printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} \
+[data_affinibus=$data_affinibus]. Fetch data from Wikidata ${tty_normal}"
+    ROOTDIR="$DESTDIR" \
+      file_translate_csv_de_numerordinatio_q__v2 "$numerodinatio_group" "0" "0"
+  fi
 
   ## NO11 tm.hxl.csv -----------------------------------------------------------
   # RESULT: 1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv

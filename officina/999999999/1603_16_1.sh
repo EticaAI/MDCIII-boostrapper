@@ -46,7 +46,14 @@ DESTDIR="$ROOTDIR"
 # echo ""
 # emoji_from_alpha "b"
 # gh_repo_update_1603_16_1
-gh_repo_update_1603_16_1__boostrap_0
+# gh_repo_update_1603_16_1__boostrap_0 "data-localibus"
+# gh_repo_update_1603_16_1__boostrap_0 ""
+
+# Check the status with like
+# git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/1603 status
+# git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/1603_16_1 status
+gh_repo_init_1603_16_1
+gh_repo_update_1603_16_1
 exit 0
 
 #### Main ______________________________________________________________________
