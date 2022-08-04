@@ -334,7 +334,9 @@ WHERE \"status\" = 1"""
 ```
 
 ## mustache
-https://github.com/noahmorrison/chevron
+- https://github.com/noahmorrison/chevron
+  - https://mustache.github.io/#demo
+  - https://rickkas7.github.io/mustache/
 
 ```
 pip3 install chevron
@@ -344,6 +346,30 @@ echo '{"var1": "value1"}' > 999999/0/mustache-data-test.json
 echo '# Hello [{{ var1 }}]! ' > 999999/0/mustache-template-test.md
 
 chevron --data=999999/0/mustache-data-test.json 999999/0/mustache-template-test.md
+
+## Data layers for GIS software
+### Geojson
+- https://datatracker.ietf.org/doc/html/rfc7946
+  - https://openlayers.org/
+  - Examples: http://geojson.xyz/
+  - Playground: https://geojson.io/#map=2/20.0/0.0
+- https://github.com/SEMICeu/GeoDCAT-AP
+- http://osm.codes/
+  - Links like this one http://osm.codes/geo:-23.550385,-46.633956
+
+
+### WMS related
+- https://github.com/mapserver/mapserver/issues/5965
+- https://gdal.org/drivers/vector/geojsonseq.html
+- https://datatracker.ietf.org/doc/html/rfc8142
+- https://www.interline.io/blog/geojsonl-extracts/
+
+### Other
+- https://github.com/geopython/pycsw
+
+### Issues
+- https://github.com/ghtmtt/DataPlotly
+- https://gis.stackexchange.com/questions/373977/linked-layers-virtually-merge-layers-in-qgis
 
 ```
 

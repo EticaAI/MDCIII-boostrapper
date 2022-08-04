@@ -1,10 +1,10 @@
 #!/bin/bash
 #===============================================================================
 #
-#          FILE:  1603_16_1.lib.sh
+#          FILE:  1603_9966.sh
 #
-#         USAGE:  #import on other scripts
-#                 . "$ROOTDIR"/999999999/1603_16_1.lib.sh
+#         USAGE:  ./999999999/1603_9966.sh
+#                 time ./999999999/1603_9966.sh
 #
 #   DESCRIPTION:  ---
 #
@@ -18,45 +18,28 @@
 #       LICENSE:  Public Domain dedication
 #                 SPDX-License-Identifier: Unlicense
 #       VERSION:  v1.0
-#       CREATED:  2022-06-22 21:20 UTC started.
+#       CREATED:  2022-08-04 13:34 UTC started.
 #      REVISION:  ---
 #===============================================================================
+set -e
 
-# echo "DEBUG: starting 1603_16_1.lib.sh"
+echo "DEBUG: starting 1603_9966.sh"
+
+ROOTDIR="$(pwd)"
+# DESTDIR is used to inform shell libs from main repository we're in another dir
+DESTDIR="$ROOTDIR"
+# NUMERORDINATIO_BASIM="$ROOTDIR"
 
 # shellcheck source=3133368.lib.sh
 . "${ROOTDIR}/999999999/3133368.lib.sh"
 
-#######################################
-# Update all repositories (if necessary)
-#
-# Globals:
-#   ROOTDIR
-#   GH_ORG_DEST
-# Arguments:
-#
-# Outputs:
-#    999999/3133368/lexicographi-sine-finibus
-#######################################
-gh_repo_edit_1603_16_1__topics_and_description() {
+echo "@TODO"
 
-  printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
-  # echo "${FUNCNAME[0]} TODO..."
-
-  gh_repo_name="1603_16_1"
-  repo_topics="unm49-001,world"
-  gh_repo_emojis="🌐"
-
-  # echo gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
-  gh repo edit "$GH_ORG_DEST/$gh_repo_name" --add-topic "$repo_topics"
-
-  gh_repo_edit_description "$gh_repo_name" "$gh_repo_emojis"
-
-  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
-}
+#### functions _________________________________________________________________
+# @TODO maybe move to dedicated lib.sh
 
 #######################################
-# Initialize "world level" level 1603_16
+# Initialize "world level" level 1603_9966 (subpopulational statistics)
 #
 # Globals:
 #   ROOTDIR
@@ -65,10 +48,10 @@ gh_repo_edit_1603_16_1__topics_and_description() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_init_1603_16_1() {
+gh_repo_init_1603_9966_1() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
-  gh_repo_create_numerordinatio "1603_16_1" "🌐"
+  gh_repo_create_numerordinatio "1603_9966_1" "🌐👥"
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY ${tty_normal}"
 
 }
@@ -83,9 +66,9 @@ gh_repo_init_1603_16_1() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_update_1603_16_1() {
-  gh_repo_name="1603_16_1"
-  gh_repo_emojis="🌐"
+gh_repo_update_1603_9966_1() {
+  gh_repo_name="1603_9966_1"
+  gh_repo_emojis="🌐👥"
 
   echo "::group::${gh_repo_name}"
 
@@ -99,10 +82,12 @@ gh_repo_update_1603_16_1() {
   # 1603/16/1/0/ -> 999999/3133368/1603_16_1/
   # However, we still need to generate/manage other top-level files
   # gh_repo_update_1603_16_1__boostrap_0 "data-localibus"
-  gh_repo_update_1603_16_1__boostrap_0 "no-cache"
+  gh_repo_update_1603_9966_1__boostrap_0 "no-cache"
+
+  echo "@TODO not fully implementd yet; requires the boostrapper first"
 
   # echo "TODO"
-  # exit 0
+  exit 0
 
   # set -x
   # "${ROOTDIR}/999999999/0/999999999_7200235.py" \
@@ -173,8 +158,8 @@ gh_repo_update_1603_16_1() {
     cp "$_gitattributes__templated" "$_gitattributes__localrepo"
   fi
 
-  gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
-  gh_repo_sync_push "${gh_repo_name}"
+  # gh_repo_edit_readme "$gh_repo_name" "${gh_repo_emojis}"
+  # gh_repo_sync_push "${gh_repo_name}"
 
   # ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv'
 
@@ -199,10 +184,10 @@ gh_repo_update_1603_16_1() {
 # Outputs:
 #    999999/3133368/lexicographi-sine-finibus
 #######################################
-gh_repo_update_1603_16_1__boostrap_0() {
+gh_repo_update_1603_9966_1__boostrap_0() {
   data_affinibus="${1:-"data-localibus"}"
 
-  gh_repo_name="1603_16_1"
+  gh_repo_name="1603_9966_1"
   numerodinatio_group="${gh_repo_name}_0"
 
   _radix_apothecae="${DESTDIR}"
@@ -229,6 +214,9 @@ gh_repo_update_1603_16_1__boostrap_0() {
 
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   start_time_fn_b=$(date +%s)
+
+  echo "@TODO ${FUNCNAME[0]} not ready yet"
+  return 0
 
   # ls -lha 1603/16/1/0/
   # ls -lha "$_radix_localrepo"
@@ -425,3 +413,42 @@ ${tty_normal}"
   elapsed=$((end_time - start_time_fn_b))
   printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY in ${elapsed}s ${tty_normal}"
 }
+
+#### Quick tests _______________________________________________________________
+# hxltmcli 999999/999999/hxltm-exemplum-linguam.tm.hxl.csv --objectivum-formulam='999999999/42302/exemplum-linguam.🗣️.json' --tmeta='999999/999999/hxltm-exemplum-linguam.tmeta.yml'
+# gh_repo_edit_readme "1603_16_1" "🇧🇷"
+# gh_repo_edit_readme "1603_16_1" "🌐"
+# gh_repo_edit_templated_file "999999999/42302/exemplum-linguam.🗣️.json" "999999/0/teste.json"
+
+# emoji_country_flag_from_iso3661p1a2 "br"
+
+# echo ""
+# emoji_from_alpha "b"
+# gh_repo_update_1603_16_1
+# gh_repo_update_1603_16_1__boostrap_0 "data-localibus"
+# gh_repo_update_1603_16_1__boostrap_0 ""
+
+# Check the status with like
+# git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/1603 status
+# git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/1603_16_1 status
+gh_repo_init_1603_9966_1
+gh_repo_update_1603_9966_1
+
+exit 0
+
+#### Main ______________________________________________________________________
+# @TODO note to self: thsi file is named 1603_9966.sh, but calling 1603_16_1.
+#       this need to be changed eventually
+# gh_repo_init_1603_16_1
+# # gh_repo_edit_1603_16_1__topics
+# gh_repo_update_1603_16_1
+
+# ./999999999/0/999999999_7200235.py --methodus='cod_ab_ad_no1_csv' --numerordinatio-praefixo="1603_16"
+
+# ./999999999/0/1603_3_12.py --help
+# printf "P17\n" | ./999999999/0/1603_3_12.py --actionem-sparql --de=P --query --ex-interlinguis
+# printf "P17\n" | ./999999999/0/1603_3_12.py --actionem-sparql --de=P --query --ex-interlinguis | ./999999999/0/1603_3_12.py --actionem-sparql --csv --hxltm
+
+# https://github.com/topics/csvw
+# https://github.com/bencomp/csvw-mustaches
+# https://github.com/rdf-ext/rdf-parser-csvw/issues/11
