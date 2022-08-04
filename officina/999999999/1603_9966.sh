@@ -189,22 +189,32 @@ gh_repo_update_1603_9966_1__boostrap_0() {
 
   gh_repo_name="1603_9966_1"
   numerodinatio_group="${gh_repo_name}_0"
+  numerordinatio="${gh_repo_name}"
 
   _radix_apothecae="${DESTDIR}"
   _radix_localrepo="${DESTDIR}/999999/3133368/${gh_repo_name}"
 
-  archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
-  archivum_no1_bcp47min__relative="1603/16/1/0/1603_16_1_0.no1.bcp47.csv"
-  archivum_no1_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
+  _path=$(numerordinatio_neo_separatum "$numerordinatio" "/")
+  _nomen=$(numerordinatio_neo_separatum "$numerordinatio" "_")
+  _path_group=$(numerordinatio_neo_separatum "$numerodinatio_group" "/")
+  _nomen_group=$(numerordinatio_neo_separatum "$numerodinatio_group" "_")
+
+  # archivum_no1__relative="1603/16/1/0/1603_16_1_0.no1.tm.hxl.csv"
+  archivum_no1__relative="${_path_group}/${_nomen_group}.no1.tm.hxl.csv"
+  # archivum_no1_bcp47min__relative="1603/16/1/0/1603_16_1_0.no1.bcp47.csv"
+  archivum_no1_bcp47min__relative="${_path_group}/${_nomen_group}.no1.bcp47.csv"
+  # archivum_no1_owl__relative="1603/16/1/0/1603_16_1_0.no1.owl.ttl"
+  archivum_no1_owl__relative="${_path_group}/${_nomen_group}.no1.owl.ttl"
   #archivum_no1_skos__relative="not applicable"
 
-  archivum_no11__relative="1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
-  archivum_no11_bcp47min__relative="1603/16/1/0/1603_16_1_0.no11.bcp47.csv"
-  #archivum_no11_owl__relative="not applicable"
-  archivum_no11_skos__relative="1603/16/1/0/1603_16_1_0.no11.skos.ttl"
+  # archivum_no11__relative="1603/16/1/0/1603_16_1_0.no11.tm.hxl.csv"
+  # archivum_no11_bcp47min__relative="1603/16/1/0/1603_16_1_0.no11.bcp47.csv"
+  # archivum_no11_owl__relative="not applicable"
+  # archivum_no11_skos__relative="1603/16/1/0/1603_16_1_0.no11.skos.ttl"
 
-  archivum_wikiq__relative="1603/16/1/0/1603_16_1_0.wikiq.tm.hxl.csv"
-  archivum_datapackage_unicae__relative="1603/16/1/0/datapackage.json"
+  # archivum_wikiq__relative="1603/16/1/0/1603_16_1_0.wikiq.tm.hxl.csv"
+  # archivum_datapackage_unicae__relative="1603/16/1/0/datapackage.json"
+  archivum_datapackage_unicae__relative="${_path_group}/datapackage.json"
 
   csv_temporarium_1="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~1.csv"
   csv_temporarium_2="${DESTDIR}/999999/0/${gh_repo_name}_0~TEMP~2.csv"
@@ -215,7 +225,109 @@ gh_repo_update_1603_9966_1__boostrap_0() {
   printf "\n\t%40s\n" "${tty_blue}${FUNCNAME[0]} STARTED ${tty_normal}"
   start_time_fn_b=$(date +%s)
 
-  echo "@TODO ${FUNCNAME[0]} not ready yet"
+  # echo "@TODO ${FUNCNAME[0]} not ready yet"
+  # echo "    archivum_no1__relative          [$archivum_no1__relative]"
+  # echo "    archivum_no1_bcp47min__relative [$archivum_no1_bcp47min__relative]"
+  # echo "    archivum_no1_owl__relative      [$archivum_no1_owl__relative]"
+
+  ## Directories preparation ---------------------------------------------------
+  if [ ! -d "${_radix_apothecae}/${_path_group}" ]; then
+    echo "creating dir [${_radix_apothecae}/${_path_group}]"
+    mkdir -p "${_radix_apothecae}/${_path_group}"
+  fi
+  if [ ! -d "${_radix_localrepo}/${_path_group}" ]; then
+    echo "creating dir [${_radix_localrepo}/${_path_group}]"
+    mkdir -p "${_radix_localrepo}/${_path_group}"
+  fi
+  # exit 0
+
+  ## .no1.tm.hxl.csv / .no1.bcp47.csv / .no1.owl.ttl ---------------------------
+  set -x
+  # "${ROOTDIR}/999999999/0/999999999_521850.py" \
+  #   --methodus-fonti="worldbank" \
+  #   --methodus="health" \
+  #   --objectivum-formato="hxltm" \
+  #   >"${csv_temporarium_1}"
+  # frictionless validate "${csv_temporarium_1}"
+
+  "${ROOTDIR}/999999999/0/999999999_521850.py" \
+    --methodus-fonti="worldbank" \
+    --methodus="health" \
+    --objectivum-formato=no1 \
+    --numerordinatio-praefixo="${numerodinatio_group}" \
+    >"${csv_temporarium_2}"
+
+  frictionless validate "${csv_temporarium_2}"
+
+  "${ROOTDIR}/999999999/0/999999999_54872.py" \
+    --methodus=_temp_no1 \
+    --rdf-sine-spatia-nominalibus=devnull,mdciii \
+    --rdf-trivio='1603' \
+    --rdf-per-trivio='iso8601v,xywdatap2899v,xywdatap4135v' \
+    "${csv_temporarium_2}" \
+    >"${ttl_temporarium_1}"
+
+  rdfpipe --input-format=turtle --output-format=longturtle \
+    "${ttl_temporarium_1}" >"${ttl_temporarium_2}"
+
+  set +x
+
+  file_update_if_necessary "skip-validation" \
+    "${csv_temporarium_2}" \
+    "${_radix_apothecae}/${archivum_no1__relative}"
+
+  file_update_if_necessary "skip-validation" \
+    "${ttl_temporarium_2}" \
+    "${_radix_apothecae}/${archivum_no1_owl__relative}"
+
+  # This already generate bcp47 from .no1.tm.hxl.csv for us
+  file_convert_bpc47min_de_numerordinatio "${numerodinatio_group}" "no1" "0" "0"
+
+  ## datapackage.json ----------------------------------------------------------
+
+  set -x
+  "${ROOTDIR}/999999999/0/1603_1.py" \
+    --methodus='data-apothecae-unicae' \
+    --data-apothecae-ex="$numerodinatio_group" \
+    --data-apothecae-ad-stdout \
+    --data-apothecae-formato='datapackage' \
+    >"${_radix_apothecae}/${archivum_datapackage_unicae__relative}"
+
+  frictionless validate "${_radix_apothecae}/${archivum_datapackage_unicae__relative}"
+  set +x
+
+  ## DEPLOY files to local repository ------------------------------------------
+  # Note: at this point we assume all files are well validated and checked
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no1__relative}" \
+    "${_radix_localrepo}/${archivum_no1__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no1_bcp47min__relative}" \
+    "${_radix_localrepo}/${archivum_no1_bcp47min__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_no1_owl__relative}" \
+    "${_radix_localrepo}/${archivum_no1_owl__relative}"
+
+  archivum_copiae_simplici \
+    "${_radix_apothecae}/${archivum_datapackage_unicae__relative}" \
+    "${_radix_localrepo}/${archivum_datapackage_unicae__relative}"
+
+  frictionless validate "${_radix_localrepo}/${archivum_datapackage_unicae__relative}"
+
+
+  ## Fini ----------------------------------------------------------------------
+  set -x
+  ls -lha "${_radix_localrepo}"
+  ls -lha "$_radix_localrepo"
+  set +x
+
+  end_time=$(date +%s)
+  elapsed=$((end_time - start_time_fn_b))
+  printf "\t%40s\n" "${tty_green}${FUNCNAME[0]} FINISHED OKAY in ${elapsed}s ${tty_normal}"
+
   return 0
 
   # ls -lha 1603/16/1/0/
@@ -431,7 +543,7 @@ ${tty_normal}"
 # Check the status with like
 # git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/1603 status
 # git -C /workspace/git/EticaAI/MDCIII-boostrapper/officina/999999/3133368/1603_16_1 status
-gh_repo_init_1603_9966_1
+# gh_repo_init_1603_9966_1
 gh_repo_update_1603_9966_1
 
 exit 0

@@ -197,6 +197,47 @@ gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx() {
 }
 
 #######################################
+# Initialize some caches (required by 99999999/0/ scripts). Use case:
+# pre-build Administrative Boundary Level 0 codes.
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#
+#######################################
+local_index_praeparationi() {
+  echo "${FUNCNAME[0]}..."
+
+  set -x
+  "${ROOTDIR}/999999999/0/999999999_7200235.py" \
+    --methodus=index_praeparationi '1603_16_1_0' \
+    --index-nomini='i1603_16_1_0' \
+    --index-ad-columnam='ix_unm49'
+  set +x
+}
+
+#######################################
+# Delete cached files at 999999/0/ if necessary
+#
+# Globals:
+#   ROOTDIR
+# Arguments:
+#
+# Outputs:
+#
+#######################################
+local_clean_999999_0() {
+  echo "${FUNCNAME[0]}..."
+
+  echo "@TODO imĺement this function to local caches at 999999/0/"
+  set -x
+  ls -lha "$ROOTDIR/999999/0/"
+  set +x
+}
+
+#######################################
 # Initialize local repository with with very rudimentar content
 #
 # Globals:
@@ -271,3 +312,6 @@ local_system_dependencies_python() {
 local_system_dependencies_python
 gh_repo_fetch_lexicographi_sine_finibus
 gh_repo_fetch_lexicographi_sine_finibus_1603_16_init_xslx
+
+local_clean_999999_0
+local_index_praeparationi
